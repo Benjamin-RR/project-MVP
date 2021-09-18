@@ -72,7 +72,10 @@ const caputres = {
         id: "20210906", // this should be the same as line above.
         authorHandle: "benjaminRR",
         timestamp: "2021-09-06T09:49:04-04:00", // default momet format.
-        location: "fill this in",               // exact location of capture.
+        location: {
+            lat: 213,
+            lng: 1234,
+        },
         region: "fill this in",                 // region of capture.
         captureSrc: "",
         verified: false,                        // parameter used for many things in app.
@@ -90,6 +93,10 @@ const caputres = {
         // fill this in
     },
 };
+
+const animals = {
+
+}
 
 module.export = {
     users,
