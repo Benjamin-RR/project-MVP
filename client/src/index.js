@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
-// import { UserProvider } from './components/UserContext';
+import { CaptureProvider } from './components/CaptureContext';
 
 ReactDOM.render(
 
     <React.StrictMode>
-        {/* <UserProvider> */}
+        <CaptureProvider>
             <App />
-        {/* </UserProvider> */}
+        </CaptureProvider>
     </React.StrictMode>,
 
 document.getElementById('root')

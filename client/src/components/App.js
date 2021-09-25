@@ -4,10 +4,12 @@ import styled from 'styled-components';
 import GlobalStyles from './GlobalStyles';
 import Header from './Header';
 import Home from './Home';
+import DM from './DM';
 import Login from './Login';
 import Profile from './Profile';
 import Explore from './Explore';
 import Leaderboard from './Leaderboard';
+import About from './About';
 import Page404 from './Page404';
 import Footer from './Footer';
 
@@ -22,6 +24,9 @@ const App = () => {
                     <Route exact path="/">
                         <Home />
                     </Route>
+                    <Route exact path="/DM">
+                        <DM />
+                    </Route>
                     <Route exact path="/Login">
                         <Login />
                     </Route>
@@ -33,6 +38,9 @@ const App = () => {
                     </Route>
                     <Route exact path="/Leaderboard">
                         <Leaderboard />
+                    </Route>
+                    <Route exact path="/About">
+                        <About />
                     </Route>
                     <Route exact path="/404">
                         <Page404 />

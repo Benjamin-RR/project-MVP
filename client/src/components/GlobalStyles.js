@@ -2,6 +2,7 @@ import { createGlobalStyle } from "styled-components";
 
 export default createGlobalStyle`
     :root{
+        --color-Header-Footer: grey;
         /* --color-cadmium-red: #D80026;
         --color-alabama-crimson: linear-gradient(0deg, rgba(0,0,0,1) 30%, rgba(0,180,173,1) 50%, rgba(0,0,0,1) 70%);
         --color-orange: black;
@@ -65,15 +66,20 @@ export default createGlobalStyle`
     }
 
     h1,
-    h2,
-    h3,
     label,
     button {
-    color: #fff;
+    color: black;
     font-family: var(--font-heading);
     /* text-shadow: var(--neon); */
     font-size: 32px;
     text-align: center;
+    }
+    h2,
+    h3 {
+        color: black;
+        font-family: var(--font-heading);
+        font-size: 16px;
+        text-align: center;
     }
     p,
     a,

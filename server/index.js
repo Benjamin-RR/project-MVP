@@ -37,8 +37,4 @@ express()
         });
     })
 
-// const server = app.listen(PORT, function() {
-//     console.info('🌍 Listening on port ' + server.address().port);
-// });
-
 .listen(PORT, () => console.info(`🦊 Listening on port ${PORT}`));

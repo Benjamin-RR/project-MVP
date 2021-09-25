@@ -1,17 +1,16 @@
 import React, {useContext} from 'react';
-import { CaptureContext } from '../CaptureContext';
+import {CaptureContext} from '../CaptureContext';
 import styled from 'styled-components';
 
-const Explore = () => {
+const Profile = () => {
     const {
         page,
         setPage
     } = useContext(CaptureContext);
-    setPage("explore");
-
+    setPage("profile");
     return (
         <Wrapper>
-            <div>Explore</div>
+            <div>Profile</div>
         </Wrapper>
     )
 }
@@ -26,4 +25,4 @@ const Wrapper = styled.div`
     border: 1px solid black;
 `
 
-export default Explore;
+export default Profile;
