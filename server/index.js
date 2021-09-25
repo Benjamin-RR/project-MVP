@@ -1,18 +1,44 @@
-// const path = require('path');
-// const express = require('express');
+"use strict";
 
-// const PORT = 31415;
+const express = require("express");
+const bodyParser = require("body-parser");
+const morgan = require("morgan");
 
-// var app = express();
+const PORT = 7777;
 
-// app.use(express.json());
+express()
+    .use(function (req, res, next) {
+        res.header(
+        "Access-Control-Allow-Methods",
+        "OPTIONS, HEAD, GET, PUT, POST, DELETE"
+        );
+        res.header(
+        "Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept"
+        );
+        next();
+    })
+    .use(morgan("tiny"))
+    // .use(express.static("./server/assets"))
+    .use(bodyParser.json())
+    .use(express.urlencoded({ extended: false }))
+    .use("/", express.static(__dirname + "/"))
 
-// app.use(require('./routes/profile'));
-// app.use(require('./routes/tweet'));
-// app.use(require('./routes/feed'));
+    // REST endpoints
+    // .use(require('./routes/items'))
+    // .use(require('./routes/companies'))
+    // .use(require('./routes/purchases'))
 
-// app.use('/assets', express.static(path.join(__dirname, 'assets')));
+    // This is the catch all Endpoint
+    .get("*", (req, res) => {
+        res.status(404).json({
+        status: 404,
+        message: "This is obviously not what you're looking for",
+        });
+    })
 
 // const server = app.listen(PORT, function() {
-//   console.info('🌍 Listening on port ' + server.address().port);
+//     console.info('🌍 Listening on port ' + server.address().port);
 // });
+
+.listen(PORT, () => console.info(`🦊 Listening on port ${PORT}`));
