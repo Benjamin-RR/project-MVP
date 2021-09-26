@@ -31,7 +31,7 @@ express()
     // .use(require('./routes/items'))
     // .use(require('./routes/companies'))
     // .use(require('./routes/purchases'))
-    .get("/user", getUser)
+    .get("/user/:email", getUser)
     .post("/user", addNewUser)
 
     // This is the catch all Endpoint

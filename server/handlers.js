@@ -16,7 +16,9 @@ const getUser = async (req, res) => {
     const client = await new MongoClient(MONGO_URI, options);
     await client.connect();
     const db = client.db("Capture");
-    const email = req.body.email
+    const email = req.params.email
+
+    console.log("req:" , req.params);
 
     console.log("byEmail:", email);
     
@@ -25,7 +27,7 @@ const getUser = async (req, res) => {
     user ?
     res.status(200).json({ status: 200, data: user, message: "user found"})
     :
-    res.status(400).json({ status: 400, data: req.body, message: "user not found"})
+    res.status(400).json({ status: 400, data: req.params, message: "user not found"})
     // console.log("user" , user)
     client.close();
 

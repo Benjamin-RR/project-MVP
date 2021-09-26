@@ -1,13 +1,21 @@
 import React, {useContext} from 'react';
 import {CaptureContext} from '../CaptureContext';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom'; 
 
 const Profile = () => {
     const {
         page,
-        setPage
+        setPage,
+        userID
     } = useContext(CaptureContext);
     setPage("profile");
+
+    let history = useHistory();
+    { !userID && 
+        history.push("/Login")
+    }
+
     return (
         <Wrapper>
             <div>Profile</div>

@@ -1,16 +1,14 @@
-import React, {useState} from "react";
-
 // will connect and sign up or sign in depending on user's selection.
-const Connect = ({
+const Connect = async({
     email,
     password,
     text,}) => {
     let connectStatus = "good";
-    const [cStatus, setCStatus] = useState("good");
 
-    // Attempt a new user sign up and immediately sign in.
+    // Attempt a new user sign up and either:
+    // 1: Succeed. 2: Fail (email already existing). 3: let user know server is having issues.
     if (text === "New user") {
-        fetch(`/user`, {
+        await fetch(`/user`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -25,24 +23,27 @@ const Connect = ({
             if (data.status === 200) {
                 // save (and overwrite previous) purchaseID
                 localStorage.setItem("userID", data.data._id);
-                console.log("DATA(200):" , data);
             }
             if (data.status === 400) {
                 connectStatus = data.error;
-                console.log("DATA(400):" , data, connectStatus);
-                setCStatus(data.error);
             }
             })
             .catch((error) => {
                 connectStatus = "A server error occured, please refresh your page and try again.";
-                setCStatus("A server error occured, please refresh your page and try again.")
             });
     } else {
-
+        // Attempt to sign in and either:
+        // 1: succeed. 2: Fail (email already existing). 3: let user know server is having issues.
+            await fetch(`/user/${email}`)
+            .then((res) => res.json())
+            .then((data) => {
+                localStorage.setItem("userID", data.data._id);
+            })
+            .catch((error) => {
+                connectStatus = "A server error occured, please refresh your page and try again.";
+            });
     }
-    console.log("check this:" , connectStatus);
-
-    return cStatus;
+    return connectStatus;
 }
 
 export default Connect;

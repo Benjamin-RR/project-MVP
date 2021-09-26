@@ -141,6 +141,7 @@ const UserAvatar = styled.div`
     height: 30px;
     width: 30px;
     border: 1px solid black;
+    cursor: pointer;
 `
 
 export default Header;

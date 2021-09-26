@@ -1,13 +1,21 @@
 import React, {useContext} from 'react';
 import {CaptureContext} from '../CaptureContext';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom'; 
 
 const Leaderboard = () => {
     const {
         page,
-        setPage
+        setPage,
+        userID
     } = useContext(CaptureContext);
     setPage("leaderboard");
+
+    let history = useHistory();
+    { !userID && 
+        history.push("/Login")
+    }
+
     return (
     <Wrapper>
         <div>Leaderboard</div>

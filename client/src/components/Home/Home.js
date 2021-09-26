@@ -12,7 +12,6 @@ const Home = () => {
     setPage("home");
 
     let history = useHistory();
-
     { !userID && 
         history.push("/Login")
     }

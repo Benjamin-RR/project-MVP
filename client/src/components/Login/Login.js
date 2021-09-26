@@ -1,6 +1,6 @@
 import React, {useState, useContext} from 'react';
 import {CaptureContext} from '../CaptureContext';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Validate from "./Validate";
 import Connect from './Connect';
@@ -9,11 +9,13 @@ import { useHistory } from 'react-router-dom';
 const Login = () => {
     const {
         page,
-        setPage
+        setPage,
+        userID,
+        setUserID
     } = useContext(CaptureContext);
     setPage("login");
     let history = useHistory();
-
+    console.log("SIMPLE TEST:" , page);
 
     const [text, setText] = useState("Sign in");
     const [text2, setText2] = useState("New user");
@@ -35,10 +37,10 @@ const Login = () => {
     }
 
     // Handles submission of sign in / sign up.
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const mySubmit = {email, password, text}
-        console.log("mysubmit:", mySubmit);
+        // console.log("mysubmit:", mySubmit);
         const validatedStatus = Validate(mySubmit)
         if (validatedStatus !== "good") {
             setBadSubmit(validatedStatus);
@@ -46,15 +48,17 @@ const Login = () => {
         } else {
             setBadSubmit(null);
         }
-        const connectStatus = Connect(mySubmit)
-        console.log("connect status: ", connectStatus);
+        const connectStatus = await Connect(mySubmit)
+        // console.log("connect status: ", connectStatus);
         if (connectStatus === "good") {
-            // history.push("/")
-            // window.location.reload();
+            let test = window.localStorage.getItem("userID");
+            setUserID(test)
+            console.log("TEST:" , test);
+            history.push("/")
+            window.location.reload();
         } else {
             setBadSubmit(connectStatus);
         }
-        
     }
 
     return (
