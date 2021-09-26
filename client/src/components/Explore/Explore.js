@@ -18,7 +18,9 @@ const Explore = () => {
 
     return (
         <Wrapper>
-            <div>Explore</div>
+            <MapWrapper>
+                <Map></Map>
+            </MapWrapper>
         </Wrapper>
     )
 }
@@ -28,8 +30,21 @@ const Wrapper = styled.div`
     display: flex;
     justify-content: space-around;
     align-items: center;
-    height: 500px;
+    height: var(--defaultHeight);
     width: 100%;
+    border: 1px solid black;
+`
+
+const MapWrapper = styled.div`
+    height: 350px;
+    width: 350px;
+    border: 1px solid black;
+`
+
+const Map = styled.div`
+    height: 100%;
+    width: 100%;
+    background: lightgrey;
     border: 1px solid black;
 `
 

@@ -18,14 +18,29 @@ const Header = () => {
         dropdown,
         setDropdown,
         userID
-    } = useContext(CaptureContext);    
+    } = useContext(CaptureContext);
+    
+    let headerHeight = `150px`;
+    if (page === "explore") {
+        headerHeight = "100%"
+    } else {
+        headerHeight = `150px`
+    }
+        
+    
+
+
 
     const handleDropdown = () => {
         setDropdown(true)
     }
 
     return (
-        <Wrapper>
+        <Wrapper
+            style={{
+                height: `${headerHeight}`
+            }}
+        >
             <TitleWrapper
                 to="/"
             >

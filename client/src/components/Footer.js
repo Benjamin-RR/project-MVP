@@ -1,77 +1,128 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import { CaptureContext } from './CaptureContext';
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
+// footer link icons
 import {GrYoutube} from 'react-icons/gr';
 import {GrInstagram} from 'react-icons/gr';
 import {GrFacebook} from 'react-icons/gr';
 import {GrLinkedin} from 'react-icons/gr'
 import {GrGithub} from 'react-icons/gr';
 
+// for mobile
+import {GrGallery} from 'react-icons/gr';
+import {AiOutlineCamera} from 'react-icons/ai';
+import {BsCloudUpload} from 'react-icons/bs';
+
 
 const Footer = () => {
+    const {
+        page,
+        setPage,
+        dropdown,
+        setDropdown,
+        userID
+    } = useContext(CaptureContext);
+    // if (@media(max-width: 600px))
+    const mediaQuery = window.matchMedia('(min-width: 600px')
+    // console.log("testing:" , mediaQuery);
+    if (mediaQuery.matches === true) {
+        // console.log("true")
+    } else {
+        // console.log("false")
+    }
+    
+    // handles rendering footer correctly if you dynamically change your screen.
+    mediaQuery.onchange = (e) => {
+        window.location.reload();
+    }
 
+
+    // handles opening all footer link paths.
     const handleLink = (path) => {
         window.open(path, '_blank');
     }
 
     return (
-        <Wrapper>
-            <Left>
-                <Text to="/About" >About</Text>
-                <Text to="/Blog" >Blog</Text>
-                <Text to="/Help" >Help</Text>
-                <Text to="/Terms" >Terms of Use</Text>
-                <Text to="Contact" >Contact us</Text>
-            </Left>
+        <>
+            { (mediaQuery.matches === true || page !== "explore") ? (
+                <Wrapper>
+                    <Left>
+                        <Text to="/About" >About</Text>
+                        <Text to="/Blog" >Blog</Text>
+                        <Text to="/Help" >Help</Text>
+                        <Text to="/Terms" >Terms of Use</Text>
+                        <Text to="Contact" >Contact us</Text>
+                    </Left>
 
-            <IconWrapper
-                onClick={() => {
-                    // handleLink("");
-                }}
-            >
-                <Icon>
-                    <GrYoutube 
-                        style={{ height: "100%", width: "100%"}}
-                    />
-                </Icon>
-                <Icon
-                    onClick={() => {
-                        // handleLink("");
-                    }}
-                >
-                    <GrInstagram 
-                        style={{ height: "100%", width: "100%"}}
-                    />
-                </Icon>
-                <Icon
-                    onClick={() => {
-                        // handleLink("");
-                    }}
-                >
-                    <GrFacebook 
-                        style={{ height: "100%", width: "100%"}}
-                    />
-                </Icon>
-                <Icon
-                    onClick={() => {
-                        handleLink("https://www.linkedin.com/in/benjaminrobertrussell/");
-                    }}
-                >
-                    <GrLinkedin 
-                        style={{ height: "100%", width: "100%"}}
-                    />
-                </Icon>
-                <Icon
-                    onClick={() => {
-                        handleLink("https://github.com/Benjamin-RR/project-MVP");
-                    }}
-                >
-                    <GrGithub 
-                        style={{ height: "100%", width: "100%"}}
-                    />
-                </Icon>
-            </IconWrapper>
-        </Wrapper>
+                    <IconWrapper
+                        onClick={() => {
+                            // handleLink("");
+                        }}
+                    >
+                        <Icon>
+                            <GrYoutube 
+                                style={{ height: "100%", width: "100%"}}
+                            />
+                        </Icon>
+                        <Icon
+                            onClick={() => {
+                                // handleLink("");
+                            }}
+                        >
+                            <GrInstagram 
+                                style={{ height: "100%", width: "100%"}}
+                            />
+                        </Icon>
+                        <Icon
+                            onClick={() => {
+                                // handleLink("");
+                            }}
+                        >
+                            <GrFacebook 
+                                style={{ height: "100%", width: "100%"}}
+                            />
+                        </Icon>
+                        <Icon
+                            onClick={() => {
+                                handleLink("https://www.linkedin.com/in/benjaminrobertrussell/");
+                            }}
+                        >
+                            <GrLinkedin 
+                                style={{ height: "100%", width: "100%"}}
+                            />
+                        </Icon>
+                        <Icon
+                            onClick={() => {
+                                handleLink("https://github.com/Benjamin-RR/project-MVP");
+                            }}
+                        >
+                            <GrGithub 
+                                style={{ height: "100%", width: "100%"}}
+                            />
+                        </Icon>
+                    </IconWrapper>
+                </Wrapper>
+            ) : (
+                <CameraButtons>
+                    <Icon>
+                        <GrGallery 
+                            style={{ height: "100%", width: "100%"}}
+                        />
+                    </Icon>
+                    <Icon>
+                        <AiOutlineCamera 
+                            style={{ height: "100%", width: "100%"}}
+                        />
+                    </Icon>
+                    <Icon>
+                        <BsCloudUpload 
+                            style={{ height: "100%", width: "100%"}}
+                        />
+                    </Icon>
+                </CameraButtons>
+            )}
+        </>
     )
 }
 
@@ -109,6 +160,9 @@ const IconWrapper = styled.div`
 `
 
 const Icon = styled.div`
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
     color: black;
     text-decoration: none;
     margin: 5px;
@@ -116,6 +170,15 @@ const Icon = styled.div`
     height: 30px;
     cursor: pointer;
     /* border: 1px solid black; */
+`
+
+const CameraButtons = styled.div`
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 50px;
+    background: grey;
 `
 
 export default Footer;

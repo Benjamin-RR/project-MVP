@@ -20,7 +20,7 @@ const Wrapper = styled.div`
     display: flex;
     justify-content: space-around;
     align-items: center;
-    height: 500px;
+    height: var(--defaultHeight);
     width: 100%;
     border: 1px solid black;
 `
