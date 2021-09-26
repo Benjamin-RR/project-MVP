@@ -16,7 +16,8 @@ const Header = () => {
         page,
         setPage,
         dropdown,
-        setDropdown
+        setDropdown,
+        userID
     } = useContext(CaptureContext);    
 
     console.log("Page:" , page);
@@ -34,67 +35,71 @@ const Header = () => {
                 <h2>Your animal of desire</h2>
             </TitleWrapper>
 
-            <IconWrapper>
-                <Icon 
-                    to="/" >
-                    { page === "home" ? (
-                        <AiFillHome 
-                            style={{ height: "100%", width: "100%"}}
-                        />
-                    ) : (
-                        <AiOutlineHome 
-                            style={{ height: "100%", width: "100%"}}
-                        />
-                    )}
-                </Icon>
+            { userID ? (
+                <IconWrapper>
+                    <Icon 
+                        to="/" >
+                        { page === "home" ? (
+                            <AiFillHome 
+                                style={{ height: "100%", width: "100%"}}
+                            />
+                        ) : (
+                            <AiOutlineHome 
+                                style={{ height: "100%", width: "100%"}}
+                            />
+                        )}
+                    </Icon>
 
-                <Icon to="/DM" >
-                { page === "dm" ? (
-                        <MdMessage 
-                            style={{ height: "100%", width: "100%"}}
-                        />
-                    ) : (
-                        <FiMessageSquare 
-                            style={{ height: "100%", width: "100%"}}
-                        />
-                    )}
-                </Icon>
+                    <Icon to="/DM" >
+                    { page === "dm" ? (
+                            <MdMessage 
+                                style={{ height: "100%", width: "100%"}}
+                            />
+                        ) : (
+                            <FiMessageSquare 
+                                style={{ height: "100%", width: "100%"}}
+                            />
+                        )}
+                    </Icon>
 
-                <Icon to="/Explore" >
-                { page === "explore" ? (
-                        <AiFillCompass 
-                            style={{ height: "100%", width: "100%"}}
-                        />
-                    ) : (
-                        <AiOutlineCompass 
-                            style={{ height: "100%", width: "100%"}}
-                        />
-                    )}
-                </Icon>
+                    <Icon to="/Explore" >
+                    { page === "explore" ? (
+                            <AiFillCompass 
+                                style={{ height: "100%", width: "100%"}}
+                            />
+                        ) : (
+                            <AiOutlineCompass 
+                                style={{ height: "100%", width: "100%"}}
+                            />
+                        )}
+                    </Icon>
 
-                <Icon to="/Leaderboard" >
-                { page === "leaderboard" ? (
-                        <AiFillTrophy 
-                            style={{ height: "100%", width: "100%"}}
-                        />
-                    ) : (
-                        <AiOutlineTrophy 
-                            style={{ height: "100%", width: "100%"}}
-                        />
-                    )}
-                </Icon>
+                    <Icon to="/Leaderboard" >
+                    { page === "leaderboard" ? (
+                            <AiFillTrophy 
+                                style={{ height: "100%", width: "100%"}}
+                            />
+                        ) : (
+                            <AiOutlineTrophy 
+                                style={{ height: "100%", width: "100%"}}
+                            />
+                        )}
+                    </Icon>
 
-                <UserAvatar
-                    onClick={() => {
-                        handleDropdown();
-                    }}
-                >
-                    {/* <img 
-                        src=""
-                        alt="user's avatar"
-                    /> */}
-                </UserAvatar>
-            </IconWrapper>
+                    <UserAvatar
+                        onClick={() => {
+                            handleDropdown();
+                        }}
+                    >
+                        {/* <img 
+                            src=""
+                            alt="user's avatar"
+                        /> */}
+                    </UserAvatar>
+                </IconWrapper>
+            ) : (
+                <div></div> // Stretch goal, add offline users can still view leaderboard.
+            )}
             
         </Wrapper>
     )

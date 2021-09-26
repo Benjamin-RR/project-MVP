@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import { CaptureContext } from './CaptureContext';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import styled from 'styled-components';
 import GlobalStyles from './GlobalStyles';
@@ -14,6 +15,10 @@ import Page404 from './Page404';
 import Footer from './Footer';
 
 const App = () => {
+    const {
+        userID,
+    } = useContext(CaptureContext);
+    
     return(
         <BrowserRouter>
             <GlobalStyles />
@@ -24,11 +29,11 @@ const App = () => {
                     <Route exact path="/">
                         <Home />
                     </Route>
-                    <Route exact path="/DM">
-                        <DM />
-                    </Route>
                     <Route exact path="/Login">
                         <Login />
+                    </Route>
+                    <Route exact path="/DM">
+                        <DM />
                     </Route>
                     <Route exact path="/Profile">
                         <Profile />
