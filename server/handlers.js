@@ -10,35 +10,46 @@ const options = {
 };
 
 const { v4: uuidv4 } = require("uuid");
+const {
+    validateEmail,
+    validatePassword
+} = require("./validate");
 
 // GET USER
-const getUser = async (req, res) => {
+const signInUser = async (req, res) => {
+    let signInStatus = "good";
+    // Validate email is indeed good.
+    signInStatus = validateEmail(req.body.email)
+    if (!signInStatus === "good") {
+        res.status(400).json({ status: 400, data: req.body, message: signInStatus})
+    }
     const client = await new MongoClient(MONGO_URI, options);
     await client.connect();
     const db = client.db("Capture");
-    const email = req.params.email
-
-    console.log("req:" , req.params);
-
-    console.log("byEmail:", email);
+    const email = req.body.email
+    const password = req.body.password
     
     const user = await db.collection("users").findOne({ email });
-    console.log("user:" , user);
-    user ?
-    res.status(200).json({ status: 200, data: user, message: "user found"})
-    :
-    res.status(400).json({ status: 400, data: req.params, message: "user not found"})
-    // console.log("user" , user)
+    console.log("this users info:" , user);
+    user ? (
+        // if email exists in database, make sure password matches.
+        user.password !==password ? (
+            res.status(400).json({ status: 400, data: req.body, message: "email and password did not match"})
+        ) : (
+            res.status(200).json({ status: 200, data: user, message: "matched. signing in..."})
+        )
+
+    )
+    : (
+        res.status(400).json({ status: 400, data: req.body, message: "user not found"})
+    )
     client.close();
 
 };
 
 
-
 // ADD NEW USER
 const addNewUser = async (req, res) => {
-
-    console.log("received:" , req.body);
 
     // verify this email account is not already taken.
     const client = await new MongoClient(MONGO_URI, options);
@@ -74,6 +85,6 @@ const addNewUser = async (req, res) => {
 };
 
 module.exports = {
-    getUser,
+    signInUser,
     addNewUser,
 };

@@ -20,8 +20,6 @@ const Header = () => {
         userID
     } = useContext(CaptureContext);    
 
-    console.log("Page:" , page);
-
     const handleDropdown = () => {
         setDropdown(true)
     }

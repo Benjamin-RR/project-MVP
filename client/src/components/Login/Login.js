@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import Validate from "./Validate";
 import Connect from './Connect';
 import { useHistory } from 'react-router-dom';
+import {FaRegEye} from 'react-icons/fa';
+import {FaRegEyeSlash} from 'react-icons/fa';
 
 const Login = () => {
     const {
@@ -15,14 +17,22 @@ const Login = () => {
     } = useContext(CaptureContext);
     setPage("login");
     let history = useHistory();
-    console.log("SIMPLE TEST:" , page);
 
     const [text, setText] = useState("Sign in");
     const [text2, setText2] = useState("New user");
     const [submitText, setSubmitText] = useState(text);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [type, setType] = useState("password");
     const [badSubmit, setBadSubmit] = useState(null);
+
+    const changeVisibility = () => {
+        if (type === "password") {
+            setType("text");
+        } else {
+            setType("password");
+        }
+    }
 
     // Handles changing from sign in to new user sign up, and vise versa.
     const handleClick = () => {
@@ -40,7 +50,6 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const mySubmit = {email, password, text}
-        // console.log("mysubmit:", mySubmit);
         const validatedStatus = Validate(mySubmit)
         if (validatedStatus !== "good") {
             setBadSubmit(validatedStatus);
@@ -49,7 +58,6 @@ const Login = () => {
             setBadSubmit(null);
         }
         const connectStatus = await Connect(mySubmit)
-        // console.log("connect status: ", connectStatus);
         if (connectStatus === "good") {
             let test = window.localStorage.getItem("userID");
             setUserID(test)
@@ -79,19 +87,20 @@ const Login = () => {
                         placeholder="email@Capture.com"
                         value={email}
                         onChange={(e) => {
-                            setEmail(e.target.value);
+                            setEmail((e.target.value).toLowerCase());
                         }}
                     >
                     </Input>
                     <Input
                         required
-                        type="password"
+                        type={type}
                         placeholder="password"
                         value={password}
                         onChange={(e) => {
                             setPassword(e.target.value);
                         }}
                     >
+                    
                     </Input>
                     <Button
                         type="submit"
@@ -100,6 +109,17 @@ const Login = () => {
                         {submitText}
                     </Button>
                 </Form>
+
+                <PasswordVisibility
+                    type="submit"
+                    onClick={changeVisibility}
+                >
+                    { type==="password" ? (
+                        <FaRegEye />
+                    ) : (
+                        <FaRegEyeSlash />
+                    )}
+                </PasswordVisibility>
 
             </FormWrapper>
 
@@ -177,7 +197,30 @@ const Button = styled.button`
         transform: scale(95%);
         transition: transform ease-in-out 200ms;
     }
-    `
+`
+
+const PasswordVisibility = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+    height: 40px;
+    background: darkgreen;
+    color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    font-size: 1.5em;
+    cursor: pointer;
+
+    background: darkgreen;
+    &:hover{
+        background: green;
+    }
+    &:active{
+        transform: scale(95%);
+        transition: transform ease-in-out 200ms;
+    }
+`
 
 const BadRequest = styled.div`
     /* color: darkorange; */

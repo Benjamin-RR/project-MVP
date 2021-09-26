@@ -4,7 +4,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const {
-    getUser,
+    signInUser,
     addNewUser } = require("./handlers");
 
 const PORT = 7777;
@@ -31,8 +31,8 @@ express()
     // .use(require('./routes/items'))
     // .use(require('./routes/companies'))
     // .use(require('./routes/purchases'))
-    .get("/user/:email", getUser)
-    .post("/user", addNewUser)
+    .post("/user/signIn", signInUser)
+    .post("/user/new", addNewUser)
 
     // This is the catch all Endpoint
     .get("*", (req, res) => {
