@@ -6,11 +6,19 @@ const users = {
         bannerSrc: "/assets/benjaminRR-banner.jpg",
         // ... and a lot more goes inside this body of user.
         locations: 8,           // # places caputures have been done by user.
-        captures: 14,           // # of user's captures.
-        verifiedGiven: 452,     // # user has verified other user captures.
-        refutesGiven: 72,       // # user has refuted other user captures.
-        documationGiven: 2,     // # user has given documentation on a creature.
-        achievement: {
+        captures: {
+            captures: 14,           // # of user's captures.
+            verifiedGiven: 452,     // # user has verified other user captures.
+            refutesGiven: 72,       // # user has refuted other user captures.
+            documationGiven: 2,     // # user has given documentation on a creature.
+            array: [
+                {
+                    _id: "1235",
+                },
+                {}
+            ]
+        },           
+        achievements: {
             TheInspector: false, // verify 5000 user captures.
             // fill this in with more acheivements
         },
@@ -67,11 +75,12 @@ const users = {
     }
 };
 
-const caputres = {
+const caputres = [{
     "20210906": {   // unique id for captures are currently year/month/day (needs to fix how Id is created.)
         id: "20210906", // this should be the same as line above.
+        authorId: "234asd-32",
         authorHandle: "benjaminRR",
-        timestamp: "2021-09-06T09:49:04-04:00", // default momet format.
+        timestamp: "2021-09-06T09:49:04-04:00", // default moment format.
         location: {
             lat: 213,
             lng: 1234,
@@ -92,7 +101,7 @@ const caputres = {
     "20210906-2": {
         // fill this in
     },
-};
+}];
 
 const animals = {
 

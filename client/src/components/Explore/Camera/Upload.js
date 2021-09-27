@@ -22,11 +22,15 @@ const Upload = () => {
         history.push("/Login")
     }
 
-    const [theImage, setTheImage] = useState(null);
-    const [selectedImage, setSelectedImage] = useState('');
-    const [previewSource, setPreviewSource] = useState('');
+    // const [theImage, setTheImage] = useState(null);
+    // const [selectedImage, setSelectedImage] = useState('');
+    // for displaying different layout on image select.
     const [grid, setGrid] = useState(false)
     const imgArray = [];
+    // for database.
+    const [previewSource, setPreviewSource] = useState('');
+    const [animalName, setAnimalName] = useState('');
+    const [description, setDescription] = useState('');
 
 
     // useEffect(() => {
@@ -50,21 +54,36 @@ const Upload = () => {
     }
 
 
-    console.log("selected image:" , selectedImage)
+    // console.log("selected image:" , selectedImage)
     console.log("preview source:" , previewSource)
 
 
     const uploadImage = async (base64EncodedImage) => {
-        await fetch('/upload', {
+        await fetch('/image/uploadCapture', {
             method: 'POST',
             body: JSON.stringify({
-                data: base64EncodedImage
+                // _id
+                userID: userID,
+                // aurthor: "name", //name of author / user who is signed in.
+                // timestamp: "2021-09-06T09:49:04-04:00", 
+                // location: {
+                //     lat: 213,
+                //     lng: 1234,
+                // },
+                captureSrc: "",
+                verified: false,
+                verifications: 0,
+                refutes: 0,
+                stars: 0,
+                documentation: description,
+                type: "",
+                rarity: 1,
+                endangered: false,
+                animalName: animalName,
+                data: base64EncodedImage,
             }),
             headers: {'Content-type': 'application/json'}
         })
-
-        console.log("code:" , base64EncodedImage);
-
     }
 
     return (
@@ -89,7 +108,7 @@ const Upload = () => {
                     />
                     )}
             </Icon>
-            <div>choose image to upload</div>
+            {/* <div>Choose Animal Capture to Upload</div> */}
             <Icon>
                 <AiOutlineCloseSquare 
                     style={{ height: "100%" , width: "100%" }}
@@ -102,27 +121,47 @@ const Upload = () => {
                     src={previewSource} 
                     alt="chosen" 
                     // style={{ height: "200px" , width: "200px"}}
+                    style={{}}
                 />
             </>
             )}
             <Input 
                 type="file" 
                 name="image"
-                value = {theImage}
+                // value = {theImage}
                 onChange={(e) =>{
-                    setSelectedImage(e.target.files[0]);
+                    // setSelectedImage(e.target.files[0]);
                     const reader = new FileReader();
                     reader.readAsDataURL(e.target.files[0]);
                     reader.onloadend = () => {
                         setPreviewSource(reader.result);
                     }
                 }}
+                // style={{ background: "green"}}
             />
+            {/* <Text>test</Text> */}
+            <InputWrapper>
+                <Input
+                    required
+                    placeholder="Animal Name"
+                    value={animalName}
+                    onChange={(e) => {
+                        setAnimalName(e.target.value);
+                    }}
+                ></Input>
+                <Input
+                    placeholder="Short description (Optional)*"
+                    value={description}
+                    onChange={(e) => {
+                        setDescription(e.target.value);
+                    }}
+                ></Input>
+            </InputWrapper>
             <Button 
                 type="submit"
                     // onSubmit={(e)=> handleSubmit()}
                 >
-                    Upload Image
+                    Upload Capture
             </Button>
         </Form>
     </Wrapper>
@@ -170,12 +209,23 @@ const Img = styled.img`
     background: lightgrey;
 `
 
+const InputWrapper = styled.div`
+    display: flex;
+`
+
 const Input = styled.input`
-    width: 300px;
+    width: 120px;
     height: 20px;
     border: 1px solid black;
     font-size: 15px;
+    margin: 5px;
     /* text-decoration: none; */
+`
+
+const Text = styled.div`
+    height: 20px;
+    margin: 5px;
+
 `
 
 const Button = styled.button`
@@ -185,6 +235,7 @@ const Button = styled.button`
     border: 1px solid black;
     border-radius: 5px;
     padding: 5px;
+    cursor: pointer;
 `
 
 export default Upload;

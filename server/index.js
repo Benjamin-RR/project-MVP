@@ -8,9 +8,11 @@ const morgan = require("morgan");
 const {
     signInUser,
     addNewUser,
-    uploadImage,
+    addCaptureImage,
+    addAvatarImage,
     downloadImage,
-    downloadImages
+    downloadImages,
+    userUpdate
 } = require("./handlers");
 
 const PORT = process.env.PORT 
@@ -39,9 +41,11 @@ express()
     // .use(require('./routes/purchases'))
     .post("/user/signIn", signInUser)
     .post("/user/new", addNewUser)
-    .post("/upload", uploadImage)
-    .get("/download", downloadImage)
-    .get("/downloadMany", downloadImages)
+    .post("/image/uploadCapture", addCaptureImage)
+    .post("/image/uploadAvatar", addAvatarImage)
+    .get("/image/download", downloadImage)
+    .get("/image/downloadMany", downloadImages)
+    .post("/user/update", userUpdate)
 
 
     // This is the catch all Endpoint
