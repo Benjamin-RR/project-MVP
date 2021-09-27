@@ -2,6 +2,7 @@ import React, {useContext} from 'react';
 import { CaptureContext } from './CaptureContext';
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
+import { useHistory } from 'react-router';
 // footer link icons
 import {GrYoutube} from 'react-icons/gr';
 import {GrInstagram} from 'react-icons/gr';
@@ -21,31 +22,44 @@ const Footer = () => {
         setPage,
         dropdown,
         setDropdown,
-        userID
+        userID,
+        mediaQ,
+        setMediaQ
     } = useContext(CaptureContext);
+
+    let history = useHistory();
+
     // if (@media(max-width: 600px))
-    const mediaQuery = window.matchMedia('(min-width: 600px')
+    // const mediaQuery = window.matchMedia('(min-width: 600px')
     // console.log("testing:" , mediaQuery);
-    if (mediaQuery.matches === true) {
+    // if (mediaQuery.matches === true) {
         // console.log("true")
-    } else {
+    // } else {
         // console.log("false")
-    }
+    // }
     
     // handles rendering footer correctly if you dynamically change your screen.
-    mediaQuery.onchange = (e) => {
+    mediaQ.onchange = (e) => {
         window.location.reload();
     }
 
 
     // handles opening all footer link paths.
     const handleLink = (path) => {
-        window.open(path, '_blank');
+        console.log("check:", path.path);
+        if (path.type === "leave") {
+            window.open(path.path, '_blank');
+        }
+        if (path.type === "stay") {
+            history.push(path.path)
+            // window.location.reload();
+        }
     }
 
+    // || page !== "explore"
     return (
         <>
-            { (mediaQuery.matches === true || page !== "explore") ? (
+            { (mediaQ.matches === true) ? (
                 <Wrapper>
                     <Left>
                         <Text to="/About" >About</Text>
@@ -85,7 +99,8 @@ const Footer = () => {
                         </Icon>
                         <Icon
                             onClick={() => {
-                                handleLink("https://www.linkedin.com/in/benjaminrobertrussell/");
+                                
+                                handleLink({path: "https://www.linkedin.com/in/benjaminrobertrussell/", type: "leave"});
                             }}
                         >
                             <GrLinkedin 
@@ -94,7 +109,7 @@ const Footer = () => {
                         </Icon>
                         <Icon
                             onClick={() => {
-                                handleLink("https://github.com/Benjamin-RR/project-MVP");
+                                handleLink({path: "https://github.com/Benjamin-RR/project-MVP", type: "leave"});
                             }}
                         >
                             <GrGithub 
@@ -105,17 +120,29 @@ const Footer = () => {
                 </Wrapper>
             ) : (
                 <CameraButtons>
-                    <Icon>
+                    <Icon
+                    onClick={() => {
+                        handleLink({path: "/Gallery", type: "stay"});
+                    }}
+                    >
                         <GrGallery 
                             style={{ height: "100%", width: "100%"}}
                         />
                     </Icon>
-                    <Icon>
+                    <Icon
+                    onClick={() => {
+                        handleLink({path: "/Camera", type: "stay"});
+                    }}
+                    >
                         <AiOutlineCamera 
                             style={{ height: "100%", width: "100%"}}
                         />
                     </Icon>
-                    <Icon>
+                    <Icon
+                        onClick={() => {
+                            handleLink({path: "/Upload", type: "stay"});
+                        }}
+                    >
                         <BsCloudUpload 
                             style={{ height: "100%", width: "100%"}}
                         />

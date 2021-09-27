@@ -9,6 +9,9 @@ import DM from './DM';
 import Login from './Login';
 import Profile from './Profile';
 import Explore from './Explore';
+import Gallery from './Explore/Camera/Gallery';
+import Camera from './Explore/Camera/Camera';
+import Upload from './Explore/Camera/Upload';
 import Leaderboard from './Leaderboard';
 import About from './About';
 import Page404 from './Page404';
@@ -40,6 +43,15 @@ const App = () => {
                     </Route>
                     <Route exact path="/Explore">
                         <Explore />
+                    </Route>
+                    <Route exact path="/Gallery">
+                        <Gallery />
+                    </Route>
+                    <Route exact path="/Camera">
+                        <Camera />
+                    </Route>
+                    <Route exact path="/Upload">
+                        <Upload />
                     </Route>
                     <Route exact path="/Leaderboard">
                         <Leaderboard />

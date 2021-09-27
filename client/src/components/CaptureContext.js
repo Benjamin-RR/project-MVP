@@ -4,31 +4,21 @@ export const CaptureContext = React.createContext();
 export const CaptureProvider = ({ children }) => {
     const [page, setPage] = useState("home");
     const [dropdown, setDropdown] = useState(false);
-    // const test = localStorage.getItem("purchaseID")
     const [userID, setUserID] = useState(localStorage.getItem("userID"));
-    // if (userID) {
-    //     console.log("user should be logged on now.");
-    // } else {
-    //     console.log("user should not be logged on now.");
-    // }
-    // console.log("user:" , userID)
-    // console.log("test", test);
+    const [mediaQ, setMediaQ] = useState(window.matchMedia('(min-width: 600px'))
 
-
-
-
-
-return (
-    <CaptureContext.Provider value={{ 
-        page,
-        setPage,
-        dropdown,
-        setDropdown,
-        userID,
-        setUserID,
-    }}>
-        {children}
-    </CaptureContext.Provider>
+    return (
+        <CaptureContext.Provider value={{ 
+            page,
+            setPage,
+            dropdown,
+            setDropdown,
+            userID,
+            setUserID,
+            mediaQ,
+            setMediaQ
+        }}>
+            {children}
+        </CaptureContext.Provider>
     );
-
 };

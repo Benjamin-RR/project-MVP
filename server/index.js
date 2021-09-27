@@ -1,13 +1,19 @@
 "use strict";
+require("dotenv").config();
+
 
 const express = require("express");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const {
     signInUser,
-    addNewUser } = require("./handlers");
+    addNewUser,
+    uploadImage,
+    downloadImage,
+    downloadImages
+} = require("./handlers");
 
-const PORT = 7777;
+const PORT = process.env.PORT 
 
 express()
     .use(function (req, res, next) {
@@ -23,8 +29,8 @@ express()
     })
     .use(morgan("tiny"))
     // .use(express.static("./server/assets"))
-    .use(bodyParser.json())
-    .use(express.urlencoded({ extended: false }))
+    .use(bodyParser.json({limit: '50mb'}))
+    .use(express.urlencoded({ extended: true, limit: '50mb' }))
     .use("/", express.static(__dirname + "/"))
 
     // REST endpoints
@@ -33,6 +39,10 @@ express()
     // .use(require('./routes/purchases'))
     .post("/user/signIn", signInUser)
     .post("/user/new", addNewUser)
+    .post("/upload", uploadImage)
+    .get("/download", downloadImage)
+    .get("/downloadMany", downloadImages)
+
 
     // This is the catch all Endpoint
     .get("*", (req, res) => {

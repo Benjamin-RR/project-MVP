@@ -17,17 +17,22 @@ const Header = () => {
         setPage,
         dropdown,
         setDropdown,
-        userID
+        userID,
+        mediaQ,
+        setMediaQ
     } = useContext(CaptureContext);
     
     let headerHeight = `150px`;
-    if (page === "explore") {
+    if (mediaQ.matches === false) {
         headerHeight = "100%"
     } else {
         headerHeight = `150px`
     }
+    mediaQ.onchange = (e) => {
+        window.location.reload();
+    }
         
-    
+    console.log("page:" , page);
 
 
 

@@ -9,6 +9,7 @@ const options = {
     useUnifiedTopology: true,
 };
 
+const { cloudinary } = require('./utils/cloudinary');
 const { v4: uuidv4 } = require("uuid");
 const {
     validateEmail,
@@ -84,7 +85,53 @@ const addNewUser = async (req, res) => {
     client.close();
 };
 
+
+// UPLOAD IMAGE
+// uploads to cloudinary.
+const uploadImage = async (req, res) => {
+    try{
+        const fileStr = req.body.data;
+        const uploadedResponse = await cloudinary.uploader.upload(fileStr, {
+            upload_preset: 'Capture'
+        })
+        console.log("response:" , uploadedResponse);
+        res.status(200).json({message: "animal Captured successfully!"})
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({message: "upload failed."})
+    }
+}
+
+const downloadImage = async (req, res) => {
+    try{
+        
+        
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({message: "download failed."})
+    }
+}
+
+const downloadImages = async (req, res) => {
+    console.log("working?");
+    try{
+        const {resources} = await cloudinary.search.expression('folder:animals')
+        .sort_by('public_id', 'desc')
+        .max_results(30)
+        .execute();
+        const publicIds = resources.map(file=> file.public_id);
+        res.send(publicIds);
+        
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({message: "download failed."})
+    }
+}
+
 module.exports = {
     signInUser,
     addNewUser,
+    uploadImage,
+    downloadImage,
+    downloadImages
 };
