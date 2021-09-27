@@ -29,7 +29,14 @@ const validatePassword = (password) => {
     return validateStatus;
 }
 
+const validateUniqueName = (uniqueName) => {
+    let validateStatus = true;
+
+    return validateStatus;
+}
+
 module.exports = {
     validateEmail,
-    validatePassword
+    validatePassword,
+    validateUniqueName
 };

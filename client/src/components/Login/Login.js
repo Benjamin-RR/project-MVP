@@ -5,6 +5,10 @@ import styled from 'styled-components';
 import Validate from "./Validate";
 import Connect from './Connect';
 import { useHistory } from 'react-router-dom';
+// for new user / back
+import {FiUserPlus} from 'react-icons/fi';
+import {TiArrowBackOutline} from 'react-icons/ti';
+// for password visibility
 import {FaRegEye} from 'react-icons/fa';
 import {FaRegEyeSlash} from 'react-icons/fa';
 
@@ -13,18 +17,28 @@ const Login = () => {
         page,
         setPage,
         userID,
-        setUserID
+        setUserID,
+        mediaQ,
+        setMediaQ
     } = useContext(CaptureContext);
     setPage("login");
     let history = useHistory();
 
     const [text, setText] = useState("Sign in");
-    const [text2, setText2] = useState("New user");
+    const [text2, setText2] = useState("Register");
     const [submitText, setSubmitText] = useState(text);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [uniqueName, setUniqueName] = useState("");
+    const [displayName, setDisplayName] = useState('');
+
     const [type, setType] = useState("password");
     const [badSubmit, setBadSubmit] = useState(null);
+
+    // handles rendering for responsive change of screen.
+    mediaQ.onchange = (e) => {
+        window.location.reload();
+    }
 
     const changeVisibility = () => {
         if (type === "password") {
@@ -40,7 +54,7 @@ const Login = () => {
         setText(text2);
         setText2(temp);
         if (text === "Sign in") {
-            setSubmitText("Sign up");
+            setSubmitText("Register");
         } else {
             setSubmitText("Sign in");
         }
@@ -49,7 +63,7 @@ const Login = () => {
     // Handles submission of sign in / sign up.
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const mySubmit = {email, password, text}
+        const mySubmit = {email, password, text, uniqueName, displayName}
         const validatedStatus = Validate(mySubmit)
         if (validatedStatus !== "good") {
             setBadSubmit(validatedStatus);
@@ -59,9 +73,8 @@ const Login = () => {
         }
         const connectStatus = await Connect(mySubmit)
         if (connectStatus === "good") {
-            let test = window.localStorage.getItem("userID");
-            setUserID(test)
-            console.log("TEST:" , test);
+            const id = window.localStorage.getItem("userID");
+            setUserID(id)
             history.push("/")
             window.location.reload();
         } else {
@@ -74,52 +87,116 @@ const Login = () => {
             <FormWrapper>
                 <Top>
                     <Text>{text}</Text>
-                    <Text2
+                    {/* <Text2
                         onClick={() => {
                             handleClick();
                         }}
-                    >{text2}</Text2>
+                    >{text2}</Text2> */}
                 </Top>
+                <FormAndButtonWrap>
+
                 <Form>
-                    <Input
-                        required
-                        type="email"
-                        placeholder="email@Capture.com"
-                        value={email}
-                        onChange={(e) => {
-                            setEmail((e.target.value).toLowerCase());
-                        }}
-                    >
-                    </Input>
-                    <Input
-                        required
-                        type={type}
-                        placeholder="password"
-                        value={password}
-                        onChange={(e) => {
-                            setPassword(e.target.value);
-                        }}
-                    >
-                    
-                    </Input>
+                    {text !=="Sign in" && (
+                        <>
+                            <Input
+                                required
+                                type="text"
+                                placeholder="unique name"
+                                value={uniqueName}
+                                maxLength="50"
+                                onChange={(e) => {
+                                    setUniqueName((e.target.value));
+                                }}
+                            >
+                            </Input>
+                            <Input
+                            required
+                            type="text"
+                            placeholder="display name"
+                            value={displayName}
+                            maxLength="25"
+                            onChange={(e) => {
+                                setDisplayName((e.target.value));
+                            }}
+                        >
+                        </Input>
+                    </>
+                    )}
+                        <Input
+                            required
+                            type="email"
+                            placeholder="email@Capture.com"
+                            value={email}
+                            onChange={(e) => {
+                                setEmail((e.target.value).toLowerCase());
+                            }}
+                        >
+                        </Input>
+                        <Input
+                            required
+                            type={type}
+                            placeholder="password"
+                            value={password}
+                            onChange={(e) => {
+                                setPassword(e.target.value);
+                            }}
+                        >
+                        </Input>
+                    { (!mediaQ.matches === true) ? (
                     <Button
+                        type="submit"
+                        onClick={handleSubmit}
+                        style={{ position: "absolute", bottom: "80px", right: "10px"}}
+                    >
+                        {submitText}
+                    </Button>
+                    ) : (
+                        <Button
                         type="submit"
                         onClick={handleSubmit}
                     >
                         {submitText}
                     </Button>
-                </Form>
-
-                <PasswordVisibility
-                    type="submit"
-                    onClick={changeVisibility}
-                >
-                    { type==="password" ? (
-                        <FaRegEye />
-                    ) : (
-                        <FaRegEyeSlash />
                     )}
-                </PasswordVisibility>
+                </Form>
+                <ButtonWrap>
+                    { (mediaQ.matches === true && text !=="Sign in") && (
+                        <Icon
+                            style={{ visibility: "hidden"}}
+                        />
+                    )}
+                    <Icon
+                        onClick={handleClick}
+                    >
+                        {text==="Sign in" ? (
+                            <FiUserPlus />
+                        ):(
+                            <TiArrowBackOutline />
+                        )}
+                    </Icon>
+                    { (mediaQ.matches === true && text !=="Sign in") && (
+                            <Icon
+                                style={{ visibility: "hidden"}}
+                            />
+                    )}
+                    <Icon
+                        onClick={changeVisibility}
+                    >
+                        { type==="password" ? (
+                            <FaRegEye />
+                        ) : (
+                            <FaRegEyeSlash />
+                        )}
+                    </Icon>
+                    { (mediaQ.matches === true) && (
+                            <Icon
+                                style={{ visibility: "hidden"}}
+                            />
+                    )}
+                </ButtonWrap>
+                </FormAndButtonWrap>
+
+
 
             </FormWrapper>
 
@@ -142,6 +219,11 @@ const Wrapper = styled.div`
     height: var(--defaultHeight);
     width: 100%;
     border: 1px solid black;
+`
+
+const FormAndButtonWrap = styled.div`
+    display: flex;
+    /* border: 1px solid black; */
 `
 
 const FormWrapper = styled.div`
@@ -179,6 +261,15 @@ const Form = styled.form`
 const Input = styled.input`
     margin: 5px;
     border: 1px solid black;
+    width: 240px;
+`
+
+const ButtonWrap = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    /* border: 1px solid black; */
 `
 
 const Button = styled.button`
@@ -199,12 +290,17 @@ const Button = styled.button`
     }
 `
 
-const PasswordVisibility = styled.div`
+const Icon = styled(Button)`
+    height: 42px;
+    width: 42px;
+    margin: 6px;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 5px;
+    /* margin: 5px; */
+    /* margin: 5px;
     height: 40px;
+    width: 40px;
     background: darkgreen;
     color: white;
     border: 1px solid black;
@@ -219,7 +315,7 @@ const PasswordVisibility = styled.div`
     &:active{
         transform: scale(95%);
         transition: transform ease-in-out 200ms;
-    }
+    } */
 `
 
 const BadRequest = styled.div`

@@ -8,6 +8,8 @@ import {BsGridFill} from 'react-icons/bs';
 import {AiOutlineCloseSquare} from 'react-icons/ai'
 
 import importAll from '../../../assets/index'
+import Loading from '../../Common/Loader';
+// import { withThemeCreator } from '@material-ui/styles';
 
 const Upload = () => {
     const {
@@ -31,6 +33,7 @@ const Upload = () => {
     const [previewSource, setPreviewSource] = useState('');
     const [animalName, setAnimalName] = useState('');
     const [description, setDescription] = useState('');
+    const [attemptSubmit, setAttemptSubmit] = useState(false);
 
 
     // useEffect(() => {
@@ -50,6 +53,7 @@ const Upload = () => {
         console.log("PREVIEW:" , previewSource);
         // return;
         if(!previewSource) return;
+        setAttemptSubmit(true);
         uploadImage(previewSource);
     }
 
@@ -65,15 +69,17 @@ const Upload = () => {
                 // _id
                 userID: userID,
                 // aurthor: "name", //name of author / user who is signed in.
-                // timestamp: "2021-09-06T09:49:04-04:00", 
                 // location: {
                 //     lat: 213,
                 //     lng: 1234,
                 // },
                 captureSrc: "",
+                authenticScore: 0,
+                rank: 0,
                 verified: false,
-                verifications: 0,
-                refutes: 0,
+                true: 0,
+                false: 0,
+                uncertain: 0,
                 stars: 0,
                 documentation: description,
                 type: "",
@@ -84,6 +90,7 @@ const Upload = () => {
             }),
             headers: {'Content-type': 'application/json'}
         })
+        setAttemptSubmit(false)
     }
 
     return (
@@ -157,12 +164,22 @@ const Upload = () => {
                     }}
                 ></Input>
             </InputWrapper>
+            { attemptSubmit ? (
+                <Button 
+                type="submit"
+                    // onSubmit={(e)=> handleSubmit()}
+                style={{ background: "white"}}
+                >
+                    <Loading/>
+            </Button>
+            ) : (
             <Button 
                 type="submit"
                     // onSubmit={(e)=> handleSubmit()}
                 >
                     Upload Capture
             </Button>
+            )}
         </Form>
     </Wrapper>
     )
@@ -230,6 +247,11 @@ const Text = styled.div`
 
 const Button = styled.button`
     margin: 10px;
+    width: 230px;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background: darkgreen;
     color: white;
     border: 1px solid black;
