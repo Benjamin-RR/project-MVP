@@ -118,14 +118,17 @@ const addNewUser = async (req, res) => {
 
 // UPLOAD IMAGE
 const addCaptureImage = async (req, res) => {
-    const _id = req.body.userID;
-    console.log("test", req.body);
+    // const _id = req.body.userID;
+    // console.log("test", req.body);
     try{
         // upload image to cloudinary
-        const fileStr = req.body.data;
+        const fileStr = req.body.capture.data;
+        // console.log("filestr", req.body);
+        
         const uploadedResponse = await cloudinary.uploader.upload(fileStr, {
             upload_preset: 'Capture'
         })
+        console.log("test2");
 
         console.log("upload response:" , uploadedResponse);
 
