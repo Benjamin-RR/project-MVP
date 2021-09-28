@@ -54,7 +54,10 @@ const Dropdown = () => {
 
             </Wrapper>
         ) : (
-            <Wrapper>
+            <Wrapper
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+            >
                 <DropDownHide></DropDownHide>
                 <DropDownItem>Account</DropDownItem>
                 <DropDownItem>Friends</DropDownItem>
@@ -85,13 +88,13 @@ const DropDownItem = styled.button`
     padding: 10px;
     width: 100%;
     cursor: pointer;
-    background: #e56717;
+    background: darkgreen;
     color: white;
     border: none;
     font-weight: 900;
     font-size: 1em;
     &:hover {
-        background: darkorange;
+        background: green;
     }
     &:active {
         transform: scale(0.9);
