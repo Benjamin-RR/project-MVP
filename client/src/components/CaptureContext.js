@@ -9,11 +9,14 @@ export const CaptureProvider = ({ children }) => {
     const [uniqueName, setUniqueName] = useState(localStorage.getItem("uniqueName"));
     const [myLocation, setMyLocation] = useState(null);
 
+    const test = localStorage.getItem("user");
+    console.log("test", test);
+
     // get user's current location
     navigator.geolocation.getCurrentPosition((position) => {
         setMyLocation(position)
     }, () => null)
-    
+
 
     return (
         <CaptureContext.Provider value={{ 

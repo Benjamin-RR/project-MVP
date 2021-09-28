@@ -11,7 +11,9 @@ const Dropdown = () => {
         userID,
         setUserID,
         mediaQ,
-        setMediaQ
+        setMediaQ,
+        uniqueName,
+        setUniqueName
     } = useContext(CaptureContext);
 
     // handle reponsive window.
@@ -29,8 +31,11 @@ const Dropdown = () => {
 
     // handle sign out.
     const handleSignOut = () => {
+        // remove all signed in user info from local storage.
         localStorage.removeItem("userID");
+        localStorage.removeItem("uniqueName")
         setUserID(null);
+        setUniqueName(null);
         window.location.reload();
     }
 

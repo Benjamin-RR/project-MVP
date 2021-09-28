@@ -128,7 +128,6 @@ const addCaptureImage = async (req, res) => {
         const uploadedResponse = await cloudinary.uploader.upload(fileStr, {
             upload_preset: 'Capture'
         })
-        console.log("test2");
 
         console.log("upload response:" , uploadedResponse);
 
@@ -141,16 +140,14 @@ const addCaptureImage = async (req, res) => {
             timeStamp: uploadedResponse.created_at,
             ...req.body
         }
-        console.log("new capture:" , newCapture)
         await db.collection("animals").insertOne(newCapture);
 
-        // console.log("checking");
         // // find user to update
         // const userToUpdate = await db.collection("users").findOne({_id})
-        // console.log("user to update:", userToUpdate);
+        console.log("user to update:", userToUpdate);
 
-        // const newValues = { $set: { isAvailable: false } };
-        // await db.collection("SA231").updateOne(query, newValues);
+        const newValues = { $set: { isAvailable: false } };
+        await db.collection("SA231").updateOne(query, newValues);
 
         // update current user info on mongoDB
         // await db.collection("users").updateOne()

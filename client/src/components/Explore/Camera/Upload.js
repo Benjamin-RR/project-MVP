@@ -15,7 +15,8 @@ const Upload = () => {
         page,
         setPage,
         userID,
-        uniqueName
+        uniqueName,
+        myLocation
     } = useContext(CaptureContext);
     setPage("upload");
     
@@ -47,7 +48,7 @@ const Upload = () => {
         uploadImage(previewSource);
     }
 
-    console.log("preview source:" , previewSource)
+    console.log("unique name:" , uniqueName)
 
 
     const uploadImage = async (base64EncodedImage) => {
@@ -59,7 +60,7 @@ const Upload = () => {
                     author: uniqueName,
                 },
                 capture: {
-                    location: { lat: 0, lng: 0},
+                    location: { lat: myLocation.coords.latitude, lng: myLocation.coords.longitude},
                     authenticScore: 0,
                     rank: 0,
                     verified: false,

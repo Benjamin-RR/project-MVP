@@ -21,6 +21,14 @@ const Connect = async({
     // } = useContext(CaptureContext);
     let connectStatus = "good";
 
+    
+    // // used to handle successful log on.
+    // const successfulConnect = () => {
+    //     // save current logged on user to local storage.
+    //     localStorage.setItem("userID", data.data._id);
+    //     localStorage.setItem("uniqueName", data.data.uniqueName)
+    // }
+
     // Attempt a new user sign up and either:
     // 1: Succeed. 2: Fail (email already existing). 3: let user know server is having issues.
     if (text === "Register") {
@@ -40,8 +48,9 @@ const Connect = async({
             .then((response) => response.json())
             .then((data) => {
             if (data.status === 200) {
-                // save (and overwrite previous) purchaseID
+                // save current logged on user to local storage.
                 localStorage.setItem("userID", data.data._id);
+                localStorage.setItem("uniqueName", data.data.uniqueName)
             }
             if (data.status === 400) {
                 connectStatus = data.message;
@@ -66,8 +75,7 @@ const Connect = async({
                 .then((response) => response.json())
                 .then((data) => {
                 if (data.status === 200) {
-                    // save (and overwrite previous) purchaseID
-
+                    // save current logged on user to local storage.
                     localStorage.setItem("userID", data.data._id);
                     localStorage.setItem("uniqueName", data.data.uniqueName)
                 }
