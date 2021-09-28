@@ -9,7 +9,6 @@ import {AiOutlineCloseSquare} from 'react-icons/ai'
 
 import importAll from '../../../assets/index'
 import Loading from '../../Common/Loader';
-// import { withThemeCreator } from '@material-ui/styles';
 
 const Upload = () => {
     const {
@@ -69,7 +68,7 @@ const Upload = () => {
                     uncertain: 0,
                     stars: 0,
                     documentation: description,
-                    type: "",
+                    type: "not specified",
                     rarity: 1,
                     endangered: false,
                     animalName: animalName,

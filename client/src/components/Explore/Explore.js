@@ -2,6 +2,7 @@ import React, {useContext} from 'react';
 import { CaptureContext } from '../CaptureContext';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom'; 
+import Map from './Map'
 
 const Explore = () => {
     const {
@@ -19,7 +20,7 @@ const Explore = () => {
     return (
         <Wrapper>
             <MapWrapper>
-                <Map></Map>
+                <Map />
             </MapWrapper>
         </Wrapper>
     )
@@ -36,15 +37,8 @@ const Wrapper = styled.div`
 `
 
 const MapWrapper = styled.div`
-    height: 350px;
-    width: 350px;
-    border: 1px solid black;
-`
-
-const Map = styled.div`
     height: 100%;
     width: 100%;
-    background: lightgrey;
     border: 1px solid black;
 `
 

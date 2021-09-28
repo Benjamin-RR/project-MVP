@@ -1,3 +1,6 @@
+import React, {useContext} from 'react';
+import { CaptureContext } from '../CaptureContext';
+
 // will connect and sign up or sign in depending on user's selection.
 const Connect = async({
     email,
@@ -6,6 +9,16 @@ const Connect = async({
     uniqueName,
     displayName,
 }) => {
+    // const {
+    //     page,
+    //     setPage,
+    //     userID,
+    //     setUserID,
+    //     mediaQ,
+    //     setMediaQ,
+    //     uniqueName, 
+    //     setUniqueName
+    // } = useContext(CaptureContext);
     let connectStatus = "good";
 
     // Attempt a new user sign up and either:
@@ -54,7 +67,9 @@ const Connect = async({
                 .then((data) => {
                 if (data.status === 200) {
                     // save (and overwrite previous) purchaseID
+
                     localStorage.setItem("userID", data.data._id);
+                    localStorage.setItem("uniqueName", data.data.uniqueName)
                 }
                 if (data.status === 400) {
                     connectStatus = data.message;

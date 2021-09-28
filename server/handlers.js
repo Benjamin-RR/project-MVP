@@ -118,12 +118,16 @@ const addNewUser = async (req, res) => {
 
 // UPLOAD IMAGE
 const addCaptureImage = async (req, res) => {
+    const _id = req.body.userID;
+    console.log("test", req.body);
     try{
         // upload image to cloudinary
         const fileStr = req.body.data;
         const uploadedResponse = await cloudinary.uploader.upload(fileStr, {
             upload_preset: 'Capture'
         })
+
+        console.log("upload response:" , uploadedResponse);
 
         // create new animal document on mongoDB
         const client = await new MongoClient(MONGO_URI, options);
@@ -137,8 +141,16 @@ const addCaptureImage = async (req, res) => {
         console.log("new capture:" , newCapture)
         await db.collection("animals").insertOne(newCapture);
 
-        // update current user info on mongoDB
+        // console.log("checking");
+        // // find user to update
+        // const userToUpdate = await db.collection("users").findOne({_id})
+        // console.log("user to update:", userToUpdate);
 
+        // const newValues = { $set: { isAvailable: false } };
+        // await db.collection("SA231").updateOne(query, newValues);
+
+        // update current user info on mongoDB
+        // await db.collection("users").updateOne()
 
 
         res.status(200).json({message: "animal Captured successfully!"})

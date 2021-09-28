@@ -6,7 +6,14 @@ export const CaptureProvider = ({ children }) => {
     const [dropdown, setDropdown] = useState(false);
     const [userID, setUserID] = useState(localStorage.getItem("userID"));
     const [mediaQ, setMediaQ] = useState(window.matchMedia('(min-width: 600px'))
-    const [uniqueName, setUniqueName] = useState('');
+    const [uniqueName, setUniqueName] = useState(localStorage.getItem("uniqueName"));
+    const [myLocation, setMyLocation] = useState(null);
+
+    // get user's current location
+    navigator.geolocation.getCurrentPosition((position) => {
+        setMyLocation(position)
+    }, () => null)
+    
 
     return (
         <CaptureContext.Provider value={{ 
@@ -19,7 +26,9 @@ export const CaptureProvider = ({ children }) => {
             mediaQ,
             setMediaQ,
             uniqueName, 
-            setUniqueName
+            setUniqueName,
+            myLocation,
+            setMyLocation,
         }}>
             {children}
         </CaptureContext.Provider>

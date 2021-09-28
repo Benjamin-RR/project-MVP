@@ -20,12 +20,12 @@ const Login = () => {
         setUserID,
         mediaQ,
         setMediaQ,
-        uniqueName, 
-        setUniqueName
+        // uniqueName, 
+        // setUniqueName
     } = useContext(CaptureContext);
     setPage("login");
     let history = useHistory();
-    // const [uniqueName, setUniqueName] = useState("");
+    const [uniqueName, setUniqueName] = useState("");
 
     const [text, setText] = useState("Sign in");
     const [text2, setText2] = useState("Register");
