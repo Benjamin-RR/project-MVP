@@ -2,6 +2,7 @@ import React, {useContext} from 'react';
 import {CaptureContext} from './CaptureContext';
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
+// icons
 import {AiFillHome} from 'react-icons/ai';
 import {AiOutlineHome} from 'react-icons/ai';
 import {MdMessage} from 'react-icons/md';
@@ -10,6 +11,7 @@ import {AiFillCompass} from 'react-icons/ai';
 import {AiOutlineCompass} from 'react-icons/ai'
 import {AiFillTrophy} from 'react-icons/ai';
 import {AiOutlineTrophy} from 'react-icons/ai'
+import Dropdown from './Dropdown';
 
 const Header = () => {
     const {
@@ -32,13 +34,14 @@ const Header = () => {
         window.location.reload();
     }
         
-    console.log("page:" , page);
-
-
-
-    const handleDropdown = () => {
+    // handle dropdown
+    const handleMouseEnter = () => {
         setDropdown(true)
     }
+    const handleMouseLeave = () => {
+        setDropdown(false)
+    }
+    
 
     return (
         <Wrapper
@@ -54,69 +57,79 @@ const Header = () => {
             </TitleWrapper>
 
             { userID ? (
-                <IconWrapper>
-                    <Icon 
-                        to="/" >
-                        { page === "home" ? (
-                            <AiFillHome 
-                                style={{ height: "100%", width: "100%"}}
-                            />
-                        ) : (
-                            <AiOutlineHome 
-                                style={{ height: "100%", width: "100%"}}
-                            />
-                        )}
-                    </Icon>
+                <>
+                    <IconWrapper>
+                        <Icon 
+                            to="/" >
+                            { page === "home" ? (
+                                <AiFillHome 
+                                    style={{ height: "100%", width: "100%"}}
+                                />
+                            ) : (
+                                <AiOutlineHome 
+                                    style={{ height: "100%", width: "100%"}}
+                                />
+                            )}
+                        </Icon>
 
-                    <Icon to="/DM" >
-                    { page === "dm" ? (
-                            <MdMessage 
-                                style={{ height: "100%", width: "100%"}}
-                            />
-                        ) : (
-                            <FiMessageSquare 
-                                style={{ height: "100%", width: "100%"}}
-                            />
-                        )}
-                    </Icon>
+                        <Icon to="/DM" >
+                        { page === "dm" ? (
+                                <MdMessage 
+                                    style={{ height: "100%", width: "100%"}}
+                                />
+                            ) : (
+                                <FiMessageSquare 
+                                    style={{ height: "100%", width: "100%"}}
+                                />
+                            )}
+                        </Icon>
 
-                    <Icon to="/Explore" >
-                    { page === "explore" ? (
-                            <AiFillCompass 
-                                style={{ height: "100%", width: "100%"}}
-                            />
-                        ) : (
-                            <AiOutlineCompass 
-                                style={{ height: "100%", width: "100%"}}
-                            />
-                        )}
-                    </Icon>
+                        <Icon to="/Explore" >
+                        { page === "explore" ? (
+                                <AiFillCompass 
+                                    style={{ height: "100%", width: "100%"}}
+                                />
+                            ) : (
+                                <AiOutlineCompass 
+                                    style={{ height: "100%", width: "100%"}}
+                                />
+                            )}
+                        </Icon>
 
-                    <Icon to="/Leaderboard" >
-                    { page === "leaderboard" ? (
-                            <AiFillTrophy 
-                                style={{ height: "100%", width: "100%"}}
-                            />
-                        ) : (
-                            <AiOutlineTrophy 
-                                style={{ height: "100%", width: "100%"}}
-                            />
-                        )}
-                    </Icon>
+                        <Icon to="/Leaderboard" >
+                        { page === "leaderboard" ? (
+                                <AiFillTrophy 
+                                    style={{ height: "100%", width: "100%"}}
+                                />
+                            ) : (
+                                <AiOutlineTrophy 
+                                    style={{ height: "100%", width: "100%"}}
+                                />
+                            )}
+                        </Icon>
 
-                    <UserAvatar
-                        onClick={() => {
-                            handleDropdown();
-                        }}
-                    >
-                        {/* <img 
-                            src=""
-                            alt="user's avatar"
-                        /> */}
-                    </UserAvatar>
-                </IconWrapper>
+                        <UserAvatar
+                            onClick={() => {
+                                if (mediaQ.matches === false) {
+                                    setDropdown(!dropdown);
+                                }
+                            }}
+                            onMouseEnter={handleMouseEnter}
+                            onMouseLeave={handleMouseLeave}
+                        >
+                            <img 
+                                src="newUser.png"
+                                alt="user's avatar"
+                                style={{ height: "100%" , width: "100%"}}
+                            />
+                        </UserAvatar>
+                    </IconWrapper>
+                    { dropdown && (
+                        <Dropdown />
+                    )}
+                </>
             ) : (
-                <div></div> // Stretch goal, add offline users can still view leaderboard.
+                <div></div> 
             )}
             
         </Wrapper>
@@ -158,7 +171,7 @@ const UserAvatar = styled.div`
     margin: 5px;
     height: 30px;
     width: 30px;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     cursor: pointer;
 `
 

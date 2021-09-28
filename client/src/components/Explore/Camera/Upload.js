@@ -15,7 +15,8 @@ const Upload = () => {
     const {
         page,
         setPage,
-        userID
+        userID,
+        uniqueName
     } = useContext(CaptureContext);
     setPage("upload");
     
@@ -24,8 +25,6 @@ const Upload = () => {
         history.push("/Login")
     }
 
-    // const [theImage, setTheImage] = useState(null);
-    // const [selectedImage, setSelectedImage] = useState('');
     // for displaying different layout on image select.
     const [grid, setGrid] = useState(false)
     const imgArray = [];
@@ -34,12 +33,6 @@ const Upload = () => {
     const [animalName, setAnimalName] = useState('');
     const [description, setDescription] = useState('');
     const [attemptSubmit, setAttemptSubmit] = useState(false);
-
-
-    // useEffect(() => {
-    //     // if (selectedImage)
-    //     console.log("test");
-    // }, [selectedImage])
 
     // handles switching layout of displaying images by grid or singularly.
     const handleGrid = () => {
@@ -50,15 +43,11 @@ const Upload = () => {
     // handle submitting image
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("PREVIEW:" , previewSource);
-        // return;
         if(!previewSource) return;
         setAttemptSubmit(true);
         uploadImage(previewSource);
     }
 
-
-    // console.log("selected image:" , selectedImage)
     console.log("preview source:" , previewSource)
 
 
@@ -66,27 +55,26 @@ const Upload = () => {
         await fetch('/image/uploadCapture', {
             method: 'POST',
             body: JSON.stringify({
-                // _id
-                userID: userID,
-                // aurthor: "name", //name of author / user who is signed in.
-                // location: {
-                //     lat: 213,
-                //     lng: 1234,
-                // },
-                captureSrc: "",
-                authenticScore: 0,
-                rank: 0,
-                verified: false,
-                true: 0,
-                false: 0,
-                uncertain: 0,
-                stars: 0,
-                documentation: description,
-                type: "",
-                rarity: 1,
-                endangered: false,
-                animalName: animalName,
-                data: base64EncodedImage,
+                author: {
+                    userID: userID,
+                    author: uniqueName,
+                },
+                capture: {
+                    location: { lat: 0, lng: 0},
+                    authenticScore: 0,
+                    rank: 0,
+                    verified: false,
+                    true: 0,
+                    false: 0,
+                    uncertain: 0,
+                    stars: 0,
+                    documentation: description,
+                    type: "",
+                    rarity: 1,
+                    endangered: false,
+                    animalName: animalName,
+                    data: base64EncodedImage,
+                },
             }),
             headers: {'Content-type': 'application/json'}
         })
@@ -115,7 +103,6 @@ const Upload = () => {
                     />
                     )}
             </Icon>
-            {/* <div>Choose Animal Capture to Upload</div> */}
             <Icon>
                 <AiOutlineCloseSquare 
                     style={{ height: "100%" , width: "100%" }}
@@ -144,9 +131,7 @@ const Upload = () => {
                         setPreviewSource(reader.result);
                     }
                 }}
-                // style={{ background: "green"}}
             />
-            {/* <Text>test</Text> */}
             <InputWrapper>
                 <Input
                     required

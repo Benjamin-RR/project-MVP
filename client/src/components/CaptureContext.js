@@ -6,6 +6,7 @@ export const CaptureProvider = ({ children }) => {
     const [dropdown, setDropdown] = useState(false);
     const [userID, setUserID] = useState(localStorage.getItem("userID"));
     const [mediaQ, setMediaQ] = useState(window.matchMedia('(min-width: 600px'))
+    const [uniqueName, setUniqueName] = useState('');
 
     return (
         <CaptureContext.Provider value={{ 
@@ -16,7 +17,9 @@ export const CaptureProvider = ({ children }) => {
             userID,
             setUserID,
             mediaQ,
-            setMediaQ
+            setMediaQ,
+            uniqueName, 
+            setUniqueName
         }}>
             {children}
         </CaptureContext.Provider>

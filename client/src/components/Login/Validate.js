@@ -1,6 +1,8 @@
 // validates form.
-const Validate = ({email, password, uniqueName, displayName}) => {
+const Validate = ({email, password, text, uniqueName, displayName}) => {
     let status="good"
+
+    //FOR ALL SIGN INS
     // validate email.
     if ( !email.includes("@") || !email.includes(".") || email.length < 8) {
         status="Invalid email"
@@ -14,14 +16,19 @@ const Validate = ({email, password, uniqueName, displayName}) => {
     if ( password.length < 10) {
         status="password requires 10 characters."
     }
-    // be sure user entered a uniqueName
-    if (uniqueName.length < 1) {
-        status="a unique name is required."
+
+    // FOR NEW USERS
+    if (text === "Register") {
+        // be sure user entered a uniqueName
+        if (uniqueName.length < 1) {
+            status="a unique name is required."
+        }
+        // be sure user entered a displayName
+        if (displayName.length < 1) {
+            status="a display name is required."
+        }
     }
-    // be sure user entered a displayName
-    if (displayName.length < 1) {
-        status="a display name is required."
-    }
+    
     console.log("status in validation:" , status);
     return status;
 }

@@ -19,17 +19,19 @@ const Login = () => {
         userID,
         setUserID,
         mediaQ,
-        setMediaQ
+        setMediaQ,
+        uniqueName, 
+        setUniqueName
     } = useContext(CaptureContext);
     setPage("login");
     let history = useHistory();
+    // const [uniqueName, setUniqueName] = useState("");
 
     const [text, setText] = useState("Sign in");
     const [text2, setText2] = useState("Register");
     const [submitText, setSubmitText] = useState(text);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [uniqueName, setUniqueName] = useState("");
     const [displayName, setDisplayName] = useState('');
 
     const [type, setType] = useState("password");
