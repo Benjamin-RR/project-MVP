@@ -24,7 +24,12 @@ const Login = () => {
         // setUniqueName
     } = useContext(CaptureContext);
     setPage("login");
+
     let history = useHistory();
+    { userID && 
+        history.push("/Home")
+    }
+
     const [uniqueName, setUniqueName] = useState("");
 
     const [text, setText] = useState("Sign in");

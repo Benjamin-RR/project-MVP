@@ -1,7 +1,8 @@
 import React, {useContext, useState} from 'react';
 import { CaptureContext } from '../../CaptureContext';
 import styled from 'styled-components';
-import Friends from './Options/Friends'
+import { useHistory } from 'react-router-dom'; 
+
 
 const Dropdown = () => {
     const {
@@ -18,6 +19,7 @@ const Dropdown = () => {
         friendClick, 
         setFriendClick
     } = useContext(CaptureContext);
+    let history = useHistory();
 
     // handle reponsive window.
     mediaQ.onchange = (e) => {
@@ -26,23 +28,21 @@ const Dropdown = () => {
 
     // handle dropdown
     const handleMouseEnter = () => {
-            // if (!friendClick) {
-                setDropdown(true)
-            // }  
-        }
-        const handleMouseLeave = () => {
-            // if (!friendClick) {
-                setDropdown(false)
-            // }    
-        }
+        // if (!friendClick) {
+            setDropdown(true)
+        // }  
+    }
+    const handleMouseLeave = () => {
+        // if (!friendClick) {
+            setDropdown(false)
+        // }    
+    }
 
     // hande friend being clicked
     const handleFriendClick = () => {
-        // setDropdown(false)
-        setFriendClick(!friendClick);
-        return(
-            <div>hello</div>
-        )
+        setDropdown(false)
+        setFriendClick(true);
+        history.push("/Friends")
     }
 
     console.log("friend:", friendClick);
@@ -59,10 +59,6 @@ const Dropdown = () => {
 
     return(
         <>
-            { friendClick && (
-                <Friends />
-            )}
-
             {(mediaQ.matches === true) ? (
                 <Wrapper
                     style={{ top: "85px"}}
@@ -80,8 +76,6 @@ const Dropdown = () => {
                     <DropDownItem
                         onClick={handleSignOut} type="submit"
                     >Sign Out</DropDownItem>
-
-
                 </Wrapper>
             ) : (
                 <Wrapper
@@ -114,6 +108,7 @@ const Wrapper = styled.div`
     position: absolute;
     right: 10px;
     top: 80px;
+    z-index: 10;
 `
 
 

@@ -17,6 +17,7 @@ import Leaderboard from './Leaderboard';
 import About from './About';
 import Page404 from './Page404';
 import Footer from './Footer';
+import Friends from './Header/Dropdown/Options/Friends'
 
 const App = () => {
     const {
@@ -44,6 +45,9 @@ const App = () => {
                     </Route>
                     <Route exact path="/Profile">
                         <Profile />
+                    </Route>
+                    <Route exact path="/Friends">
+                        <Friends />
                     </Route>
                     <Route exact path="/Explore">
                         <Explore />

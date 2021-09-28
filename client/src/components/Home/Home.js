@@ -12,7 +12,7 @@ const Home = () => {
         userID,
     } = useContext(CaptureContext);
     setPage("home");
-
+    
     let history = useHistory();
     { !userID && 
         history.push("/Login")
