@@ -8,9 +8,8 @@ export const CaptureProvider = ({ children }) => {
     const [mediaQ, setMediaQ] = useState(window.matchMedia('(min-width: 600px'))
     const [uniqueName, setUniqueName] = useState(localStorage.getItem("uniqueName"));
     const [myLocation, setMyLocation] = useState(null);
+    const [friendClick, setFriendClick] = useState(false);
 
-    const test = localStorage.getItem("user");
-    console.log("test", test);
 
     // get user's current location
     navigator.geolocation.getCurrentPosition((position) => {
@@ -32,6 +31,8 @@ export const CaptureProvider = ({ children }) => {
             setUniqueName,
             myLocation,
             setMyLocation,
+            friendClick, 
+            setFriendClick
         }}>
             {children}
         </CaptureContext.Provider>

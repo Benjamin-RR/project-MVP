@@ -17,7 +17,11 @@ const {
     validateUniqueName
 } = require("./validate");
 
-// GET USER
+//////////////////////////////////////////////
+//                                          //
+//              SIGN IN USER                //
+//                                          //
+//////////////////////////////////////////////
 const signInUser = async (req, res) => {
     let signInStatus = "good";
     // Validate email is indeed good.
@@ -32,7 +36,6 @@ const signInUser = async (req, res) => {
     const password = req.body.password
     
     const user = await db.collection("users").findOne({ email });
-    // console.log("this users info:" , user);
     user ? (
         // if email exists in database, make sure password matches.
         user.password !==password ? (
@@ -40,17 +43,18 @@ const signInUser = async (req, res) => {
         ) : (
             res.status(200).json({ status: 200, data: user, message: "matched. signing in..."})
         )
-
     )
     : (
         res.status(400).json({ status: 400, data: req.body, message: "user not found"})
     )
     client.close();
-
 };
 
-
-// ADD NEW USER
+//////////////////////////////////////////////
+//                                          //
+//              ADD NEW USER                //
+//                                          //
+//////////////////////////////////////////////
 const addNewUser = async (req, res) => {
     // verify this email account is not already taken.
     const client = await new MongoClient(MONGO_URI, options);
@@ -115,20 +119,18 @@ const addNewUser = async (req, res) => {
     }
 };
 
-
-// UPLOAD IMAGE
+//////////////////////////////////////////////
+//                                          //
+//           ADD CAPTURED IMAGE             //
+//                                          //
+//////////////////////////////////////////////
 const addCaptureImage = async (req, res) => {
-    // const _id = req.body.userID;
-    // console.log("test", req.body);
     try{
         // upload image to cloudinary
         const fileStr = req.body.capture.data;
-        // console.log("filestr", req.body);
-        
         const uploadedResponse = await cloudinary.uploader.upload(fileStr, {
             upload_preset: 'Capture'
         })
-
         console.log("upload response:" , uploadedResponse);
 
         // create new animal document on mongoDB
@@ -161,7 +163,11 @@ const addCaptureImage = async (req, res) => {
     }
 }
 
-// UPLOAD IMAGE
+//////////////////////////////////////////////
+//                                          //
+//              UPLOAD IMAGE                //
+//                                          //
+//////////////////////////////////////////////
 const addAvatarImage = async (req, res) => {
 //     try{
 //         // upload image to cloudinary
@@ -184,6 +190,11 @@ const addAvatarImage = async (req, res) => {
 //     }
 }
 
+//////////////////////////////////////////////
+//                                          //
+//             DOWNLOAD IMAGE               //
+//                                          //
+//////////////////////////////////////////////
 const downloadImage = async (req, res) => {
     try{
         
@@ -207,16 +218,93 @@ const downloadImages = async (req, res) => {
     }
 }
 
+//////////////////////////////////////////////
+//                                          //
+//              UPDATE USER                 //
+//                                          //
+//////////////////////////////////////////////
 const userUpdate = async (req, res) => {
 
+}
+
+//////////////////////////////////////////////
+//                                          //
+//              ADD FRIEND                  //
+//                                          //
+//////////////////////////////////////////////
+const addFriend = async (req, res) => {
+
+    try{
+    const client = await new MongoClient(MONGO_URI, options);
+    await client.connect();
+    const db = client.db("Capture");
+
+    // attempt to find friend being searched.
+    
+    let _id = req.body.seat
+    let query = {_id}
+    const checkNewSeat = await db.collection("SA231").findOne(query)
+    if (checkNewSeat.isAvailable === false) {
+        thisError = true
+        res.status(400).json({
+        status: 400,
+        data: req.body,
+        error: ` Sorry ${req.body.givenName}, seat ${_id} has already been booked. We will email you at ${req.body.email} once seat ${_id} becomes available once more.`,
+    })
+    }
+    
+    // get old seat id.
+    _id = req.body._id
+    query = {_id}
+    const oldFlightInfo = await db.collection("reservations").findOne(query)
+    const oldSeatID = oldFlightInfo._id
+    
+    // change old seat availability to true.
+    _id = oldFlightInfo.seat
+    query = { _id}
+    let newValues = { $set: { isAvailable: true } };
+    await db.collection("SA231").updateOne(query, newValues);
+    
+    // change new seat to availability to false.
+    _id = req.body.seat
+    query = { _id}
+    newValues = { $set: { isAvailable: false } };
+    await db.collection("SA231").updateOne(query, newValues);
+        
+    // update reservation info.
+        _id = req.body._id;
+        query = { _id };
+        newValues = {
+        $set: {
+            seat: req.body.seat,
+            givenName: req.body.givenName,
+            surname: req.body.surname,
+            email: req.body.email,
+        },
+        };
+    await db.collection("reservations").updateOne(query, newValues);
+    res.status(200).json({ status: 200, data: req.body, message: "update success." });
+    client.close();
+    }
+    catch {
+
+    if (!thisError) {
+        res.status(400).json({     
+            status: 400,
+            data: req.body,
+            error: `An error occured. Be sure to provide all expected keys: _id, flight, seat, givenName, surname, email. (and their value pairs.)`,
+        })
+    }
+    }
 }
 
 module.exports = {
     signInUser,
     addNewUser,
     addCaptureImage,
-    addAvatarImage,
-    downloadImage,
+    addAvatarImage,     // not doing much yet.
+    downloadImage,      // not doing much yet.
     downloadImages,
-    userUpdate
+    userUpdate,         // not doing much yet.
+    addFriend
 };

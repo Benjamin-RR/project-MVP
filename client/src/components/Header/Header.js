@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {CaptureContext} from './CaptureContext';
+import {CaptureContext} from '../CaptureContext';
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
 // icons
@@ -11,7 +11,7 @@ import {AiFillCompass} from 'react-icons/ai';
 import {AiOutlineCompass} from 'react-icons/ai'
 import {AiFillTrophy} from 'react-icons/ai';
 import {AiOutlineTrophy} from 'react-icons/ai'
-import Dropdown from './Dropdown';
+import Dropdown from './Dropdown/Dropdown';
 
 const Header = () => {
     const {
@@ -21,7 +21,9 @@ const Header = () => {
         setDropdown,
         userID,
         mediaQ,
-        setMediaQ
+        setMediaQ,
+        friendClick, 
+        setFriendClick
     } = useContext(CaptureContext);
     
     let headerHeight = `150px`;
