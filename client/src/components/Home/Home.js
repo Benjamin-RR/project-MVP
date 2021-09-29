@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useHistory } from 'react-router-dom'; 
 import {Image} from 'cloudinary-react';
 import Loading from '../Common/Loader';
+// import Loading2 from '../Common/Loader2'
 
 const Home = () => {
     const {
@@ -13,35 +14,33 @@ const Home = () => {
         friendArray, 
         setFriendArray
     } = useContext(CaptureContext);
-    setPage("home");
+    const [loaded, setLoaded] = useState(false);
+    if (page !== "home") {
+        setPage("home");
+        window.location.reload();
+    }
     
     let history = useHistory();
     { !userID && 
         history.push("/Login")
     }
-
+    
+    // array animal pictures to render, includes logged on user, and thier friends.
     const [imageIds, setImageIds] = useState(null);
-    const [loaded, setLoaded] = useState(false);
     let animalsArray = [];
-
-    // console.log("friends:" , friendArray, typeof friendArray);
-
+    // array of animal data of each animal that will be rendered. again; includes logged on user, and their friends.
+    const [animalData, setAnimalData] = useState(null);
+    let animalDataArray = [];
+        
+    
     const loadImages = async () => {
         try{
             // get all images from cloudinary. (max 30).
             // const res = await fetch('/image/downloadMany');
             // const data = await res.json();
             // setImageIds(data);  // ALL images are stored here.
-
-
-            // add animal fetch here for more info for homescreen
-            // 1. user unique name who posted it (links to their profile)
-            // 2. image links to map where image was taken (lat, long)
-            // 3. user's commentary on their own image.
-            // 4. more stats?
-
-
-            // get all friend's animals into an array from mongoDB.
+                        
+            // get all friend's animal img sources into an array from mongoDB.
             friendArray.forEach( async (friend) => {
                 await fetch('/user/info', {
                     method: 'POST',
@@ -52,51 +51,84 @@ const Home = () => {
                 })
                 .then((response) => response.json())
                 .then((data) => {
-                if (data.status === 200) {
-                    console.log("friend data:" , data.data.captures.animals);
-                    const thisUserAnimals = data.data.captures.animals;
-                    thisUserAnimals.forEach(animal => {
-                        animalsArray.push(animal)
-                    })
-                    // console.log("CHECK:" , animalsArray);
-                    setImageIds(animalsArray);
-                    setLoaded(true);
-                }
-                if (data.status === 400) {
-                    console.log("error:" , data.message);
-                }
+                    if (data.status === 200) {
+                        const thisUserAnimalPicss = data.data.captures.animals;
+                        thisUserAnimalPicss.forEach(animal => {
+                            animalsArray.push(animal)
+                        })
+                    }
+                    if (data.status === 400) {
+                        console.log("error:" , data.message);
+                    }
                 })
                 .catch((error) => {
-                    connectStatus = "A client side error occured, please refresh your page and try again.";
+                    console.log("A server side error occured while attempting to fetch images.");
                 });
             })
-            
-            
         } catch (error) {
             console.error("Error:" , error);
         }
+        // store all images to render into an array into a state.
+        setImageIds(animalsArray);
     }
     
+
+    const loadAnimalData = async () => {
+        try{
+            // get each animal detail into a new array.
+            
+            friendArray.forEach( async (friend) => {
+                await fetch('/animal', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        friend
+                    }),
+                    headers: {'Content-type': 'application/json'}
+                })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.status === 200) {
+                        const thisUserAnimalData = data.data;
+                            animalDataArray.push(thisUserAnimalData);
+                    }
+                    if (data.status === 400) {
+                        console.log("error:" , data.message);
+                    }
+                })
+                .catch((error) => {
+                    console.log("A server side error occured while attempting to fetch animal data.");
+                });
+            })
+        } catch (error) {
+            console.error("Error:" , error);
+        }
+        // store each animal data into an array.
+        setAnimalData(animalDataArray);
+    }
+    
+    // Load images and animal data into their arrays, set page to loaded so we can render everything below. (gets called once).
     useEffect(()=> {
         loadImages();
+        loadAnimalData();
+        setLoaded(true);
     }, [])
-    
-    // if (imageIds) {
-    //     console.log("true")
-    // } else {
-    //     console.log('false');
-    // }
 
-    console.log("all images:" , imageIds);
-    console.log("animal array:" , animalsArray);
     
+    console.log("loaded?:" , loaded);
+    console.log("all images:" , imageIds);
+    console.log("all animal data:", animalData);    
+
+    // TO DO: use both image array and animal aray to render:
+    // 1. user unique name who posted it (links to their profile)
+    // 2. image links to map where image was taken (lat, long)
+    // 3. user's commentary on their own image.
+    // 4. more stats?
     return (
         <Wrapper>
             <div>Captures</div>
-            {(imageIds && loaded) ? (imageIds.map((imageId, index) => {
-            
+            {(imageIds) ? (imageIds.map((imageId, index) => {
+                
                     return(
-                        <>
                             <Image 
                                 key={index}
                                 alt="img"
@@ -105,14 +137,11 @@ const Home = () => {
                                 width="300"
                                 crop="scale"
                             />
-                        </>
                     )
-
                 
             })) : (
                 <Loading />
             )
-        
         }
         </Wrapper>
     )

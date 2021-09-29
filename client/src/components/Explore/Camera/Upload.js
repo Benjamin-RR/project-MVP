@@ -55,10 +55,7 @@ const Upload = () => {
         await fetch('/image/uploadCapture', {
             method: 'POST',
             body: JSON.stringify({
-                author: {
-                    userID: userID,
-                    author: uniqueName,
-                },
+                author: uniqueName,
                 capture: {
                     location: { lat: myLocation.coords.latitude, lng: myLocation.coords.longitude},
                     authenticScore: 0,

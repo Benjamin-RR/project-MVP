@@ -51,7 +51,7 @@ express()
     .post("/user/update", userUpdate)
     .put("/user/addFriend", addFriend)
     .post("/user/info", getUserInfo)
-    .post('/animal', getAnimal)
+    .post('/animal', getAnimal)     // get animal info
 
 
     // This is the catch all Endpoint

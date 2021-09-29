@@ -69,7 +69,7 @@ const Dropdown = () => {
                     <DropDownItem>Account</DropDownItem>
                     <DropDownItem
                         onClick={handleFriendClick} type="submit"
-                    >Friends</DropDownItem>
+                    >Add a friend</DropDownItem>
                     <DropDownItem>Achievements</DropDownItem>
                     <DropDownItem>Help</DropDownItem>
                     <DropDownItem>Settings</DropDownItem>
@@ -86,7 +86,7 @@ const Dropdown = () => {
                     <DropDownItem>Account</DropDownItem>
                     <DropDownItem
                         onClick={handleFriendClick} type="submit"
-                    >Friends</DropDownItem>
+                    >Add a friend</DropDownItem>
                     <DropDownItem>Achievements</DropDownItem>
                     <DropDownItem>Help</DropDownItem>
                     <DropDownItem>Settings</DropDownItem>

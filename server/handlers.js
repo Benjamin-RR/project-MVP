@@ -345,6 +345,7 @@ const getUserInfo = async (req, res) => {
     }
     catch {
         res.status(500).json({ status: 500, data: req.body, message: "sorry we are having server issues."})
+        client.close();
     }
 }
 
@@ -355,16 +356,16 @@ const getUserInfo = async (req, res) => {
 //////////////////////////////////////////////
 const getAnimal = async (req, res) => {
     try{
-        console.log("check:", req.body);
         const client = await new MongoClient(MONGO_URI, options);
         await client.connect();
         const db = client.db("Capture");
-        const author = req.body
-        console.log("check again:" , author);
-        const animal = await db.collection("animals").findOne({ author });
-        // if user found, sound back info.
+        const author = req.body.friend
+        console.log("check:", author);
+        const animal = await db.collection("animals").findOne( {author} );
+        // if animal found, sound back info.
+        console.log("Animal:" , animal);
         animal ? (
-            res.status(200).json({ status: 200, data: user, message: "matched found."})
+            res.status(200).json({ status: 200, data: animal, message: "matched found."})
         ) : (
             res.status(400).json({ status: 400, data: req.body, message: "animal not found"})
         )
@@ -372,6 +373,7 @@ const getAnimal = async (req, res) => {
     }
     catch {
         res.status(500).json({ status: 500, data: req.body, message: "sorry we are having server issues."})
+        client.close();
     }
 }
 
