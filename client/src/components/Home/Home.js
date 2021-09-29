@@ -29,9 +29,18 @@ const Home = () => {
     const loadImages = async () => {
         try{
             // get all images from cloudinary. (max 30).
-            const res = await fetch('/image/downloadMany');
-            const data = await res.json();
-            setImageIds(data);  // ALL images are stored here.
+            // const res = await fetch('/image/downloadMany');
+            // const data = await res.json();
+            // setImageIds(data);  // ALL images are stored here.
+
+
+            // add animal fetch here for more info for homescreen
+            // 1. user unique name who posted it (links to their profile)
+            // 2. image links to map where image was taken (lat, long)
+            // 3. user's commentary on their own image.
+            // 4. more stats?
+
+
             // get all friend's animals into an array from mongoDB.
             friendArray.forEach( async (friend) => {
                 await fetch('/user/info', {
@@ -50,10 +59,7 @@ const Home = () => {
                         animalsArray.push(animal)
                     })
                     // console.log("CHECK:" , animalsArray);
-
-                    
-
-
+                    setImageIds(animalsArray);
                     setLoaded(true);
                 }
                 if (data.status === 400) {
@@ -64,13 +70,6 @@ const Home = () => {
                     connectStatus = "A client side error occured, please refresh your page and try again.";
                 });
             })
-            
-            
-            
-            // get all friends images.
-            // 1. send POST with current user's array of friends.
-            // 2. for each friend, return their array of animals.
-            // 3. display only matching images on home, omit all others.
             
             
         } catch (error) {
@@ -89,12 +88,13 @@ const Home = () => {
     // }
 
     console.log("all images:" , imageIds);
+    console.log("animal array:" , animalsArray);
     
     return (
         <Wrapper>
             <div>Captures</div>
             {(imageIds && loaded) ? (imageIds.map((imageId, index) => {
-                if (animalsArray.indexOf(imageId) > -1) {
+            
                     return(
                         <>
                             <Image 
@@ -108,7 +108,7 @@ const Home = () => {
                         </>
                     )
 
-                }
+                
             })) : (
                 <Loading />
             )

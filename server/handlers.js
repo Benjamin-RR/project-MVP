@@ -149,26 +149,28 @@ const addCaptureImage = async (req, res) => {
         // get old user data. ( by uniqueName )
         const uniqueName = req.body.author.author
         const oldUserData = await db.collection("users").findOne({ uniqueName });
+
         // store all animals into an array, then push the new one in.
         let animalArray = oldUserData.captures.animals
         animalArray.push(uploadedResponse.public_id)
         
         const query = { uniqueName }
+
         // update animal array.
         let update = { $set: { "captures.animals": animalArray}}
         await db.collection("users").updateOne(query, update)
+
         // update total captures
         update = { $set: { "captures.total": (Number(oldUserData.captures.total)+1)}}
         await db.collection("users").updateOne(query, update)
+
         // if description given, update, otherwise move on.
         if (req.body.capture.documentation) {
             update = { $set: { "captures.documentations": (Number(oldUserData.captures.documentations)+1)}}
             await db.collection("users").updateOne(query, update)
         }
-        // update user with new data:
 
         res.status(200).json({message: "animal Captured successfully!"})
-
     } catch (err) {
         console.error(err);
         res.status(500).json({message: "upload failed."})
@@ -346,6 +348,33 @@ const getUserInfo = async (req, res) => {
     }
 }
 
+//////////////////////////////////////////////
+//                                          //
+//            GET ANIMAL INFO               //
+//                                          //
+//////////////////////////////////////////////
+const getAnimal = async (req, res) => {
+    try{
+        console.log("check:", req.body);
+        const client = await new MongoClient(MONGO_URI, options);
+        await client.connect();
+        const db = client.db("Capture");
+        const author = req.body
+        console.log("check again:" , author);
+        const animal = await db.collection("animals").findOne({ author });
+        // if user found, sound back info.
+        animal ? (
+            res.status(200).json({ status: 200, data: user, message: "matched found."})
+        ) : (
+            res.status(400).json({ status: 400, data: req.body, message: "animal not found"})
+        )
+        client.close();
+    }
+    catch {
+        res.status(500).json({ status: 500, data: req.body, message: "sorry we are having server issues."})
+    }
+}
+
 module.exports = {
     signInUser,
     addNewUser,
@@ -356,4 +385,5 @@ module.exports = {
     userUpdate,         // not doing much yet.
     addFriend,          // not doing much yet.
     getUserInfo,
+    getAnimal
 };
