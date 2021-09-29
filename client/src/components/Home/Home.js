@@ -16,7 +16,7 @@ const Home = () => {
     } = useContext(CaptureContext);
     if (page !== "home") {
         setPage("home");
-        window.location.reload();
+        // window.location.reload();
     }
     
     let history = useHistory();
@@ -24,61 +24,10 @@ const Home = () => {
         history.push("/Login")
     }
     
-    const [loaded, setLoaded] = useState(false);
-    // array animal pictures to render, includes logged on user, and thier friends.
-    // const [imageIds, setImageIds] = useState(null);
-    // let animalsArray = [];
-    // array of animal data of each animal that will be rendered. again; includes logged on user, and their friends.
-    // const [animalData, setAnimalData] = useState(null);
+    const [loaded, setLoaded] = useState(false);    
     let animalDataArray = [];
     let feedArray = [];
-    // const [feed, setFeed] = useState({
-    //     source: null,
-    //     capture: null,
-    // });        
     const [feed, setFeed] = useState(null);
-    
-    // const loadImages = async () => {
-    //     try{
-    //         // get all images from cloudinary. (max 30).
-    //         // const res = await fetch('/image/downloadMany');
-    //         // const data = await res.json();
-    //         // setImageIds(data);  // ALL images are stored here.
-                        
-    //         // get all friend's animal img sources into an array from mongoDB.
-    //         friendArray.forEach( async (friend) => {
-    //             await fetch('/user/info', {
-    //                 method: 'POST',
-    //                 body: JSON.stringify({
-    //                     friend
-    //                 }),
-    //                 headers: {'Content-type': 'application/json'}
-    //             })
-    //             .then((response) => response.json())
-    //             .then((data) => {
-    //                 if (data.status === 200) {
-    //                     const thisUserAnimalPicss = data.data.captures.animals;
-    //                     thisUserAnimalPicss.forEach(animal => {
-    //                         animalsArray.push(animal)
-    //                     })
-    //                 }
-    //                 if (data.status === 400) {
-    //                     console.log("error:" , data.message);
-    //                 }
-    //             })
-    //             .catch((error) => {
-    //                 console.log("A server side error occured while attempting to fetch images.");
-    //             });
-    //         })
-    //     } catch (error) {
-    //         console.error("Error:" , error);
-    //     }
-    //     // store all images to render into an array into a state.
-    //     // setImageIds(animalsArray);
-    //     // setFeed({source: animalsArray})
-    //     return animalsArray;
-    // }
-    
 
     const loadCaptures = async () => {
         try{
@@ -109,39 +58,65 @@ const Home = () => {
             console.error("Error:" , error);
         }
         // store each animal data into an array.
-        // setAnimalData(animalDataArray);
-        // setFeed({capture: animalDataArray})
-        return animalDataArray;
+        await setFeed(animalDataArray);
     }
-    
-    // Load images and animal data into their arrays, set page to loaded so we can render everything below. (gets called once).
-    useEffect( async ()=> {
-        // one = await loadImages();
-        const theCaptures = await loadCaptures();
-        setFeed(theCaptures);
-        
-    }, [])
-    
-    // console.log("loaded?:" , loaded);
-    console.log("FEED:" , feed);
 
-    if (feed) {
-        let animalArray = [];
+    // configures the loaded data to the correct format, once done, loading is set to true, page renders.
+    const configCaptures = () => {
+
+        console.log("Double check:", feed);
         feed.forEach(person => {
-            // animalArray.push(animal.captures.animals);
+            console.log("person:", person)
             person.captures.animals.forEach((animal => {
                 feedArray.push(animal);
             }))
         })
-        // animalArray.forEach(item => {
-        //     feedArray.push(item);
-        // })
-        console.log("animal array:" , animalArray);
+        setFeed(feedArray);
         console.log("FINAL : feed array:" , feedArray);
-        // setLoaded(true);
-
     }
 
+    const wait = () => {
+        // setTimeout(func(), 1000);
+        // setTimeout(func() { alert("Hello"); }, 3000);
+    }
+    
+    
+    // Load images and animal data into their arrays, set page to loaded so we can render everything below. (gets called once).
+    useEffect( async ()=> {
+        await loadCaptures()
+        setTimeout(wait(), 1000);
+        // wait();
+        configCaptures()
+        setTimeout(wait(), 1000);
+        setLoaded(true)
+        // setTimeout(func() , 1000);
+
+    }, [])
+    // useEffect(() => {
+    //     configCaptures()
+    //     setLoaded(true)
+    // },[feed])
+    
+
+    // console.log("FEED:" , feed);
+
+    // if (feed) {
+    //     let animalArray = [];
+    //     feed.forEach(person => {
+    //         // animalArray.push(animal.captures.animals);
+    //         person.captures.animals.forEach((animal => {
+    //             feedArray.push(animal);
+    //         }))
+    //     })
+    //     setfeed2(animalArray);
+        
+    //     console.log("animal array:" , animalArray);
+    //     console.log("FINAL : feed array:" , feedArray);
+    // }
+    // if (feed2) {
+    //     // setFeed(null);
+    //     // setLoaded(true);
+    // }
 
     // TO DO: use both image array and animal aray to render:
     // 1. user unique name who posted it (links to their profile)
@@ -164,7 +139,7 @@ const Home = () => {
                         <Image
                             alt="img"
                             cloudName="capturecapture"
-                            publicId={aCapture}
+                            publicId={aCapture.public_id}
                             width="300"
                             crop="scale"
                         />
