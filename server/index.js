@@ -15,7 +15,8 @@ const {
     userUpdate,
     addFriend,
     getUserInfo, 
-    getAnimal
+    getAnimal,
+    // getUser
 } = require("./handlers");
 
 const PORT = process.env.PORT 
@@ -51,7 +52,8 @@ express()
     .post("/user/update", userUpdate)
     .put("/user/addFriend", addFriend)
     .post("/user/info", getUserInfo)
-    .post('/animal', getAnimal)     // get animal info
+    .post('/animal', getAnimal)     // get animal info // has been nuked...
+    // .post('/user', getUser)
 
 
     // This is the catch all Endpoint

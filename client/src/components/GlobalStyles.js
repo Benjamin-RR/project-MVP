@@ -23,6 +23,8 @@ export default createGlobalStyle`
         0 0 82px #ff4d4d,
         0 0 151px #ff0000; */
         --defaultHeight: 500px;
+        --IconHeight: 30px;
+        --IconWidth: 30px;
     }
 
     html, body, div, span, applet, object, iframe,

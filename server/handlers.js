@@ -138,21 +138,23 @@ const addCaptureImage = async (req, res) => {
         const client = await new MongoClient(MONGO_URI, options);
         await client.connect();
         const db = client.db("Capture");
+
+        // create new animal capture object.
         const newCapture = {
             _id : uuidv4(),
             timeStamp: uploadedResponse.created_at,
             public_id: uploadedResponse.public_id,
             ...req.body
         }
-        await db.collection("animals").insertOne(newCapture);
+        // await db.collection("animals").insertOne(newCapture);
 
-        // get old user data. ( by uniqueName )
-        const uniqueName = req.body.author.author
+        // get old user data.
+        const uniqueName = req.body.author
         const oldUserData = await db.collection("users").findOne({ uniqueName });
-
         // store all animals into an array, then push the new one in.
         let animalArray = oldUserData.captures.animals
-        animalArray.push(uploadedResponse.public_id)
+        // animalArray.push(uploadedResponse.public_id)
+        animalArray.push(newCapture);
         
         const query = { uniqueName }
 
@@ -377,6 +379,29 @@ const getAnimal = async (req, res) => {
     }
 }
 
+// const getUser = async (req, res) => {
+//     try{
+//         const client = await new MongoClient(MONGO_URI, options);
+//         await client.connect();
+//         const db = client.db("Capture");
+//         const author = req.body.friend
+//         console.log("check:", author);
+//         const animal = await db.collection("users").findOne( {author} );
+//         // if animal found, sound back info.
+//         console.log("Animal:" , animal);
+//         animal ? (
+//             res.status(200).json({ status: 200, data: animal, message: "matched found."})
+//         ) : (
+//             res.status(400).json({ status: 400, data: req.body, message: "animal not found"})
+//         )
+//         client.close();
+//     }
+//     catch {
+//         res.status(500).json({ status: 500, data: req.body, message: "sorry we are having server issues."})
+//         client.close();
+//     }
+// }
+
 module.exports = {
     signInUser,
     addNewUser,
@@ -387,5 +412,6 @@ module.exports = {
     userUpdate,         // not doing much yet.
     addFriend,          // not doing much yet.
     getUserInfo,
-    getAnimal
+    getAnimal,
+    // getUser,
 };
