@@ -13,7 +13,8 @@ const {
     downloadImage,
     downloadImages,
     userUpdate,
-    addFriend
+    addFriend,
+    getUserInfo, 
 } = require("./handlers");
 
 const PORT = process.env.PORT 
@@ -48,6 +49,7 @@ express()
     .get("/image/downloadMany", downloadImages)
     .post("/user/update", userUpdate)
     .put("/user/addFriend", addFriend)
+    .post("/user/info", getUserInfo)
 
 
     // This is the catch all Endpoint

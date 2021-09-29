@@ -17,12 +17,6 @@ const {
     validateUniqueName
 } = require("./validate");
 
-// const OpenConnection = () => {
-//     const client = await new MongoClient(MONGO_URI, options);
-//     await client.connect();
-//     const db = client.db("Capture");
-// }
-
 //////////////////////////////////////////////
 //                                          //
 //              SIGN IN USER                //
@@ -183,7 +177,7 @@ const addCaptureImage = async (req, res) => {
 
 //////////////////////////////////////////////
 //                                          //
-//              UPLOAD IMAGE                //
+//            ADD AVATAR IMAGE              //
 //                                          //
 //////////////////////////////////////////////
 const addAvatarImage = async (req, res) => {
@@ -215,13 +209,23 @@ const addAvatarImage = async (req, res) => {
 //////////////////////////////////////////////
 const downloadImage = async (req, res) => {
     try{
-        
+        const {resources} = await cloudinary.search.expression('folder:animals')
+        // .sort_by('public_id', 'desc')
+        // .max_results(30)
+        // .execute();
+        // const publicIds = resources.map(file=> file.public_id);
+        // res.send(publicIds);
     } catch (err) {
         console.error(err);
         res.status(500).json({message: "download failed."})
     }
 }
 
+//////////////////////////////////////////////
+//                                          //
+//             DOWNLOAD IMAGES              //
+//                                          //
+//////////////////////////////////////////////
 const downloadImages = async (req, res) => {
     try{
         const {resources} = await cloudinary.search.expression('folder:animals')
@@ -316,6 +320,32 @@ const addFriend = async (req, res) => {
     }
 }
 
+//////////////////////////////////////////////
+//                                          //
+//             GET USER INFO                //
+//                                          //
+//////////////////////////////////////////////
+const getUserInfo = async (req, res) => {
+    try{
+        // console.log("check:", req.body);
+        const client = await new MongoClient(MONGO_URI, options);
+        await client.connect();
+        const db = client.db("Capture");
+        const uniqueName = req.body.friend
+        const user = await db.collection("users").findOne({ uniqueName });
+        // if user found, sound back info.
+        user ? (
+            res.status(200).json({ status: 200, data: user, message: "matched found."})
+        ) : (
+            res.status(400).json({ status: 400, data: req.body, message: "user not found"})
+        )
+        client.close();
+    }
+    catch {
+        res.status(500).json({ status: 500, data: req.body, message: "sorry we are having server issues."})
+    }
+}
+
 module.exports = {
     signInUser,
     addNewUser,
@@ -324,5 +354,6 @@ module.exports = {
     downloadImage,      // not doing much yet.
     downloadImages,
     userUpdate,         // not doing much yet.
-    addFriend
+    addFriend,          // not doing much yet.
+    getUserInfo,
 };

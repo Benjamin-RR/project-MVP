@@ -10,6 +10,8 @@ const Home = () => {
         page,
         setPage,
         userID,
+        friendArray, 
+        setFriendArray
     } = useContext(CaptureContext);
     setPage("home");
     
@@ -19,51 +21,94 @@ const Home = () => {
     }
 
     const [imageIds, setImageIds] = useState(null);
+    const [loaded, setLoaded] = useState(false);
+    let animalsArray = [];
+
+    // console.log("friends:" , friendArray, typeof friendArray);
 
     const loadImages = async () => {
         try{
-            // get all images
+            // get all images from cloudinary. (max 30).
             const res = await fetch('/image/downloadMany');
             const data = await res.json();
             setImageIds(data);  // ALL images are stored here.
-            console.log("DATA:" , data);
+            // get all friend's animals into an array from mongoDB.
+            friendArray.forEach( async (friend) => {
+                await fetch('/user/info', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        friend
+                    }),
+                    headers: {'Content-type': 'application/json'}
+                })
+                .then((response) => response.json())
+                .then((data) => {
+                if (data.status === 200) {
+                    console.log("friend data:" , data.data.captures.animals);
+                    const thisUserAnimals = data.data.captures.animals;
+                    thisUserAnimals.forEach(animal => {
+                        animalsArray.push(animal)
+                    })
+                    // console.log("CHECK:" , animalsArray);
+
+                    
+
+
+                    setLoaded(true);
+                }
+                if (data.status === 400) {
+                    console.log("error:" , data.message);
+                }
+                })
+                .catch((error) => {
+                    connectStatus = "A client side error occured, please refresh your page and try again.";
+                });
+            })
+            
+            
+            
             // get all friends images.
             // 1. send POST with current user's array of friends.
-            // 2. for each friend, return
-            // 1. get array of each friends image, and display only matching images.
-
-
+            // 2. for each friend, return their array of animals.
+            // 3. display only matching images on home, omit all others.
+            
+            
         } catch (error) {
             console.error("Error:" , error);
         }
     }
-
+    
     useEffect(()=> {
         loadImages();
     }, [])
+    
+    // if (imageIds) {
+    //     console.log("true")
+    // } else {
+    //     console.log('false');
+    // }
 
-    if (imageIds) {
-        console.log("true")
-    } else {
-        console.log('false');
-    }
-
+    console.log("all images:" , imageIds);
+    
     return (
         <Wrapper>
             <div>Captures</div>
-            {imageIds ? (imageIds.map((imageId, index) => {
-                return(
-                    <>
-                        <Image 
-                            key={index}
-                            alt="img"
-                            cloudName="capturecapture"
-                            publicId={imageId}
-                            width="300"
-                            crop="scale"
-                        />
-                    </>
-                )
+            {(imageIds && loaded) ? (imageIds.map((imageId, index) => {
+                if (animalsArray.indexOf(imageId) > -1) {
+                    return(
+                        <>
+                            <Image 
+                                key={index}
+                                alt="img"
+                                cloudName="capturecapture"
+                                publicId={imageId}
+                                width="300"
+                                crop="scale"
+                            />
+                        </>
+                    )
+
+                }
             })) : (
                 <Loading />
             )

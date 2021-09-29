@@ -9,6 +9,7 @@ export const CaptureProvider = ({ children }) => {
     const [uniqueName, setUniqueName] = useState(localStorage.getItem("uniqueName"));
     const [myLocation, setMyLocation] = useState(null);
     const [friendClick, setFriendClick] = useState(false);
+    const [friendArray, setFriendArray] = useState(((localStorage.getItem("friends")).split(",")));
 
 
     // get user's current location
@@ -32,7 +33,9 @@ export const CaptureProvider = ({ children }) => {
             myLocation,
             setMyLocation,
             friendClick, 
-            setFriendClick
+            setFriendClick,
+            friendArray, 
+            setFriendArray
         }}>
             {children}
         </CaptureContext.Provider>
