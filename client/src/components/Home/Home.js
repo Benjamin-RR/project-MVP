@@ -22,10 +22,17 @@ const Home = () => {
 
     const loadImages = async () => {
         try{
+            // get all images
             const res = await fetch('/image/downloadMany');
             const data = await res.json();
+            setImageIds(data);  // ALL images are stored here.
             console.log("DATA:" , data);
-            setImageIds(data);
+            // get all friends images.
+            // 1. send POST with current user's array of friends.
+            // 2. for each friend, return
+            // 1. get array of each friends image, and display only matching images.
+
+
         } catch (error) {
             console.error("Error:" , error);
         }

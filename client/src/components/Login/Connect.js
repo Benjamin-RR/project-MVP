@@ -51,6 +51,7 @@ const Connect = async({
                 // save current logged on user to local storage.
                 localStorage.setItem("userID", data.data._id);
                 localStorage.setItem("uniqueName", data.data.uniqueName)
+                localStorage.setItem("friends", [ uniqueName ])
             }
             if (data.status === 400) {
                 connectStatus = data.message;
@@ -78,6 +79,8 @@ const Connect = async({
                     // save current logged on user to local storage.
                     localStorage.setItem("userID", data.data._id);
                     localStorage.setItem("uniqueName", data.data.uniqueName)
+                    localStorage.setItem("friends", data.data.friends)
+
                 }
                 if (data.status === 400) {
                     connectStatus = data.message;

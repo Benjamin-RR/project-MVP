@@ -31,7 +31,7 @@ const Upload = () => {
     // for database.
     const [previewSource, setPreviewSource] = useState('');
     const [animalName, setAnimalName] = useState('');
-    const [description, setDescription] = useState('');
+    const [description, setDescription] = useState(null);
     const [attemptSubmit, setAttemptSubmit] = useState(false);
 
     // handles switching layout of displaying images by grid or singularly.

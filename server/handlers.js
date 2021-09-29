@@ -17,6 +17,12 @@ const {
     validateUniqueName
 } = require("./validate");
 
+// const OpenConnection = () => {
+//     const client = await new MongoClient(MONGO_URI, options);
+//     await client.connect();
+//     const db = client.db("Capture");
+// }
+
 //////////////////////////////////////////////
 //                                          //
 //              SIGN IN USER                //
@@ -83,6 +89,7 @@ const addNewUser = async (req, res) => {
             _id : uuidv4(),
             ...req.body,
             captures: {
+                total: 0,
                 numOflocations: 0,
                 authenticScore: 0,
                 rank: 0,
@@ -96,7 +103,7 @@ const addNewUser = async (req, res) => {
             },
             moreStats: {numOfRatingsGiven: 0, numFalsified: 0, numTruthified: 0, numIndecisive: 0, numLoggedOn: 0},
             achievements: {AnimalLover: false, AnimalEnthusiast: false, Biologist: false, Zoologist: false, Scientist: false, Authenticator: false, Inspector: false, TopPlayer: false},
-            friends: [],
+            friends: [ req.body.uniqueName ],
         }
 
         await db.collection("users").insertOne(newUser);
@@ -140,20 +147,31 @@ const addCaptureImage = async (req, res) => {
         const newCapture = {
             _id : uuidv4(),
             timeStamp: uploadedResponse.created_at,
+            public_id: uploadedResponse.public_id,
             ...req.body
         }
         await db.collection("animals").insertOne(newCapture);
 
-        // // find user to update
-        // const userToUpdate = await db.collection("users").findOne({_id})
-        console.log("user to update:", userToUpdate);
-
-        const newValues = { $set: { isAvailable: false } };
-        await db.collection("SA231").updateOne(query, newValues);
-
-        // update current user info on mongoDB
-        // await db.collection("users").updateOne()
-
+        // get old user data. ( by uniqueName )
+        const uniqueName = req.body.author.author
+        const oldUserData = await db.collection("users").findOne({ uniqueName });
+        // store all animals into an array, then push the new one in.
+        let animalArray = oldUserData.captures.animals
+        animalArray.push(uploadedResponse.public_id)
+        
+        const query = { uniqueName }
+        // update animal array.
+        let update = { $set: { "captures.animals": animalArray}}
+        await db.collection("users").updateOne(query, update)
+        // update total captures
+        update = { $set: { "captures.total": (Number(oldUserData.captures.total)+1)}}
+        await db.collection("users").updateOne(query, update)
+        // if description given, update, otherwise move on.
+        if (req.body.capture.documentation) {
+            update = { $set: { "captures.documentations": (Number(oldUserData.captures.documentations)+1)}}
+            await db.collection("users").updateOne(query, update)
+        }
+        // update user with new data:
 
         res.status(200).json({message: "animal Captured successfully!"})
 
@@ -240,61 +258,61 @@ const addFriend = async (req, res) => {
     const db = client.db("Capture");
 
     // attempt to find friend being searched.
+
+    // let _id = req.body.seat
+    // let query = {_id}
+    // const checkNewSeat = await db.collection("SA231").findOne(query)
+    // if (checkNewSeat.isAvailable === false) {
+    //     thisError = true
+    //     res.status(400).json({
+    //     status: 400,
+    //     data: req.body,
+    //     error: ` Sorry ${req.body.givenName}, seat ${_id} has already been booked. We will email you at ${req.body.email} once seat ${_id} becomes available once more.`,
+    // })
+    // }
     
-    let _id = req.body.seat
-    let query = {_id}
-    const checkNewSeat = await db.collection("SA231").findOne(query)
-    if (checkNewSeat.isAvailable === false) {
-        thisError = true
-        res.status(400).json({
-        status: 400,
-        data: req.body,
-        error: ` Sorry ${req.body.givenName}, seat ${_id} has already been booked. We will email you at ${req.body.email} once seat ${_id} becomes available once more.`,
-    })
-    }
+    // // get old seat id.
+    // _id = req.body._id
+    // query = {_id}
+    // const oldFlightInfo = await db.collection("reservations").findOne(query)
+    // const oldSeatID = oldFlightInfo._id
     
-    // get old seat id.
-    _id = req.body._id
-    query = {_id}
-    const oldFlightInfo = await db.collection("reservations").findOne(query)
-    const oldSeatID = oldFlightInfo._id
+    // // change old seat availability to true.
+    // _id = oldFlightInfo.seat
+    // query = { _id}
+    // let newValues = { $set: { isAvailable: true } };
+    // await db.collection("SA231").updateOne(query, newValues);
     
-    // change old seat availability to true.
-    _id = oldFlightInfo.seat
-    query = { _id}
-    let newValues = { $set: { isAvailable: true } };
-    await db.collection("SA231").updateOne(query, newValues);
-    
-    // change new seat to availability to false.
-    _id = req.body.seat
-    query = { _id}
-    newValues = { $set: { isAvailable: false } };
-    await db.collection("SA231").updateOne(query, newValues);
+    // // change new seat to availability to false.
+    // _id = req.body.seat
+    // query = { _id}
+    // newValues = { $set: { isAvailable: false } };
+    // await db.collection("SA231").updateOne(query, newValues);
         
-    // update reservation info.
-        _id = req.body._id;
-        query = { _id };
-        newValues = {
-        $set: {
-            seat: req.body.seat,
-            givenName: req.body.givenName,
-            surname: req.body.surname,
-            email: req.body.email,
-        },
-        };
-    await db.collection("reservations").updateOne(query, newValues);
-    res.status(200).json({ status: 200, data: req.body, message: "update success." });
-    client.close();
+    // // update reservation info.
+    //     _id = req.body._id;
+    //     query = { _id };
+    //     newValues = {
+    //     $set: {
+    //         seat: req.body.seat,
+    //         givenName: req.body.givenName,
+    //         surname: req.body.surname,
+    //         email: req.body.email,
+    //     },
+    //     };
+    // await db.collection("reservations").updateOne(query, newValues);
+    // res.status(200).json({ status: 200, data: req.body, message: "update success." });
+    // client.close();
     }
     catch {
 
-    if (!thisError) {
-        res.status(400).json({     
-            status: 400,
-            data: req.body,
-            error: `An error occured. Be sure to provide all expected keys: _id, flight, seat, givenName, surname, email. (and their value pairs.)`,
-        })
-    }
+    // if (!thisError) {
+    //     res.status(400).json({     
+    //         status: 400,
+    //         data: req.body,
+    //         error: `An error occured. Be sure to provide all expected keys: _id, flight, seat, givenName, surname, email. (and their value pairs.)`,
+    //     })
+    // }
     }
 }
 
