@@ -82,6 +82,7 @@ const Login = () => {
         if (connectStatus === "good") {
             const id = window.localStorage.getItem("userID");
             setUserID(id)
+            
             history.push("/")
             window.location.reload();
         } else {

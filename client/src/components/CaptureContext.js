@@ -2,22 +2,30 @@ import React, { useState } from 'react';
 export const CaptureContext = React.createContext();
 
 export const CaptureProvider = ({ children }) => {
-    const [page, setPage] = useState("home");
-    const [dropdown, setDropdown] = useState(false);
-    const [userID, setUserID] = useState(localStorage.getItem("userID"));
+    // start up data that only changes once per app load
+    const [appLoaded, setAppLoaded] = useState(false);
+    // for handling page and settings
     const [mediaQ, setMediaQ] = useState(window.matchMedia('(min-width: 600px'))
-    const [uniqueName, setUniqueName] = useState(localStorage.getItem("uniqueName"));
-    const [myLocation, setMyLocation] = useState(null);
-    const [friendClick, setFriendClick] = useState(false);
-    const [friendArray, setFriendArray] = useState(((localStorage.getItem("friends")).split(",")));
+    const [page, setPage] = useState("home");
     const [settingsClick, setSettingsClick] = useState(false);
     const [dynamicMapStyle, setDynamicMapStyle] = useState(true);
-
+    // for dropdown
+    const [dropdown, setDropdown] = useState(false);
+    const [friendClick, setFriendClick] = useState(false);
+    //for loging in
+    const [userID, setUserID] = useState(localStorage.getItem("userID"));
+    // const [uniqueName, setUniqueName] = useState(localStorage.getItem("uniqueName"));
+    // const [userColor, setUserColor] = useState(localStorage.getItem("userColor"));
+    // const [friendArray, setFriendArray] = useState(null);
+    // let temp = localStorage.getItem("friends");
+    // if (temp && !appLoaded) setFriendArray(temp.split(","));
     // get user's current location
+    const [myLocation, setMyLocation] = useState(null);
     navigator.geolocation.getCurrentPosition((position) => {
         setMyLocation(position)
     }, () => null)
 
+    // setAppLoaded(true);
 
     return (
         <CaptureContext.Provider value={{ 
@@ -29,18 +37,20 @@ export const CaptureProvider = ({ children }) => {
             setUserID,
             mediaQ,
             setMediaQ,
-            uniqueName, 
-            setUniqueName,
+            // uniqueName, 
+            // setUniqueName,
             myLocation,
             setMyLocation,
             friendClick, 
             setFriendClick,
-            friendArray, 
-            setFriendArray,
+            // friendArray, 
+            // setFriendArray,
             settingsClick,
             setSettingsClick,
             dynamicMapStyle,
-            setDynamicMapStyle
+            setDynamicMapStyle,
+            // userColor,
+            // setUserColor
         }}>
             {children}
         </CaptureContext.Provider>

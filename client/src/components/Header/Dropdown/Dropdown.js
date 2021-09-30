@@ -20,6 +20,10 @@ const Dropdown = () => {
         setFriendClick,
         settingsClick,
         setSettingsClick,
+        userColor,
+        setUserColor,
+        friendArray, 
+        setFriendArray,
     } = useContext(CaptureContext);
     let history = useHistory();
 
@@ -60,8 +64,12 @@ const Dropdown = () => {
         // remove all signed in user info from local storage.
         localStorage.removeItem("userID");
         localStorage.removeItem("uniqueName");
+        localStorage.removeItem("userColor");
+        localStorage.removeItem("friends");
         setUserID(null);
         setUniqueName(null);
+        setUserColor(null)
+        setFriendArray(null);
         window.location.reload();
     }
 

@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {CaptureContext} from '../CaptureContext';
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
@@ -23,8 +23,14 @@ const Header = () => {
         mediaQ,
         setMediaQ,
         friendClick, 
-        setFriendClick
+        setFriendClick,
+        // userColor,
+        // setUserColor,
+        // uniqueName, 
+        // setUniqueName,
     } = useContext(CaptureContext);
+    const [uniqueName, setUniqueName] = useState(localStorage.getItem("uniqueName"));
+    const [userColor, setUserColor] = useState(localStorage.getItem("userColor"));
     
     let headerHeight = `150px`;
     if (mediaQ.matches === false) {
@@ -43,7 +49,28 @@ const Header = () => {
     const handleMouseLeave = () => {
         setDropdown(false)
     }
-    
+
+    // console.log("user color: ", userColor);
+    // console.log("CHECK", uniqueName.split(uniqueName.charAt(2))[0].toUpperCase()  );
+
+    // // test for character string
+    // var txt = 'Hello World!';
+    // var x = 30,
+    //     y = 50;
+
+    // context.font = "40px Helvetica";
+
+    // context.strokeStyle = 'white';
+
+    // // setup these to match your needs
+    // context.miterLimit = 2;
+    // context.lineJoin = 'circle';
+
+    // // draw an outline, then filled
+    // context.lineWidth = 7;
+    // context.strokeText(txt, x, y);
+    // context.lineWidth = 1;
+    // context.fillText(txt, x, y);
 
     return (
         <Wrapper
@@ -118,12 +145,38 @@ const Header = () => {
                             }}
                             onMouseEnter={handleMouseEnter}
                             onMouseLeave={handleMouseLeave}
+                            style={{
+                                background: `${userColor}`,
+                                borderRadius: "50%"
+                            }}
                         >
-                            <img 
-                                src="newUser.png"
+                            {/* <img 
+                                // src="newUser.png"
                                 alt="user's avatar"
                                 style={{ height: "100%" , width: "100%"}}
-                            />
+                            /> */}
+                            <UserAvatarDefault
+                                style={{ 
+                                    position: "absolute",
+                                    // background: `${userColor}`,
+                                    color: 'white',
+                                    fontWeight: "900"
+                                }}
+                                >
+                                {uniqueName.split(uniqueName.charAt(2))[0].toUpperCase().split('')[0]+"  "+uniqueName.split(uniqueName.charAt(2))[0].toUpperCase().split('')[1]}
+                            </UserAvatarDefault>
+                            <UserAvatarDefault
+                                style={{ 
+                                    fontWeight: "900",
+                                    postion: "absolute",
+                                    fontSize: "1.3em",
+                                    zIndex: "115",
+                                    color: "black",
+                                    background: "transparent",
+                                }}
+                            >
+                                {uniqueName.split(uniqueName.charAt(2))[0].toUpperCase()}
+                            </UserAvatarDefault>
                         </UserAvatar>
                     </IconWrapper>
                     { dropdown && (
@@ -175,6 +228,17 @@ const UserAvatar = styled.div`
     width: 30px;
     /* border: 1px solid black; */
     cursor: pointer;
+    position: relative;
+`
+
+const UserAvatarDefault = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    /* background: blue; */
+    border-radius: 50%;
 `
 
 export default Header;

@@ -2,17 +2,19 @@ import React, {useContext, useState, useEffect} from 'react';
 import {CaptureContext} from '../CaptureContext';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom'; 
-import {Image} from 'cloudinary-react';
 import Loading from '../Common/Loader';
+import SingleCapture from '../Common/SingleCapture';
 
 const Home = () => {
     const {
         page,
         setPage,
         userID,
-        friendArray, 
-        setFriendArray
+        // friendArray, 
+        // setFriendArray
     } = useContext(CaptureContext);
+    const [friendArray, setFriendArray] = useState(localStorage.getItem("friends").split(','));
+
     if (page !== "home") {
         setPage("home");
         // window.location.reload();
@@ -22,13 +24,14 @@ const Home = () => {
     { !userID && 
         history.push("/Login")
     }
-    
-    const [loaded, setLoaded] = useState(false);    
-    let animalDataArray = [];
+
     let feedArray = [];
     const [feed, setFeed] = useState(null);
 
+    // LOAD CAPTURES
     const loadCaptures = async () => {
+        let animalDataArray = [];
+
         try{
             // get each user data (includes animal captures) and put into a new array.
             friendArray.forEach( async (friend) => {
@@ -48,6 +51,17 @@ const Home = () => {
                     if (data.status === 400) {
                         console.log("error:" , data.message);
                     }
+                    return(animalDataArray)
+                })
+                .then((animalDataArray) => {
+                    console.log("Double check:", animalDataArray);
+                    animalDataArray.forEach(person => {
+                        console.log("person:", person)
+                        person.captures.animals.forEach((animal => {
+                            feedArray.push(animal);
+                        }))
+                    })
+                    setFeed(feedArray);
                 })
                 .catch((error) => {
                     console.log("A server side error occured while attempting to fetch animal data.");
@@ -56,76 +70,26 @@ const Home = () => {
         } catch (error) {
             console.error("Error:" , error);
         }
-        // store each animal data into an array.
-        await setFeed(animalDataArray);
     }
 
-    // configures the loaded data to the correct format, once done, loading is set to true, page renders.
-    const configCaptures = () => {
-
-        console.log("Double check:", feed);
-        feed.forEach(person => {
-            console.log("person:", person)
-            person.captures.animals.forEach((animal => {
-                feedArray.push(animal);
-            }))
-        })
-        setFeed(feedArray);
-        console.log("FINAL : feed array:" , feedArray);
-    }
-
-    const wait = () => {
-        // setTimeout(func(), 1000);
-        // setTimeout(func() { alert("Hello"); }, 3000);
-    }
-    
+    console.log("Friend list:" , friendArray);
     
     // Load images and animal data into their arrays, set page to loaded so we can render everything below. (gets called once).
     useEffect( async ()=> {
         await loadCaptures()
-        // setTimeout(wait(), 1000);
-        configCaptures()
-        // setTimeout(wait(), 1000);
-        setLoaded(true)
-        // setTimeout(func() , 1000);
     }, [])
 
-    // console.log("FEED:" , feed);
-
-
-    // TO DO: use both image array and animal aray to render:
-    // 1. user unique name who posted it (links to their profile)
-    // 2. image links to map where image was taken (lat, long)
-    // 3. user's commentary on their own image.
-    // 4. more stats?
     return (
         <Wrapper>
             <div>Captures</div>
-            {(loaded) ? (feed.map((aCapture, index) => {
+            {(feed) ? (feed.map((data, index) => {
                 return(
                     <CaptureContent
-                        key={index}
+                    key={index}
                     >
-                        <Top>
-                            <Avatar />
-                            <div>uniqueName</div>
-                            <div>animal</div>
-                        </Top>
-                        <Image
-                            alt="img"
-                            cloudName="capturecapture"
-                            publicId={aCapture.public_id}
-                            width="300"
-                            crop="scale"
+                        <SingleCapture
+                            data={data}
                         />
-                        <Bottom>
-                            <Details>
-                                <div>timestamp?</div>
-                                <div>documented comment</div>
-                            </Details>
-                            <Rate>Rate</Rate>
-                        </Bottom>
-                        
                     </CaptureContent>
                 )
             })) : (
@@ -159,33 +123,5 @@ const CaptureContent = styled.div`
     margin: 5px;
     background: green;
 `
-
-const Top = styled.div`
-    display: flex;
-    flex-direction: row;
-`
-
-const Avatar = styled.div`
-    height: var(--IconHeight);
-    width: var(--IconWidth);
-`
-
-const Bottom = styled.div`
-    
-`
-
-const Details = styled.div`
-    display: flex;
-    flex-direction: row;
-`
-
-const Rate = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-`
-
-
 
 export default Home;

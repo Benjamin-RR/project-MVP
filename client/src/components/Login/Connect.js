@@ -8,6 +8,10 @@ const Connect = async({
     text,
     uniqueName,
     displayName,
+    userColor,
+    setUserColor,
+    friendArray, 
+    setFriendArray,
 }) => {
     // const {
     //     page,
@@ -32,6 +36,18 @@ const Connect = async({
     // Attempt a new user sign up and either:
     // 1: Succeed. 2: Fail (email already existing). 3: let user know server is having issues.
     if (text === "Register") {
+
+        // used to generate a random color for new users.
+        const Color = () => {
+            let letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+              color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+        newUserColor = Color;
+
         await fetch(`/user/new`, {
             method: "POST",
             headers: {
@@ -42,7 +58,7 @@ const Connect = async({
                 password: password,
                 uniqueName: uniqueName,
                 displayName: displayName,
-                avatarId: "default",
+                avatarSrc: {color: newUserColor},
             }),
         })
             .then((response) => response.json())
@@ -51,6 +67,7 @@ const Connect = async({
                 // save current logged on user to local storage.
                 localStorage.setItem("userID", data.data._id);
                 localStorage.setItem("uniqueName", data.data.uniqueName)
+                localStorage.setItem("userColor", newUserColor)
                 localStorage.setItem("friends", [ uniqueName ])
             }
             if (data.status === 400) {
@@ -58,7 +75,7 @@ const Connect = async({
             }
             })
             .catch((error) => {
-                connectStatus = "A server error occured, please refresh your page and try again.";
+                connectStatus = "error while registering, please refresh your page and try again.";
             });
     } else {
         // Attempt to sign in and either:
@@ -77,22 +94,21 @@ const Connect = async({
                 .then((data) => {
                 if (data.status === 200) {
                     // save current logged on user to local storage.
+                    console.log("DATA:" , data)
                     localStorage.setItem("userID", data.data._id);
                     localStorage.setItem("uniqueName", data.data.uniqueName)
+                    localStorage.setItem("userColor", data.data.avatarSrc.userColor)
+                    // setUserColor(data.data.avatarSrc.userColor)
                     localStorage.setItem("friends", data.data.friends)
-
+                    // setFriendArray(data.data.friends)
                 }
                 if (data.status === 400) {
                     connectStatus = data.message;
                 }
                 })
                 .catch((error) => {
-                    connectStatus = "A server error occured, please refresh your page and try again.";
+                    connectStatus = "Error while loggin in, please refresh your page and try again.";
                 });
-
-
-
-
     }
     return connectStatus;
 }

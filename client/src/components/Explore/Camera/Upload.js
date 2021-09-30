@@ -16,7 +16,9 @@ const Upload = () => {
         setPage,
         userID,
         uniqueName,
-        myLocation
+        myLocation,
+        userColor,
+        setUserColor
     } = useContext(CaptureContext);
     setPage("upload");
     
@@ -56,6 +58,7 @@ const Upload = () => {
             method: 'POST',
             body: JSON.stringify({
                 author: uniqueName,
+                userColor: userColor,
                 capture: {
                     location: { lat: myLocation.coords.latitude, lng: myLocation.coords.longitude},
                     authenticScore: 0,
