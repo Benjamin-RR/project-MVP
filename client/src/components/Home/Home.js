@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { useHistory } from 'react-router-dom'; 
 import {Image} from 'cloudinary-react';
 import Loading from '../Common/Loader';
-// import Loading2 from '../Common/Loader2'
 
 const Home = () => {
     const {
@@ -85,40 +84,15 @@ const Home = () => {
     useEffect( async ()=> {
         await loadCaptures()
         // setTimeout(wait(), 1000);
-        // wait();
         configCaptures()
         // setTimeout(wait(), 1000);
         setLoaded(true)
         // setTimeout(func() , 1000);
-
     }, [])
-    // useEffect(() => {
-    //     configCaptures()
-    //     setLoaded(true)
-    // },[feed])
-    
 
     // console.log("FEED:" , feed);
 
-    // if (feed) {
-    //     let animalArray = [];
-    //     feed.forEach(person => {
-    //         // animalArray.push(animal.captures.animals);
-    //         person.captures.animals.forEach((animal => {
-    //             feedArray.push(animal);
-    //         }))
-    //     })
-    //     setfeed2(animalArray);
-        
-    //     console.log("animal array:" , animalArray);
-    //     console.log("FINAL : feed array:" , feedArray);
-    // }
-    // if (feed2) {
-    //     // setFeed(null);
-    //     // setLoaded(true);
-    // }
 
-    
     // TO DO: use both image array and animal aray to render:
     // 1. user unique name who posted it (links to their profile)
     // 2. image links to map where image was taken (lat, long)
