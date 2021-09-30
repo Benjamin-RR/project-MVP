@@ -144,8 +144,12 @@ const Upload = () => {
                 <Input
                     placeholder="Short description (Optional)*"
                     value={description}
+                    maxLength="210"
                     onChange={(e) => {
                         setDescription(e.target.value);
+                        if (value.length === 210) {
+                            alert("max character length reached.")
+                        }
                     }}
                 ></Input>
             </InputWrapper>

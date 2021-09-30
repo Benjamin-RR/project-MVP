@@ -23,6 +23,36 @@ function thisMap() {
         setDynamicMapStyle
     } = useContext(CaptureContext);
     const libraries = ["places"];
+    // const coords = localStorage.getItem("coords")
+    // localStorage.getItem("friends").split(',')
+
+    // if (coords) {
+    //     console.log("true")
+    // } else {
+    //     console.log("false")
+    // }
+
+    // const position = {lat, long} || { lat: myLocation.coords.latitude, lng: myLocation.coords.longitude};
+    // console.log("postion:" , position)
+    let lat, long;
+    
+    if (localStorage.getItem("coords")) {
+        lat = localStorage.getItem("coords").split(',')[0]
+        long = localStorage.getItem("coords").split(',')[1]
+    }
+    console.log("postion:", lat, long);
+
+    let position;
+    if (lat) {
+        console.log("true")
+        position = {lat: Number(lat), lng: Number(long)}
+    } else {
+        console.log("false")
+        position = { lat: myLocation.coords.latitude, lng: myLocation.coords.longitude }
+    }
+
+
+    // lat: myLocation.coords.latitude, lng: myLocation.coords.longitude
 
     // const {isLoaded, loadError} = useLoadScript({
     //     googleMapsApiKey: process.env.REACT_APP_GOOGLE_HEATMAP_KEY,
@@ -38,13 +68,13 @@ function thisMap() {
     const Time = moment().calendar()
     let mapStyle;
     if (dynamicMapStyle) {
-        if (Time.includes("6")) {
-            mapStyle = Rise;
-        }
         if ( Time.includes("P") && ((Time.split(":")[0]).split(" ")[2] < 6) || Time.includes("P") && ((Time.split(":")[0]).split(" ")[2] == 12) || Time.includes("A") && ((Time.split(":")[0]).split(" ")[2] > 6)) {
             mapStyle = Day;
         } else {
             mapStyle = Midnight
+        }
+        if (Time.split(":")[0].includes("6")) {
+            mapStyle = Rise;
         }
     } else {
         mapStyle = Day;
@@ -109,7 +139,7 @@ function thisMap() {
             { (myLocation) ? (
                 <GoogleMap
                     defaultZoom={10}
-                    defaultCenter={{ lat: myLocation.coords.latitude, lng: myLocation.coords.longitude}}
+                    defaultCenter={{ lat: position.lat, lng: position.lng }}
                     defaultOptions={{ 
                         styles: mapStyle,
                         // streetViewControl: false,
@@ -122,7 +152,7 @@ function thisMap() {
                             key={Math.floor(Math.random) * 99999999}
                         >
                             <Marker 
-                                position={{ lat: myLocation.coords.latitude, lng: myLocation.coords.longitude }}
+                                position={{ lat: position.lat, lng: position.lng }}
                                 icon={{
                                     url: `${marker}`,
                                     scaledSize: new window.google.maps.Size(48, 70)
@@ -136,7 +166,7 @@ function thisMap() {
 
                     { selectedMarker && (
                         <InfoWindow
-                            position={{ lat: myLocation.coords.latitude, lng: myLocation.coords.longitude }}
+                            position={{ lat: position.lat, lng: position.lng }}
                             onCloseClick={()=>{
                                 setSelectedMarker(null);
                             }}
@@ -160,8 +190,6 @@ function thisMap() {
 const TheMap = withScriptjs(withGoogleMap(thisMap))
 
 export default function Map() {
-
-    console.log("CHECKING:" , process.env.REACT_APP_GOOGLE_HEATMAP_KEY)
 
     return (
         <MapWrapper>

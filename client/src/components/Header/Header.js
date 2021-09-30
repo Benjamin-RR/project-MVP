@@ -13,6 +13,8 @@ import {AiFillTrophy} from 'react-icons/ai';
 import {AiOutlineTrophy} from 'react-icons/ai'
 import Dropdown from './Dropdown/Dropdown';
 
+import DefaultAvatar from '../Common/DefaultAvatar';
+
 const Header = () => {
     const {
         page,
@@ -29,8 +31,9 @@ const Header = () => {
         // uniqueName, 
         // setUniqueName,
     } = useContext(CaptureContext);
-    const [uniqueName, setUniqueName] = useState(localStorage.getItem("uniqueName"));
     const [userColor, setUserColor] = useState(localStorage.getItem("userColor"));
+    const [uniqueName, setUniqueName] = useState(localStorage.getItem("uniqueName"));
+
     
     let headerHeight = `150px`;
     if (mediaQ.matches === false) {
@@ -71,6 +74,7 @@ const Header = () => {
     // context.strokeText(txt, x, y);
     // context.lineWidth = 1;
     // context.fillText(txt, x, y);
+
 
     return (
         <Wrapper
@@ -150,33 +154,9 @@ const Header = () => {
                                 borderRadius: "50%"
                             }}
                         >
-                            {/* <img 
-                                // src="newUser.png"
-                                alt="user's avatar"
-                                style={{ height: "100%" , width: "100%"}}
-                            /> */}
-                            <UserAvatarDefault
-                                style={{ 
-                                    position: "absolute",
-                                    // background: `${userColor}`,
-                                    color: 'white',
-                                    fontWeight: "900"
-                                }}
-                                >
-                                {uniqueName.split(uniqueName.charAt(2))[0].toUpperCase().split('')[0]+"  "+uniqueName.split(uniqueName.charAt(2))[0].toUpperCase().split('')[1]}
-                            </UserAvatarDefault>
-                            <UserAvatarDefault
-                                style={{ 
-                                    fontWeight: "900",
-                                    postion: "absolute",
-                                    fontSize: "1.3em",
-                                    zIndex: "115",
-                                    color: "black",
-                                    background: "transparent",
-                                }}
-                            >
-                                {uniqueName.split(uniqueName.charAt(2))[0].toUpperCase()}
-                            </UserAvatarDefault>
+                            <DefaultAvatar 
+                                name={uniqueName}
+                            />
                         </UserAvatar>
                     </IconWrapper>
                     { dropdown && (
@@ -229,16 +209,6 @@ const UserAvatar = styled.div`
     /* border: 1px solid black; */
     cursor: pointer;
     position: relative;
-`
-
-const UserAvatarDefault = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-    /* background: blue; */
-    border-radius: 50%;
 `
 
 export default Header;

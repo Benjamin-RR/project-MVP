@@ -14,16 +14,16 @@ const Dropdown = () => {
         setUserID,
         mediaQ,
         setMediaQ,
-        uniqueName,
-        setUniqueName,
+        // uniqueName,
+        // setUniqueName,
         friendClick, 
         setFriendClick,
         settingsClick,
         setSettingsClick,
-        userColor,
-        setUserColor,
-        friendArray, 
-        setFriendArray,
+        // userColor,
+        // setUserColor,
+        // friendArray, 
+        // setFriendArray,
     } = useContext(CaptureContext);
     let history = useHistory();
 
@@ -67,9 +67,9 @@ const Dropdown = () => {
         localStorage.removeItem("userColor");
         localStorage.removeItem("friends");
         setUserID(null);
-        setUniqueName(null);
-        setUserColor(null)
-        setFriendArray(null);
+        // setUniqueName(null);
+        // setUserColor(null)
+        // setFriendArray(null);
         window.location.reload();
     }
 
