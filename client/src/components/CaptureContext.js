@@ -10,7 +10,8 @@ export const CaptureProvider = ({ children }) => {
     const [myLocation, setMyLocation] = useState(null);
     const [friendClick, setFriendClick] = useState(false);
     const [friendArray, setFriendArray] = useState(((localStorage.getItem("friends")).split(",")));
-
+    const [settingsClick, setSettingsClick] = useState(false);
+    const [dynamicMapStyle, setDynamicMapStyle] = useState(true);
 
     // get user's current location
     navigator.geolocation.getCurrentPosition((position) => {
@@ -35,7 +36,11 @@ export const CaptureProvider = ({ children }) => {
             friendClick, 
             setFriendClick,
             friendArray, 
-            setFriendArray
+            setFriendArray,
+            settingsClick,
+            setSettingsClick,
+            dynamicMapStyle,
+            setDynamicMapStyle
         }}>
             {children}
         </CaptureContext.Provider>

@@ -84,10 +84,10 @@ const Home = () => {
     // Load images and animal data into their arrays, set page to loaded so we can render everything below. (gets called once).
     useEffect( async ()=> {
         await loadCaptures()
-        setTimeout(wait(), 1000);
+        // setTimeout(wait(), 1000);
         // wait();
         configCaptures()
-        setTimeout(wait(), 1000);
+        // setTimeout(wait(), 1000);
         setLoaded(true)
         // setTimeout(func() , 1000);
 
@@ -118,6 +118,7 @@ const Home = () => {
     //     // setLoaded(true);
     // }
 
+    
     // TO DO: use both image array and animal aray to render:
     // 1. user unique name who posted it (links to their profile)
     // 2. image links to map where image was taken (lat, long)

@@ -16,16 +16,27 @@ function thisMap() {
         setPage,
         userID,
         myLocation,
-        setMyLocation
+        setMyLocation,
+        dynamicMapStyle,
+        setDynamicMapStyle
     } = useContext(CaptureContext);
 
     const Time = moment().calendar()
+    // console.log("time:", Time, typeof Time);
+    // const newT = Time.split(":");
+    // console.log("new:" , newT);
+    console.log("time:", (Time.split(":")[0]).split(" ")[2] )
+
     let mapStyle;
-    if (Time.includes("6")) {
-        mapStyle = Rise;
-    }
-    if (Time.includes("P")) {
-        mapStyle = Midnight;
+    if (dynamicMapStyle) {
+        if (Time.includes("6")) {
+            mapStyle = Rise;
+        }
+        if ( Time.includes("P") && ((Time.split(":")[0]).split(" ")[2] < 6) || Time.includes("P") && ((Time.split(":")[0]).split(" ")[2] == 12) || Time.includes("A") && ((Time.split(":")[0]).split(" ")[2] > 6)) {
+            mapStyle = Day;
+        } else {
+            mapStyle = Midnight
+        }
     } else {
         mapStyle = Day;
     }

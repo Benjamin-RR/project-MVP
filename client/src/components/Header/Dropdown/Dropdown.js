@@ -17,7 +17,9 @@ const Dropdown = () => {
         uniqueName,
         setUniqueName,
         friendClick, 
-        setFriendClick
+        setFriendClick,
+        settingsClick,
+        setSettingsClick,
     } = useContext(CaptureContext);
     let history = useHistory();
 
@@ -38,14 +40,20 @@ const Dropdown = () => {
         // }    
     }
 
-    // hande friend being clicked
+    // handle friend being clicked
     const handleFriendClick = () => {
         setDropdown(false)
         setFriendClick(true);
         history.push("/Friends")
     }
+    // handle settings being clicked
+    const handleSettingsClick = () => {
+        setDropdown(false)
+        setSettingsClick(true);
+        history.push("/Settings")
+    }
 
-    console.log("friend:", friendClick);
+    // console.log("friend:", friendClick);
 
     // handle sign out.
     const handleSignOut = () => {
@@ -72,7 +80,9 @@ const Dropdown = () => {
                     >Add a friend</DropDownItem>
                     <DropDownItem>Achievements</DropDownItem>
                     <DropDownItem>Help</DropDownItem>
-                    <DropDownItem>Settings</DropDownItem>
+                    <DropDownItem
+                        onClick={handleSettingsClick} type="submit"
+                    >Settings</DropDownItem>
                     <DropDownItem
                         onClick={handleSignOut} type="submit"
                     >Sign Out</DropDownItem>

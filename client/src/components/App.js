@@ -18,6 +18,7 @@ import About from './About';
 import Page404 from './Page404';
 import Footer from './Footer';
 import Friends from './Header/Dropdown/Options/Friends'
+import Settings from './Header/Dropdown/Options/Settings'
 
 const App = () => {
     const {
@@ -49,6 +50,9 @@ const App = () => {
                     <Route exact path="/Friends">
                         <Friends />
                     </Route>
+                    <Route exact path="/Settings">
+                        <Settings />
+                    </Route>
                     <Route exact path="/Explore">
                         <Explore />
                     </Route>
@@ -79,7 +83,9 @@ const App = () => {
 }
 
 const Main = styled.div`
-
+    /* display: flex;
+    height: 100vh;
+    width: 100vw; */
 `
 
 export default App;
