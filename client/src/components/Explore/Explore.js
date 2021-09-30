@@ -27,13 +27,11 @@ const Explore = () => {
 }
 
 const Wrapper = styled.div`
-    padding: 10px;
     display: flex;
     justify-content: space-around;
     align-items: center;
     height: var(--defaultHeight);
     width: 100%;
-    border: 1px solid black;
 `
 
 const MapWrapper = styled.div`
