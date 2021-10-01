@@ -6,10 +6,7 @@ import DefaultAvatar from './DefaultAvatar';
 
 const SingleCapture = (data) => {
     localStorage.removeItem("coords");
-
-
-    let lat = 51.509865;
-    let long = -0.118092
+    localStorage.removeItem("CaptureInfo");
 
     // TO DO:
     // 1. user unique name who posted it (links to their profile)
@@ -37,7 +34,8 @@ const SingleCapture = (data) => {
                 // lat={ 51.509865}
                 // long={-0.118092}
                 onClick={() => {
-                    localStorage.setItem("coords", `${lat},${long}`)
+                    // localStorage.setItem("coords", `${lat},${long}`)
+                    localStorage.setItem("CaptureInfo", JSON.stringify(data) )
                 }}
                 to="/Explore"
             >

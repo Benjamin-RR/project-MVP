@@ -21,9 +21,9 @@ import Friends from './Header/Dropdown/Options/Friends'
 import Settings from './Header/Dropdown/Options/Settings'
 
 const App = () => {
-    const {
-        userID,
-    } = useContext(CaptureContext);
+    // const {
+    //     userID,
+    // } = useContext(CaptureContext);
     
     return(
         <BrowserRouter>

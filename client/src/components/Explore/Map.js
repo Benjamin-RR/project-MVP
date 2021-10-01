@@ -11,7 +11,6 @@ import moment from 'moment';
 import HeatmapLayer from "react-google-maps/lib/components/visualization/HeatmapLayer";
 
 
-
 function thisMap() {
     const {
         page,
@@ -23,33 +22,24 @@ function thisMap() {
         setDynamicMapStyle
     } = useContext(CaptureContext);
     const libraries = ["places"];
-    // const coords = localStorage.getItem("coords")
-    // localStorage.getItem("friends").split(',')
-
-    // if (coords) {
-    //     console.log("true")
-    // } else {
-    //     console.log("false")
-    // }
-
-    // const position = {lat, long} || { lat: myLocation.coords.latitude, lng: myLocation.coords.longitude};
-    // console.log("postion:" , position)
-    let lat, long;
     
-    if (localStorage.getItem("coords")) {
-        lat = localStorage.getItem("coords").split(',')[0]
-        long = localStorage.getItem("coords").split(',')[1]
-    }
-    console.log("postion:", lat, long);
+    let position;   // used to center map.
+    let data;       // used from single capture.
+    data = JSON.parse(localStorage.getItem("CaptureInfo") );
+    // if data from a single capture brought us to this map
+    if (data) {
+        data = [data.data];
+        console.log("DATA FROM SINGLE CAPTURE:" , data[0]);
+        position = {lat: data[0].capture.location.lat, lng: data[0].capture.location.lng}
+    } 
+    else 
+    // if we clicked on the explore / map ourselves.
+    {
 
-    let position;
-    if (lat) {
-        console.log("true")
-        position = {lat: Number(lat), lng: Number(long)}
-    } else {
-        console.log("false")
+        console.log("MY LOCATION:" , myLocation);
         position = { lat: myLocation.coords.latitude, lng: myLocation.coords.longitude }
     }
+    console.log("MAP IS CENTERED ON:" , position);
 
 
     // lat: myLocation.coords.latitude, lng: myLocation.coords.longitude
@@ -64,7 +54,7 @@ function thisMap() {
 
     // return <div>map!</div>;
 
-    // find time, find style dependable upon that time (dawn, day, dusk, night)
+    // find time, find style dependable upon that time (dawn, day, dusk, night) OR if dynamic style is turned 
     const Time = moment().calendar()
     let mapStyle;
     if (dynamicMapStyle) {
@@ -139,7 +129,7 @@ function thisMap() {
             { (myLocation) ? (
                 <GoogleMap
                     defaultZoom={10}
-                    defaultCenter={{ lat: position.lat, lng: position.lng }}
+                    defaultCenter={position}
                     defaultOptions={{ 
                         styles: mapStyle,
                         // streetViewControl: false,
@@ -147,12 +137,23 @@ function thisMap() {
                     }}
                     
                 >
-                    {/* { locations.map(location => { */}
+                    { data.map(each => {
+                        console.log("MAPPED DATA of each:", each);
                         <div
                             key={Math.floor(Math.random) * 99999999}
                         >
                             <Marker 
-                                position={{ lat: position.lat, lng: position.lng }}
+                                position={{ lat: 45.3780541, lng: -72.7243079 }}
+                                icon={{
+                                    url: `${marker}`,
+                                    scaledSize: new window.google.maps.Size(48, 70)
+                                }}
+                                onClick={() => {
+                                    setSelectedMarker(location)
+                                }}
+                            />
+                            <Marker 
+                                position={{ lat: 45.3780541, lng: -72.7243079 }}
                                 icon={{
                                     url: `${marker}`,
                                     scaledSize: new window.google.maps.Size(48, 70)
@@ -162,11 +163,11 @@ function thisMap() {
                                 }}
                             />
                         </div>
-                    {/* })} */}
+                    })}
 
                     { selectedMarker && (
                         <InfoWindow
-                            position={{ lat: position.lat, lng: position.lng }}
+                            position={{ lat: data.capture.location.lat, lng: data.capture.location.lng }}
                             onCloseClick={()=>{
                                 setSelectedMarker(null);
                             }}
