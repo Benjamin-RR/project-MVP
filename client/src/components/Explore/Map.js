@@ -58,10 +58,10 @@ function thisMap() {
     const Time = moment().calendar()
     let mapStyle;
     if (dynamicMapStyle) {
-        if ( Time.includes("P") && ((Time.split(":")[0]).split(" ")[2] < 6) || Time.includes("P") && ((Time.split(":")[0]).split(" ")[2] == 12) || Time.includes("A") && ((Time.split(":")[0]).split(" ")[2] > 6)) {
+        if ( Time.includes("P") && ((Time.split(":")[0]).split(" ")[2] < 6) || Time.includes("P") && ((Time.split(":")[0]).split(" ")[2] == 12) || Time.includes("A") && ((Time.split(":")[0]).split(" ")[2] < 6)) {
             mapStyle = Day;
         } else {
-            mapStyle = Midnight
+            mapStyle = Midnight;
         }
         if (Time.split(":")[0].includes("6")) {
             mapStyle = Rise;
@@ -126,7 +126,7 @@ function thisMap() {
 
     return(
         <>
-            { (myLocation) ? (
+            { (myLocation || data) ? (
                 <GoogleMap
                     defaultZoom={10}
                     defaultCenter={position}
@@ -135,7 +135,6 @@ function thisMap() {
                         // streetViewControl: false,
                         disableDefaultUI: true
                     }}
-                    
                 >
                     { data.map(each => {
                         console.log("MAPPED DATA of each:", each);
@@ -146,11 +145,13 @@ function thisMap() {
                                 position={{ lat: 45.3780541, lng: -72.7243079 }}
                                 icon={{
                                     url: `${marker}`,
-                                    scaledSize: new window.google.maps.Size(48, 70)
+                                    scaledSize: new window.google.maps.Size(48, 70),
+                                    // visible: true
                                 }}
                                 onClick={() => {
                                     setSelectedMarker(location)
                                 }}
+                                // visible="true"
                             />
                             <Marker 
                                 position={{ lat: 45.3780541, lng: -72.7243079 }}

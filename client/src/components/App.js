@@ -7,6 +7,7 @@ import Header from './Header';
 import Home from './Home';
 import DM from './DM';
 import Login from './Login';
+import Rate from './Features/Rate';
 // import Register from './Login/Register';
 import Profile from './Profile';
 import Explore from './Explore';
@@ -37,6 +38,9 @@ const App = () => {
                     </Route>
                     <Route exact path="/Login">
                         <Login />
+                    </Route>
+                    <Route exact path="/Rate">
+                        <Rate />
                     </Route>
                     {/* <Route exact path="/Register">
                         <Register />

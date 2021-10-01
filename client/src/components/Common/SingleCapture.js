@@ -29,12 +29,7 @@ const SingleCapture = (data) => {
                 <Animal>{data.data.capture.animalName}</Animal>
             </Top>
             <ImageWrapper
-                // lat={data.data.capture.location.lat}
-                // long={data.data.capture.location.lng}
-                // lat={ 51.509865}
-                // long={-0.118092}
                 onClick={() => {
-                    // localStorage.setItem("coords", `${lat},${long}`)
                     localStorage.setItem("CaptureInfo", JSON.stringify(data) )
                 }}
                 to="/Explore"

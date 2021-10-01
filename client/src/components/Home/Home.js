@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useHistory } from 'react-router-dom'; 
 import Loading from '../Common/Loader';
 import SingleCapture from '../Common/SingleCapture';
+import LoadCapture from '../Utilities/LoadCapture';
 
 const Home = () => {
     const {
@@ -28,55 +29,55 @@ const Home = () => {
     let feedArray = [];
     const [feed, setFeed] = useState(null);
 
-    // LOAD CAPTURES
-    const loadCaptures = async () => {
-        let animalDataArray = [];
+    // // LOAD CAPTURES
+    // const loadCaptures = async () => {
+    //     let animalDataArray = [];
 
-        try{
-            // get each user data (includes animal captures) and put into a new array.
-            friendArray.forEach( async (friend) => {
-                await fetch('/user/info', {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        friend
-                    }),
-                    headers: {'Content-type': 'application/json'}
-                })
-                .then((response) => response.json())
-                .then((data) => {
-                    if (data.status === 200) {
-                        const userData = data.data;
-                            animalDataArray.push(userData);
-                    }
-                    if (data.status === 400) {
-                        console.log("error:" , data.message);
-                    }
-                    return(animalDataArray)
-                })
-                .then((animalDataArray) => {
-                    console.log("Double check:", animalDataArray);
-                    animalDataArray.forEach(person => {
-                        console.log("person:", person)
-                        person.captures.animals.forEach((animal => {
-                            feedArray.push(animal);
-                        }))
-                    })
-                    setFeed(feedArray);
-                })
-                .catch((error) => {
-                    console.log("A server side error occured while attempting to fetch animal data.");
-                });
-            })
-        } catch (error) {
-            console.error("Error:" , error);
-        }
-    }
+    //     try{
+    //         // get each user data (includes animal captures) and put into a new array.
+    //         friendArray.forEach( async (friend) => {
+    //             await fetch('/user/info', {
+    //                 method: 'POST',
+    //                 body: JSON.stringify({
+    //                     friend
+    //                 }),
+    //                 headers: {'Content-type': 'application/json'}
+    //             })
+    //             .then((response) => response.json())
+    //             .then((data) => {
+    //                 if (data.status === 200) {
+    //                     const userData = data.data;
+    //                         animalDataArray.push(userData);
+    //                 }
+    //                 if (data.status === 400) {
+    //                     console.log("error:" , data.message);
+    //                 }
+    //                 return(animalDataArray)
+    //             })
+    //             .then((animalDataArray) => {
+    //                 console.log("Double check:", animalDataArray);
+    //                 animalDataArray.forEach(person => {
+    //                     console.log("person:", person)
+    //                     person.captures.animals.forEach((animal => {
+    //                         feedArray.push(animal);
+    //                     }))
+    //                 })
+    //                 setFeed(feedArray);
+    //             })
+    //             .catch((error) => {
+    //                 console.log("A server side error occured while attempting to fetch animal data.");
+    //             });
+    //         })
+    //     } catch (error) {
+    //         console.error("Error:" , error);
+    //     }
+    // }
 
-    console.log("Friend list:" , friendArray);
+    // console.log("Friend list:" , friendArray);
     
     // Load images and animal data into their arrays, set page to loaded so we can render everything below. (gets called once).
     useEffect( async ()=> {
-        await loadCaptures()
+        await loadCaptures() 
     }, [])
 
     return (
