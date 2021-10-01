@@ -15,10 +15,10 @@ const Upload = () => {
         page,
         setPage,
         userID,
-        uniqueName,
+        // uniqueName,
         myLocation,
-        userColor,
-        setUserColor
+        // userColor,
+        // setUserColor
     } = useContext(CaptureContext);
     setPage("upload");
     
@@ -27,10 +27,15 @@ const Upload = () => {
         history.push("/Login")
     }
 
+    console.log("my location:" , myLocation);
+    
+    
     // for displaying different layout on image select.
     const [grid, setGrid] = useState(false)
     const imgArray = [];
     // for database.
+    const [uniqueName, setUniqueName] = useState(localStorage.getItem("uniqueName"));
+    const [userColor, setSetUserColor] = useState(localStorage.getItem("userColor"));
     const [previewSource, setPreviewSource] = useState('');
     const [animalName, setAnimalName] = useState('');
     const [description, setDescription] = useState(null);

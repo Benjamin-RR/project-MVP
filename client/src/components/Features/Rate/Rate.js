@@ -1,24 +1,22 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
-import SingleCapture from '../Common/SingleCapture';
+import SingleCapture from '../../Common/SingleCapture';
 
 // icons
 import {BsStar} from 'react-icons/bs';
 import {BsStarFill} from 'react-icons/bs';
 
 const Rate = () => {
-    const [stars, setStars] = useState(5);
+    const [stars, setStars] = useState(0);
 
-    const handleStarClick = (stars) => {
-
+    // HANDLE SUBMIT / STAR CLICK
+    const handleStarClick = (e) => {
+        e.preventDefault();
+        setStars(e.target.value)
+        // setStars(5)
+        console.log("stars on click:", stars);
     }
 
-    const handleMouseEnter = (value) => {
-        // setStars(value)
-    }
-    const handleMouseLeave = (value) => {
-        // setStars(value)
-    }
 
     return(
         <Wrapper>
@@ -37,14 +35,18 @@ const Rate = () => {
                 /> */}
                 </Card>
                 <Stars
-                    onMouseLeave={handleMouseLeave(1)}
+                    onMouseLeave={(e) => {
+                        setStars(0)
+                    }}
                 >
 
                     {stars > 0 ? (
                         <Icon
-                            i
-                            onClick={handleStarClick(1)}
-                            onMouseEnter={handleMouseEnter(1)}
+                            type="submit"
+                            onClick={handleStarClick}
+                            onMouseEnter={(e) => {
+                                setStars(1)
+                            }}
                         >
                             <BsStarFill 
                                 style={{ height: "100%", width: "100%"}}
@@ -52,8 +54,11 @@ const Rate = () => {
                         </Icon>
                     ) : (
                         <Icon
-                        onClick={handleStarClick(1)}
-                        onMouseEnter={handleMouseEnter(1)}
+                        type="submit"
+                        onClick={handleStarClick}
+                        onMouseEnter={(e) => {
+                            setStars(1)
+                        }}
                     >
                         <BsStar 
                             style={{ height: "100%", width: "100%"}}
@@ -63,8 +68,11 @@ const Rate = () => {
 
                     {stars > 1 ? (
                         <Icon
-                            onClick={handleStarClick(2)}
-                            onMouseEnter={handleMouseEnter(2)}
+                            type="submit"
+                            onClick={handleStarClick}
+                            onMouseEnter={(e) => {
+                                setStars(2)
+                            }}
                         >
                             <BsStarFill 
                                 style={{ height: "100%", width: "100%"}}
@@ -72,8 +80,11 @@ const Rate = () => {
                         </Icon>
                     ) : (
                         <Icon
-                        onClick={handleStarClick(2)}
-                        onMouseEnter={handleMouseEnter(2)}
+                        type="submit"
+                        onClick={handleStarClick}
+                        onMouseEnter={(e) => {
+                            setStars(2)
+                        }}
                     >
                         <BsStar 
                             style={{ height: "100%", width: "100%"}}
@@ -83,8 +94,11 @@ const Rate = () => {
 
                     {stars > 2 ? (
                         <Icon
-                            onClick={handleStarClick(3)}
-                            onMouseEnter={handleMouseEnter(3)}
+                            type="submit"
+                            onClick={handleStarClick}
+                            onMouseEnter={(e) => {
+                                setStars(3)
+                            }}
                         >
                             <BsStarFill 
                                 style={{ height: "100%", width: "100%"}}
@@ -92,9 +106,12 @@ const Rate = () => {
                         </Icon>
                     ) : ( 
                         <Icon
-                        onClick={handleStarClick(3)}
-                        onMouseEnter={handleMouseEnter(3)}
-                    >
+                            type="submit"
+                            onClick={handleStarClick}
+                            onMouseEnter={(e) => {
+                                setStars(3)
+                            }}
+                        >
                         <BsStar 
                             style={{ height: "100%", width: "100%"}}
                         />
@@ -103,8 +120,11 @@ const Rate = () => {
 
                     {stars > 3 ? (
                         <Icon
-                            onClick={handleStarClick(4)}
-                            onMouseEnter={handleMouseEnter(4)}
+                            type="submit"
+                            onClick={handleStarClick}
+                            onMouseEnter={(e) => {
+                                setStars(4)
+                            }}
                         >
                             <BsStarFill 
                                 style={{ height: "100%", width: "100%"}}
@@ -112,8 +132,11 @@ const Rate = () => {
                         </Icon>
                     ) : (
                         <Icon
-                            onClick={handleStarClick(4)}
-                            onMouseEnter={handleMouseEnter(4)}
+                            type="submit"
+                            onClick={handleStarClick}
+                            onMouseEnter={(e) => {
+                                setStars(4)
+                            }}
                         >
                             <BsStar 
                                 style={{ height: "100%", width: "100%"}}
@@ -123,8 +146,11 @@ const Rate = () => {
 
                     {stars > 4 ? (
                         <Icon
-                            onClick={handleStarClick(5)}
-                            onMouseEnter={handleMouseEnter(5)}
+                            type="submit"
+                            onClick={handleStarClick}
+                            onMouseEnter={(e) => {
+                                setStars(5)
+                            }}
                         >
                             <BsStarFill 
                                 style={{ height: "100%", width: "100%"}}
@@ -132,8 +158,11 @@ const Rate = () => {
                         </Icon>
                     ) : (
                         <Icon
-                        onClick={handleStarClick(5)}
-                        onMouseEnter={handleMouseEnter(5)}
+                        type="submit"
+                        onClick={handleStarClick}
+                        onMouseEnter={(e) => {
+                            setStars(5)
+                        }}
                     >
                         <BsStar 
                             style={{ height: "100%", width: "100%"}}
@@ -213,13 +242,13 @@ const Card = styled.div`
 const Stars = styled.div`
     display: flex;
     flex-direction: row;
-    cursor: pointer;
-`
+    `
 
 const Icon = styled.div`
     height: 40px;
     width: 40px;
     margin: 5px;
+    cursor: pointer;
     color: goldenrod;
     /* border: 1px solid black; */
     &:hover{

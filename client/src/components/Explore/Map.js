@@ -8,7 +8,7 @@ import GoogleMapReact from 'react-google-maps';
 import styled from "styled-components";
 import Loader from '../Common/Loader'
 import moment from 'moment';
-import HeatmapLayer from "react-google-maps/lib/components/visualization/HeatmapLayer";
+// import HeatmapLayer from "react-google-maps/lib/components/visualization/HeatmapLayer";
 
 
 function thisMap() {
@@ -145,6 +145,7 @@ function thisMap() {
                                 position={{ lat: 45.3780541, lng: -72.7243079 }}
                                 icon={{
                                     url: `${marker}`,
+                                    // url: `/markerVerified.png`,
                                     scaledSize: new window.google.maps.Size(48, 70),
                                     // visible: true
                                 }}
@@ -153,7 +154,7 @@ function thisMap() {
                                 }}
                                 // visible="true"
                             />
-                            <Marker 
+                            {/* <Marker 
                                 position={{ lat: 45.3780541, lng: -72.7243079 }}
                                 icon={{
                                     url: `${marker}`,
@@ -162,7 +163,7 @@ function thisMap() {
                                 onClick={() => {
                                     setSelectedMarker(location)
                                 }}
-                            />
+                            /> */}
                         </div>
                     })}
 

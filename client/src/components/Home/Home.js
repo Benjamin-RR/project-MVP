@@ -15,10 +15,12 @@ const Home = () => {
         // setFriendArray
     } = useContext(CaptureContext);
     const [friendArray, setFriendArray] = useState(localStorage.getItem("friends").split(','));
+    const [feed, setFeed] = useState(null);
 
     if (page !== "home") {
         setPage("home");
-        // window.location.reload();
+        setFeed(null);
+        window.location.reload();
     }
     
     let history = useHistory();
@@ -27,7 +29,6 @@ const Home = () => {
     }
 
     // let feedArray = [];
-    const [feed, setFeed] = useState(null);
     // let feed;
 
     // // LOAD CAPTURES
@@ -95,6 +96,7 @@ const Home = () => {
                         <SingleCapture
                             data={data}
                         />
+                        <Rate>Rate</Rate>
                     </CaptureContent>
                 )
             })) : (
@@ -121,12 +123,31 @@ const CaptureContent = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 400px;
+    /* height: 400px; */
     width: 320px;
     border: 1px solid black;
     padding: 5px;
     margin: 5px;
     background: green;
+`
+
+const Rate = styled.button`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* padding: 5px; */
+    /* margin: 5px; */
+    margin-top: auto;
+    width: 100px;
+    border-radius: 7px;
+    border: 1px solid black;
+    cursor: pointer;
+    &:hover{
+        
+    }
+    &:active{
+
+    }
 `
 
 export default Home;
