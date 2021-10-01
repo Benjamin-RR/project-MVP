@@ -5,6 +5,8 @@ import { useHistory } from 'react-router-dom';
 import Loading from '../Common/Loader';
 import SingleCapture from '../Common/SingleCapture';
 import {LoadCapture} from '../Utilities/LoadCapture';
+import {Link} from 'react-router-dom';
+
 
 const Home = () => {
     const {
@@ -93,10 +95,17 @@ const Home = () => {
                     <CaptureContent
                     key={index}
                     >
-                        <SingleCapture
-                            data={data}
-                        />
-                        <Rate>Rate</Rate>
+                        <Card>
+                            <SingleCapture
+                                data={data}
+                            />
+                        </Card>
+                        <Rate
+                            // onClick={() => {
+                            //     localStorage.setItem("CaptureInfo", JSON.stringify(data) )
+                            // }}
+                            to="/Rate"
+                        >Rate</Rate>
                     </CaptureContent>
                 )
             })) : (
@@ -119,6 +128,19 @@ const Wrapper = styled.div`
 `
 
 const CaptureContent = styled.div`
+    /* display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+    width: 320px;
+    border: 1px solid black;
+    padding: 5px;
+    margin: 5px;
+    background: green; */
+`
+
+const Card = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -126,27 +148,29 @@ const CaptureContent = styled.div`
     /* height: 400px; */
     width: 320px;
     border: 1px solid black;
-    padding: 5px;
+    /* padding: 5px; */
     margin: 5px;
-    background: green;
+    /* background: green; */
 `
 
-const Rate = styled.button`
+const Rate = styled(Link)`
     display: flex;
     justify-content: center;
     align-items: center;
-    /* padding: 5px; */
-    /* margin: 5px; */
-    margin-top: auto;
+    padding: 5px;
+    margin-bottom: 50px;
+    margin-left: auto;
+    margin-right: 20px;
     width: 100px;
     border-radius: 7px;
     border: 1px solid black;
     cursor: pointer;
+    text-decoration: none;
     &:hover{
-        
+        transform: scale(125%) ease-in-out 1000ms;
     }
     &:active{
-
+        transform: scale(95%);
     }
 `
 

@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
+import { CaptureContext } from '../../CaptureContext';
 import styled from 'styled-components';
 import SingleCapture from '../../Common/SingleCapture';
 
@@ -7,15 +8,47 @@ import {BsStar} from 'react-icons/bs';
 import {BsStarFill} from 'react-icons/bs';
 
 const Rate = () => {
+    const {
+        page,
+        setPage,
+        userID,
+        // friendArray, 
+        // setFriendArray
+    } = useContext(CaptureContext);
+
+    setPage("rate");
+
+
     const [stars, setStars] = useState(0);
+    const [starVote, setStarVote] = useState(0)
+    const [vote, setVote] = useState(null);
+    
 
     // HANDLE SUBMIT / STAR CLICK
     const handleStarClick = (e) => {
         e.preventDefault();
-        setStars(e.target.value)
-        // setStars(5)
+        setStarVote(stars)
         console.log("stars on click:", stars);
+        areWeGood();
     }
+
+    // HANDLE SUBMIT / VOTE CLICK
+    const handleVoteClick = (e) => {
+        // e.preventDefault();
+        // setVote(e.target.value)
+        areWeGood();
+    }
+
+    // checks to see if we are good to move on and submit
+    const areWeGood = () => {
+        if (stars === 0 || !vote) {
+            console.log("NOT READY")
+            return;
+        }
+        console.log("READY")
+    }
+
+    console.log("STARS:" , stars, "STAR VOTE:" , starVote);
 
 
     return(
@@ -23,11 +56,53 @@ const Rate = () => {
             <Text>Is this what the user says it is?</Text>
             <ContentWrapper>
                 <Top>
-                    <Button>UNSURE</Button>
-                    <LeftToRight>
-                        <Button>TRUE</Button>
-                        <Button>FALSE</Button>
-                    </LeftToRight>
+                    {vote ? (
+                        <Revote
+                            onClick={() => {
+                                setVote(null);
+                                handleVoteClick();
+                                areWeGood();
+                            }}
+                        >REVOTE</Revote>
+                    ):(
+                        <>
+                            <Button
+                                type="submit"
+                                // onMouseEnter={(e) => {
+                                //     setVote("UNSURE")
+                                // }}
+                                onClick={() => {
+                                    setVote("UNSURE");
+                                    handleVoteClick();
+                                    areWeGood();
+                                }}
+                            >UNSURE</Button>
+                            <LeftToRight>
+                                <Button
+                                    type="submit"
+                                    // onMouseEnter={(e) => {
+                                    //     setVote("TRUE")
+                                    // }}
+                                    onClick={() => {
+                                        setVote("TRUE");
+                                        handleVoteClick();
+                                        areWeGood();
+                                    }}
+                            >TRUE</Button>
+                                <Button
+                                    type="submit"
+                                    // onMouseEnter={(e) => {
+                                    //     setVote("FALSE")
+                                    // }}
+                                    onClick={() => {
+                                        setVote("FALSE");
+                                        handleVoteClick();
+                                        areWeGood();
+                                    }}
+                                >FALSE</Button>
+                            </LeftToRight>
+                        </>
+                    )}
                 </Top>
                 <Card>
                     {/* <SingleCapture 
@@ -36,7 +111,7 @@ const Rate = () => {
                 </Card>
                 <Stars
                     onMouseLeave={(e) => {
-                        setStars(0)
+                        setStars(starVote)
                     }}
                 >
 
@@ -54,12 +129,12 @@ const Rate = () => {
                         </Icon>
                     ) : (
                         <Icon
-                        type="submit"
-                        onClick={handleStarClick}
-                        onMouseEnter={(e) => {
-                            setStars(1)
-                        }}
-                    >
+                            type="submit"
+                            onClick={handleStarClick}
+                            onMouseEnter={(e) => {
+                                setStars(1)
+                            }}
+                        >
                         <BsStar 
                             style={{ height: "100%", width: "100%"}}
                         />
@@ -80,12 +155,12 @@ const Rate = () => {
                         </Icon>
                     ) : (
                         <Icon
-                        type="submit"
-                        onClick={handleStarClick}
-                        onMouseEnter={(e) => {
-                            setStars(2)
-                        }}
-                    >
+                            type="submit"
+                            onClick={handleStarClick}
+                            onMouseEnter={(e) => {
+                                setStars(2)
+                            }}
+                        >
                         <BsStar 
                             style={{ height: "100%", width: "100%"}}
                         />
@@ -225,7 +300,11 @@ const Button = styled.button`
     &:active{
         transform: rotate(1.014turn) scale(110%);
     }
-`
+    `
+    
+    const Revote = styled(Button)`
+        /* width: 100%; */
+    `
 
 const LeftToRight = styled.div`
     display: flex;

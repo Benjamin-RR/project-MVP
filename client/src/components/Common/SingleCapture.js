@@ -22,7 +22,12 @@ const SingleCapture = (data) => {
             <Wrapper>
                 <Top>
                     <AvatarAndAuthor>
-                        <Avatar>
+                        <Avatar
+                            onClick={() => {
+                                localStorage.setItem("CaptureInfo", JSON.stringify(data) )
+                            }}
+                            to="/Profile"
+                        >
                             <DefaultAvatar 
                                 name={data.data.author}
                                 color={data.data.userColor}
@@ -43,7 +48,7 @@ const SingleCapture = (data) => {
                         alt="img"
                         cloudName="capturecapture"
                         publicId={data.data.public_id}
-                        width="296"
+                        width="300"
                         crop="scale"
                         // style={{ display: "flex" , justifyContent: "center", alignItems: "center"}}
                     />
@@ -120,7 +125,9 @@ const Animal = styled.div`
 `
 
 const ImageWrapper = styled(Link)`
-    /* position: relative; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border: 1px solid black;
     cursor: pointer;
 `
