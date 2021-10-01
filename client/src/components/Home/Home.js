@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useHistory } from 'react-router-dom'; 
 import Loading from '../Common/Loader';
 import SingleCapture from '../Common/SingleCapture';
-import LoadCapture from '../Utilities/LoadCapture';
+import {LoadCapture} from '../Utilities/LoadCapture';
 
 const Home = () => {
     const {
@@ -26,8 +26,9 @@ const Home = () => {
         history.push("/Login")
     }
 
-    let feedArray = [];
+    // let feedArray = [];
     const [feed, setFeed] = useState(null);
+    // let feed;
 
     // // LOAD CAPTURES
     // const loadCaptures = async () => {
@@ -77,9 +78,12 @@ const Home = () => {
     
     // Load images and animal data into their arrays, set page to loaded so we can render everything below. (gets called once).
     useEffect( async ()=> {
-        await loadCaptures() 
+        // await loadCaptures()
+        const results = await LoadCapture(friendArray)
+        setFeed(results)
     }, [])
-
+    
+    
     return (
         <Wrapper>
             <div>Captures</div>

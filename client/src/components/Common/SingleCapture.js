@@ -8,6 +8,8 @@ const SingleCapture = (data) => {
     localStorage.removeItem("coords");
     localStorage.removeItem("CaptureInfo");
 
+    console.log("Data in single capture component:" , data);
+
     // TO DO:
     // 1. user unique name who posted it (links to their profile)
     // 2. image links to map where image was taken (lat, long)

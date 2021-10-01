@@ -1,9 +1,11 @@
 // LOAD CAPTURES
 
-const LoadCapture = async (arrayToLoad) => {
-    const [friendArray, setFriendArray] = useState(localStorage.getItem("friends").split(','));
+// giving this component an array of unique names will return all unique name's captures. there is no limit to how few or many you can ask it.
+export const LoadCapture = async (arrayToLoad) => {
+    const friendArray = arrayToLoad;
     let feedArray = [];
-    const [feed, setFeed] = useState(null);
+    // const [feed, setFeed] = useState(null);
+    let feed = [];
 
     let animalDataArray = [];
     // const [friendArray, setFriendArray] = useState(localStorage.getItem("friends").split(','));
@@ -38,7 +40,9 @@ const LoadCapture = async (arrayToLoad) => {
                         feedArray.push(animal);
                     }))
                 })
-                setFeed(feedArray);
+                // setFeed(feedArray);
+                // feed.push()
+                // console.log("feed array:" , feedArray);
             })
             .catch((error) => {
                 console.log("A server side error occured while attempting to fetch animal data.");
@@ -47,8 +51,9 @@ const LoadCapture = async (arrayToLoad) => {
     } catch (error) {
         console.error("Error:" , error);
     }
-    
+    console.log("feed array:" , feedArray);
 
+    return feedArray;
 }
 
 // const Wrapper = styled.div`
@@ -62,4 +67,4 @@ const LoadCapture = async (arrayToLoad) => {
 //     border: 1px solid black;
 // `
 
-export default LoadCapture;
+// export default LoadCapture;
