@@ -16,6 +16,10 @@ import Camera from './Explore/Camera/Camera';
 import Upload from './Explore/Camera/Upload';
 import Leaderboard from './Leaderboard';
 import About from './About';
+import Blog from './Features/Blog/Blog'
+import Help from './Features/Help/Help'
+import Terms from './Features/Terms/Terms'
+import Contact from './Features/Contact/Contact'
 import Page404 from './Page404';
 import Footer from './Footer';
 import Friends from './Header/Dropdown/Options/Friends'
@@ -74,6 +78,18 @@ const App = () => {
                     </Route>
                     <Route exact path="/About">
                         <About />
+                    </Route>
+                    <Route exact path="/Blog">
+                        <Blog />
+                    </Route>
+                    <Route exact path="/Help">
+                        <Help />
+                    </Route>
+                    <Route exact path="/Terms">
+                        <Terms />
+                    </Route>
+                    <Route exact path="/Contact">
+                        <Contact />
                     </Route>
                     <Route exact path="/404">
                         <Page404 />
