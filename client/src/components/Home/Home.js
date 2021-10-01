@@ -14,7 +14,9 @@ const Home = () => {
         setPage,
         userID,
         // friendArray, 
-        // setFriendArray
+        // setFriendArray,
+        currentCapture,
+        setCurrentCapture
     } = useContext(CaptureContext);
     const [friendArray, setFriendArray] = useState(localStorage.getItem("friends").split(','));
     const [feed, setFeed] = useState(null);
@@ -104,6 +106,9 @@ const Home = () => {
                             // onClick={() => {
                             //     localStorage.setItem("CaptureInfo", JSON.stringify(data) )
                             // }}
+                            onClick={() => {
+                                setCurrentCapture(data)
+                            }}
                             to="/Rate"
                         >Rate</Rate>
                     </CaptureContent>

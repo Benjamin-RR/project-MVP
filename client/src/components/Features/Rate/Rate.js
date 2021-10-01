@@ -12,15 +12,18 @@ const Rate = () => {
         page,
         setPage,
         userID,
-        // friendArray, 
-        // setFriendArray
+        // friendArray,
+        // setFriendArray,
+        currentCapture,
+        setCurrentCapture,
     } = useContext(CaptureContext);
 
     setPage("rate");
 
+    console.log("current capture is:" , currentCapture);
 
     const [stars, setStars] = useState(0);
-    const [starVote, setStarVote] = useState(0)
+    const [starVote, setStarVote] = useState(0);
     const [vote, setVote] = useState(null);
     
 
@@ -29,24 +32,26 @@ const Rate = () => {
         e.preventDefault();
         setStarVote(stars)
         console.log("stars on click:", stars);
-        areWeGood();
+        // areWeGood();
     }
 
     // HANDLE SUBMIT / VOTE CLICK
     const handleVoteClick = (e) => {
         // e.preventDefault();
         // setVote(e.target.value)
-        areWeGood();
+        // areWeGood();
     }
 
     // checks to see if we are good to move on and submit
-    const areWeGood = () => {
-        if (stars === 0 || !vote) {
+    // const areWeGood = () => {
+        if (!starVote || !vote) {
             console.log("NOT READY")
-            return;
+            // return;
+        } else {
+
+            console.log("READY")
         }
-        console.log("READY")
-    }
+    // }
 
     console.log("STARS:" , stars, "STAR VOTE:" , starVote);
 
@@ -61,7 +66,6 @@ const Rate = () => {
                             onClick={() => {
                                 setVote(null);
                                 handleVoteClick();
-                                areWeGood();
                             }}
                         >REVOTE</Revote>
                     ):(
@@ -74,7 +78,7 @@ const Rate = () => {
                                 onClick={() => {
                                     setVote("UNSURE");
                                     handleVoteClick();
-                                    areWeGood();
+                                    // areWeGood();
                                 }}
                             >UNSURE</Button>
                             <LeftToRight>
@@ -86,7 +90,7 @@ const Rate = () => {
                                     onClick={() => {
                                         setVote("TRUE");
                                         handleVoteClick();
-                                        areWeGood();
+                                        // areWeGood();
                                     }}
                             >TRUE</Button>
                                 <Button
@@ -97,18 +101,20 @@ const Rate = () => {
                                     onClick={() => {
                                         setVote("FALSE");
                                         handleVoteClick();
-                                        areWeGood();
+                                        // areWeGood();
                                     }}
                                 >FALSE</Button>
                             </LeftToRight>
                         </>
                     )}
                 </Top>
+
                 <Card>
-                    {/* <SingleCapture 
-                
-                /> */}
+                    <SingleCapture 
+                        data={currentCapture}
+                    />
                 </Card>
+
                 <Stars
                     onMouseLeave={(e) => {
                         setStars(starVote)
@@ -256,7 +262,7 @@ const Wrapper = styled.div`
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    height: var(--defaultHeight);
+    /* height: var(--defaultHeight); */
     width: 100%;
     border: 1px solid black;
 `
@@ -279,8 +285,8 @@ const ContentWrapper = styled.div`
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    height: 400px;
-    width: 300px;
+    /* height: 400px; */
+    /* width: 100%; */
     border: 1px solid black;
 `
 
@@ -312,7 +318,7 @@ const LeftToRight = styled.div`
 `
 
 const Card = styled.div`
-    height: 100%;
+    /* height: 100%; */
     width: 100%;
     border: 1px solid black;
     margin: 5px;

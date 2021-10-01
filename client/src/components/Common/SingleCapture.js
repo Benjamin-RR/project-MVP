@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import { CaptureContext } from '../CaptureContext';
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
 import {Image} from 'cloudinary-react';
@@ -6,6 +7,15 @@ import DefaultAvatar from './DefaultAvatar';
 // import Badge from '/verified.png'
 
 const SingleCapture = (data) => {
+    const {
+        page,
+        setPage,
+        userID,
+        // friendArray, 
+        // setFriendArray,
+        currentCapture,
+        setCurrentCapture
+    } = useContext(CaptureContext);
     localStorage.removeItem("coords");
     localStorage.removeItem("CaptureInfo");
 
