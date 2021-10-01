@@ -152,9 +152,9 @@ const Upload = () => {
                     maxLength="210"
                     onChange={(e) => {
                         setDescription(e.target.value);
-                        if (value.length === 210) {
-                            alert("max character length reached.")
-                        }
+                        // if (value.length === 210) {
+                        //     alert("max character length reached.")
+                        // }
                     }}
                 ></Input>
             </InputWrapper>

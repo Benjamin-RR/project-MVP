@@ -113,7 +113,7 @@ const Wrapper = styled.div`
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    height: var(--defaultHeight);
+    /* height: var(--defaultHeight); */
     width: 100%;
     border: 1px solid black;
 `

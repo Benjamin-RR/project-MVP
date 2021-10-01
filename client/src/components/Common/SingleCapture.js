@@ -18,9 +18,8 @@ const SingleCapture = (data) => {
     // 1. user unique name who posted it (links to their profile)
     // 2. image links to map where image was taken (lat, long)
     return(
-            <Wrapper2>
-        <Wrapper>
-
+        <Wrapper2>
+            <Wrapper>
                 <Top>
                     <AvatarAndAuthor>
                         <Avatar>
@@ -62,8 +61,8 @@ const SingleCapture = (data) => {
                         )}
                     </Details>
                 </Bottom>
-        </Wrapper>
-            </Wrapper2>
+            </Wrapper>
+        </Wrapper2>
     )
 }
 
@@ -73,7 +72,7 @@ const Wrapper = styled.div`
     flex-direction: column;
     /* justify-content: space-around; */
     /* align-items: center; */
-    height: var(--defaultHeight);
+    /* height: var(--defaultHeight); */
     width: 100%;
     background: green;
     border: 1px solid black;
@@ -126,6 +125,16 @@ const ImageWrapper = styled(Link)`
     cursor: pointer;
 `
 
+const Badge = styled.img`
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    top: 70px;
+    left: 244px;
+    /* background: red; */
+    src: 'url("/verified.png)';
+`
+
 const Avatar = styled.div`
     height: var(--IconHeight);
     width: var(--IconWidth);
@@ -142,7 +151,6 @@ const Bottom = styled.div`
     height: 100%;
     width: 100%;
     border: 1px solid black;
-
 `
 
 const Details = styled.div`
@@ -165,16 +173,6 @@ const Text = styled.div`
     width: 100%;
     height: 100px;
     background: lightgreen; 
-`
-
-const Badge = styled.img`
-    position: absolute;
-    height: 50px;
-    width: 50px;
-    top: 70px;
-    left: 244px;
-    /* background: red; */
-    src: 'url("/verified.png)';
 `
 
 export default SingleCapture
