@@ -10,7 +10,9 @@ export const CaptureProvider = ({ children }) => {
     const [mediaQ, setMediaQ] = useState(window.matchMedia('(min-width: 600px'))
     const [page, setPage] = useState("home");
     const [settingsClick, setSettingsClick] = useState(false);
+    const [badgeSetting, setBadgeSetting] = useState(true);
     const [dynamicMapStyle, setDynamicMapStyle] = useState(true);
+    
 
     // for dropdown
     const [dropdown, setDropdown] = useState(false);
@@ -55,6 +57,8 @@ export const CaptureProvider = ({ children }) => {
             // setFriendArray,
             settingsClick,
             setSettingsClick,
+            badgeSetting, 
+            setBadgeSetting,
             dynamicMapStyle,
             setDynamicMapStyle,
             // userColor,

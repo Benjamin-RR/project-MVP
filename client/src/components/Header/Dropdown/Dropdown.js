@@ -50,6 +50,10 @@ const Dropdown = () => {
         setFriendClick(true);
         history.push("/Friends")
     }
+    const handleHelpClick = () => {
+        setDropdown(false)
+        history.push("/Help")
+    }
     // handle settings being clicked
     const handleSettingsClick = () => {
         setDropdown(false)
@@ -87,7 +91,9 @@ const Dropdown = () => {
                         onClick={handleFriendClick} type="submit"
                     >Add a friend</DropDownItem>
                     <DropDownItem>Achievements</DropDownItem>
-                    <DropDownItem>Help</DropDownItem>
+                    <DropDownItem
+                        onClick={handleHelpClick} type="submit"
+                    >Help</DropDownItem>
                     <DropDownItem
                         onClick={handleSettingsClick} type="submit"
                     >Settings</DropDownItem>

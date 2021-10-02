@@ -2,8 +2,8 @@ import React, {useContext} from 'react'
 import { CaptureContext } from '../../../CaptureContext'
 import styled from 'styled-components';
 // icons
-import {BsToggleOn} from 'react-icons';
-import {BsToggleOff} from 'react-icons';
+import {BsToggleOn} from 'react-icons/bs';
+import {BsToggleOff} from 'react-icons/bs';
 
 const Settings = () => {
     const {
@@ -19,17 +19,14 @@ const Settings = () => {
         setUniqueName,
         friendClick, 
         setFriendClick,
+        badgeSetting, 
+        setBadgeSetting,
         dynamicMapStyle,
         setDynamicMapStyle
     } = useContext(CaptureContext);
     setPage("settings");
 
-    // handle all settings clicked.
-    const handleSettingsClick = (value) => {
-        if (value = "Dynamic Map") {
-
-        }
-    }
+    console.log("badge:", badgeSetting, "map style:" , dynamicMapStyle);
 
     return(
         <Wrapper>
@@ -39,25 +36,57 @@ const Settings = () => {
                     <SubTitle>Feature</SubTitle>
                     <SideBySide>
                         <Column>
-                            <Text>something</Text>
+                            <Text>Badge Display Preference
+                                <SubText>Toggle displaying badge overlay on verified captures.</SubText>
+                            </Text>
                             <Text>Dynamic Map Style
                                 <SubText>Map style renders according to time of day.</SubText>
                             </Text>
                         </Column>
                         <Column>
-                            <Input 
-                                type="radio"
-                                value="something"
-                                onClick={() => handleSettingsClick(value)}
-                                // visibility="none"
-                            />
-                            {/* <SubText /> */}
-                            <Input 
-                                type="radio"
-                                value="Dynamic Map"
-                                // checked={setDynamicMapStyle(!dynamicMapStyle)}
-                                onClick={() => handleSettingsClick(value)}
-                            />
+                            {badgeSetting ? (
+                                <Switch 
+                                    onClick={() => {
+                                        setBadgeSetting(!badgeSetting);
+                                    }}
+                                >
+                                    <BsToggleOn 
+                                        style={{ height: "100%", width: "100%", cursor: "pointer"}}
+                                    />
+                                </Switch>
+                            ):(
+                                <Switch 
+                                    onClick={() => {
+                                        setBadgeSetting(!badgeSetting);
+                                    }}
+                                >
+                                    <BsToggleOff 
+                                        style={{ height: "100%", width: "100%", cursor: "pointer"}}
+                                    />
+                                </Switch>
+                            )}
+                            
+                            {dynamicMapStyle ? (
+                                <Switch 
+                                    onClick={() => {
+                                        setDynamicMapStyle(!dynamicMapStyle);
+                                    }}
+                                >
+                                    <BsToggleOn 
+                                        style={{ height: "100%", width: "100%", cursor: "pointer"}}
+                                    />
+                                </Switch>
+                            ):(
+                                <Switch 
+                                    onClick={() => {
+                                        setDynamicMapStyle(!dynamicMapStyle);
+                                    }}
+                                >
+                                    <BsToggleOff 
+                                        style={{ height: "100%", width: "100%", cursor: "pointer"}}
+                                    />
+                                </Switch>
+                            )}
                         </Column>
                     </SideBySide>
 
@@ -80,7 +109,7 @@ const SettingsContent = styled.div`
     /* justify-content: center; */
     align-items: center;
     height: 400px;
-    width: 300px;
+    width: 100%;
     border: 1px solid black;
 `
 
@@ -135,11 +164,13 @@ const SubText = styled.div`
     /* border: 1px solid black; */
 `
 
-const Input = styled.input`
+const Switch = styled.div`
+    display: flex;
+    align-items: center;
     padding: 5px;
-    height: 100%;
+    height: 70px;
     /* border: 1px solid black; */
-
+    color: green;
 `
 
 export default Settings;

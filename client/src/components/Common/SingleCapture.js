@@ -15,13 +15,20 @@ const SingleCapture = (data) => {
         // friendArray, 
         // setFriendArray,
         currentCapture,
-        setCurrentCapture
+        setCurrentCapture,
+        badgeSetting, 
+        setBadgeSetting,
     } = useContext(CaptureContext);
     localStorage.removeItem("coords");
     localStorage.removeItem("CaptureInfo");
 
     const badge = `/verified.png`
     let marker = `/markerVerified.png`
+
+    console.log("BADGE:" , badgeSetting, typeof badgeSetting)
+    if (badgeSetting) {
+        console.log("TRUE");
+    }
 
     return(
         <Wrapper2>
@@ -59,7 +66,7 @@ const SingleCapture = (data) => {
                         // style={{ display: "flex" , justifyContent: "center", alignItems: "center"}}
                     />
                 </ImageWrapper>
-                {data.data.capture.verified && (
+                {(data.data.capture.verified && badgeSetting ) && (
                     <Badge 
                         src={badge}
                     />
@@ -112,7 +119,7 @@ const AvatarAndAuthor = styled.div`
     justify-content: center;
     align-items: center;
     /* margin: 5px; */
-    padding: 5px; 
+    padding: 5px 5px 0px 5px; 
     margin-right: auto;
     /* border: 1px solid black; */
 `
@@ -128,6 +135,7 @@ const Animal = styled.div`
     font-size: 1.5em;
     margin-left: auto;
     margin-right: auto;
+    padding-bottom: 5px;
 `
 
 const ImageWrapper = styled(Link)`
@@ -142,8 +150,8 @@ const Badge = styled.img`
     position: absolute;
     height: 50px;
     width: 50px;
-    top: 70px;
-    left: 244px;
+    top: 80px;
+    left: 255px;
     /* background: red; */
     src: 'url("/verified.png)';
 `
@@ -151,8 +159,8 @@ const Badge = styled.img`
 const Avatar = styled(Link)`
     /* height: var(--IconHeight);
     width: var(--IconWidth); */
-    height: 50px;
-    width: 50px;
+    height: 40px;
+    width: 40px;
     /* display: flex;
     justify-content: center;
     align-items: center;
