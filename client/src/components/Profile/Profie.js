@@ -10,6 +10,7 @@ import Achievements from './Statistics/Achievements';
 import Friends from './Friends';
 // utility
 import {LoadCapture} from '../Utilities/LoadCapture';
+import { LoadUsers } from '../Utilities/LoadUsers';
 
 
 
@@ -32,13 +33,21 @@ const Profile = () => {
 
     const data = (JSON.parse(localStorage.getItem("CaptureInfo")).data );
     const [feed, setFeed] = useState(null);
+    const [captureFeed, setCaptureFeed] = useState(null);
+    const [userInfoFeed, setUserInfoFeed] = useState(null);
+
 
     console.log("data from profile:" , data)
 
     useEffect( async ()=> {
-        const results = await LoadCapture([data.author])
-        console.log("results:" , results);
-        setFeed(results)
+        // for rendering this profile's captures.
+        const thisProfileCaptures = await LoadCapture([data.author])
+        console.log("results:" , thisProfileCaptures);
+        setCaptureFeed(thisProfileCaptures)
+        // for getting all stats/achievements of this profile
+        const thisProfileInfo = await LoadUsers([data.author])
+        console.log("results:" , thisProfileInfo);
+        setUserInfoFeed(thisProfileInfo)
     }, [])
 
     // console.log("mediaQ:" , mediaQ);
@@ -54,7 +63,7 @@ const Profile = () => {
                         <LeftToRight>
                             {profileOption === "Captures" && (
                                 <Captures 
-                                    feed={feed}
+                                feed={captureFeed}
                                 />
                             )}
                             {profileOption === "Statistics" && (
@@ -84,7 +93,7 @@ const Profile = () => {
                         />
                         <LeftToRight>
                             <Captures 
-                                feed={feed}
+                                feed={captureFeed}
                             />
                             <TopToBottom>
                                 <Statistics 

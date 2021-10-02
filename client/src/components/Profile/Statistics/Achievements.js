@@ -7,6 +7,7 @@ const Achievements = () => {
     return (
         <Wrapper>
             <div>Achievements</div>
+            <div>Coming in future update.</div>
         </Wrapper>
     )
 }
@@ -14,6 +15,7 @@ const Achievements = () => {
 const Wrapper = styled.div`
     padding: 10px;
     display: flex;
+    flex-direction: column;
     justify-content: space-around;
     align-items: center;
     /* height: 100%; */
