@@ -95,8 +95,26 @@ const addNewUser = async (req, res) => {
                 types: 0,
                 animals: [],
             },
-            moreStats: {numOfRatingsGiven: 0, numFalsified: 0, numTruthified: 0, numIndecisive: 0, numLoggedOn: 0},
-            achievements: {AnimalLover: false, AnimalEnthusiast: false, Biologist: false, Zoologist: false, Scientist: false, Authenticator: false, Inspector: false, TopPlayer: false},
+            moreStats: {
+                numOfRatingsGiven: 0, 
+                numFalsified: 0, 
+                numTruthified: 0, 
+                numIndecisive: 0, 
+                numOfStarsGiven: 0, 
+                numLoggedOn: 0, 
+                numMapSearches: 0, 
+                numMapUses: 0, 
+            },
+            achievements: {
+                AnimalLover: false, 
+                AnimalEnthusiast: false, 
+                Biologist: false, 
+                Zoologist: false, 
+                Scientist: false, 
+                Authenticator: false,
+                Inspector: false, 
+                TopPlayer: false
+            },
             friends: [ req.body.uniqueName ],
         }
 

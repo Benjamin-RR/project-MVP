@@ -24,11 +24,13 @@ const Settings = () => {
         dynamicMapStyle,
         setDynamicMapStyle,
         dynamicBanner,
-        setDynamicBanner
+        setDynamicBanner,
+        statsOnRatingOthers,
+        setStatsOnRatingOthers,
     } = useContext(CaptureContext);
     setPage("settings");
 
-    console.log("BADGE:", badgeSetting, "MAP:" , dynamicMapStyle, "PROFILE:", dynamicBanner);
+    console.log("BADGE:", badgeSetting, "MAP:" , dynamicMapStyle, "PROFILE:", dynamicBanner, "OTHERS:", statsOnRatingOthers);
 
     return(
         <Wrapper>
@@ -46,6 +48,11 @@ const Settings = () => {
                             </Text>
                             <Text>Dynamic Profile Banner
                                 <SubText>When on, displays your most popular capture.</SubText>
+                            </Text>
+                            <Text>Rating Other's Statistics
+                                <SubText>
+                                    When on, profile statistics displays stats on how your rate other user's captures.
+                                </SubText>
                             </Text>
                         </Column>
                         <Column>
@@ -107,6 +114,28 @@ const Settings = () => {
                                 <Switch 
                                     onClick={() => {
                                         setDynamicBanner(!dynamicBanner);
+                                    }}
+                                >
+                                    <BsToggleOff 
+                                        style={{ height: "100%", width: "100%", cursor: "pointer", color: "darkgrey"}}
+                                    />
+                                </Switch>
+                            )}
+
+                            {statsOnRatingOthers ? (
+                                <Switch 
+                                    onClick={() => {
+                                        setStatsOnRatingOthers(!statsOnRatingOthers);
+                                    }}
+                                >
+                                    <BsToggleOn 
+                                        style={{ height: "100%", width: "100%", cursor: "pointer"}}
+                                    />
+                                </Switch>
+                            ):(
+                                <Switch 
+                                    onClick={() => {
+                                        setStatsOnRatingOthers(!statsOnRatingOthers);
                                     }}
                                 >
                                     <BsToggleOff 

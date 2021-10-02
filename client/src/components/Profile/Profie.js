@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import Banner from './Banner';
 import Captures from './Captures';
 import Statistics from './Statistics';
-import Achievements from './Achievements';
+import Achievements from './Statistics/Achievements';
 import Friends from './Friends';
 // utility
 import {LoadCapture} from '../Utilities/LoadCapture';

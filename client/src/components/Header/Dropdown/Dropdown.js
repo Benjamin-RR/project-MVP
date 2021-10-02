@@ -31,6 +31,10 @@ const Dropdown = () => {
     mediaQ.onchange = (e) => {
         // window.location.reload();
     }
+    let thisTop = '0px';
+    if (mediaQ.matches) {
+        thisTop = '85px'
+    }
 
     // handle dropdown
     const handleMouseEnter = () => {
@@ -86,49 +90,28 @@ const Dropdown = () => {
     }
 
     return(
-        <>
-            {(mediaQ.matches === true) ? (
-                <Wrapper
-                    style={{ top: "85px"}}
-                    onMouseEnter={handleMouseEnter}
-                    onMouseLeave={handleMouseLeave}
-                >
-                    <DropDownHide></DropDownHide>
-                    <DropDownItem
-                        onClick={handleAccountClick} type="submit"
-                    >Account</DropDownItem>
-                    <DropDownItem
-                        onClick={handleFriendClick} type="submit"
-                    >Add a friend</DropDownItem>
-                    <DropDownItem
-                        onClick={handleHelpClick} type="submit"
-                    >Help</DropDownItem>
-                    <DropDownItem
-                        onClick={handleSettingsClick} type="submit"
-                    >Settings</DropDownItem>
-                    <DropDownItem
-                        onClick={handleSignOut} type="submit"
-                    >Sign Out</DropDownItem>
-                </Wrapper>
-            ) : (
-                <Wrapper
-                    onMouseEnter={handleMouseEnter}
-                    onMouseLeave={handleMouseLeave}
-                >
-                    <DropDownHide></DropDownHide>
-                    <DropDownItem>Account</DropDownItem>
-                    <DropDownItem
-                        onClick={handleFriendClick} type="submit"
-                    >Add a friend</DropDownItem>
-                    <DropDownItem>Achievements</DropDownItem>
-                    <DropDownItem>Help</DropDownItem>
-                    <DropDownItem>Settings</DropDownItem>
-                    <DropDownItem
-                        onClick={handleSignOut} type="submit"
-                    >Sign Out</DropDownItem>
-                </Wrapper>
-            )}
-        </>
+        <Wrapper
+            style={{ top: {thisTop}}}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+        >
+            <DropDownHide></DropDownHide>
+            <DropDownItem
+                onClick={handleAccountClick} type="submit"
+            >Account</DropDownItem>
+            <DropDownItem
+                onClick={handleFriendClick} type="submit"
+            >Add a friend</DropDownItem>
+            <DropDownItem
+                onClick={handleHelpClick} type="submit"
+            >Help</DropDownItem>
+            <DropDownItem
+                onClick={handleSettingsClick} type="submit"
+            >Settings</DropDownItem>
+            <DropDownItem
+                onClick={handleSignOut} type="submit"
+            >Sign Out</DropDownItem>
+        </Wrapper>
     )
 }
 

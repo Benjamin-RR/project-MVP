@@ -20,12 +20,10 @@ const Captures = ({feed}) => {
     
     return (
         <Wrapper>
-            <div>Captures</div>
             {(feed) ? (feed.map((data, index) => {
-                console.log("do they match?" , data.author, localStorage.getItem("uniqueName"), typeof data.author, typeof localStorage.getItem("uniqueName"))
                 return(
                     <div
-                    key={index}
+                    key={Math.floor(Math.random)* 999999999}
                     >
                         <Card>
                             <SingleCapture
@@ -34,9 +32,6 @@ const Captures = ({feed}) => {
                         </Card>
                         {data.author !== localStorage.getItem("uniqueName") && (
                             <Rate
-                                // onClick={() => {
-                                //     localStorage.setItem("CaptureInfo", JSON.stringify(data) )
-                                // }}
                                 onClick={() => {
                                     setCurrentCapture(data)
                                 }}
@@ -47,8 +42,7 @@ const Captures = ({feed}) => {
                 )
             })) : (
                 <Loading />
-            )
-        }
+            )}
         </Wrapper>
     )
 }

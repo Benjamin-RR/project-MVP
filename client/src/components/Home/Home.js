@@ -24,6 +24,7 @@ const Home = () => {
     }
     const [friendArray, setFriendArray] = useState(localStorage.getItem("friends").split(','));
     const [feed, setFeed] = useState(null);
+    const [homeLoad, setHomeLoad] = useState(false);
 
     if (page !== "home") {
         setPage("home");
@@ -35,6 +36,7 @@ const Home = () => {
     useEffect( async ()=> {
         const results = await LoadCapture(friendArray)
         setFeed(results)
+        // setHomeLoad(true);
     }, [])
     
     
