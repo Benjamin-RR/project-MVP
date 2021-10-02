@@ -40,7 +40,7 @@ const Footer = () => {
     
     // handles rendering footer correctly if you dynamically change your screen.
     mediaQ.onchange = (e) => {
-        window.location.reload();
+        // window.location.reload();
     }
 
 

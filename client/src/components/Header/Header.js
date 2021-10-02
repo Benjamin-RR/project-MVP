@@ -42,7 +42,7 @@ const Header = () => {
         headerHeight = `150px`
     }
     mediaQ.onchange = (e) => {
-        window.location.reload();
+        // window.location.reload();
     }
         
     // handle dropdown

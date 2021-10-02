@@ -29,7 +29,7 @@ const Dropdown = () => {
 
     // handle reponsive window.
     mediaQ.onchange = (e) => {
-        window.location.reload();
+        // window.location.reload();
     }
 
     // handle dropdown

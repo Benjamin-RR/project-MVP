@@ -18,25 +18,30 @@ const Home = () => {
         currentCapture,
         setCurrentCapture
     } = useContext(CaptureContext);
+    let history = useHistory();
+    { !userID && 
+        history.push("/Login")
+    }
     const [friendArray, setFriendArray] = useState(localStorage.getItem("friends").split(','));
     const [feed, setFeed] = useState(null);
 
     if (page !== "home") {
         setPage("home");
         // setFeed(null);
-        window.location.reload();       // without this ... my homefeed doesn't rerender, with it, my useContext isn't much help.....
+        // window.location.reload();
     }
     
-    let history = useHistory();
-    { !userID && 
-        history.push("/Login")
-    }
-
-    // console.log("CHECKING HOME PAGE:" , page, feed,)
+    // let history = useHistory();
+    // { !userID && 
+    //     history.push("/Login")
+    // }
     
     // Load images and animal data into their arrays, set page to loaded so we can render everything below. (gets called once).
     useEffect( async ()=> {
         // await loadCaptures()
+        // if (localStorage.getItem("friends").includes(',')) {
+        //     setFriendArray(localStorage.getItem("friends").split(','))
+        // }
         const results = await LoadCapture(friendArray)
         setFeed(results)
     }, [])
