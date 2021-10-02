@@ -9,9 +9,9 @@ const Captures = ({data}) => {
     return (
         <Wrapper>
             <div>Captures</div>
-            <SingleCapture
+            {/* <SingleCapture
                 data={data}
-            />
+            /> */}
         </Wrapper>
     )
 }

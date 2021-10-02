@@ -7,7 +7,7 @@ import {BsGrid} from 'react-icons/bs';
 import {BsGridFill} from 'react-icons/bs';
 import {AiOutlineCloseSquare} from 'react-icons/ai'
 
-import importAll from '../../../assets/index'
+// import {importAll} from '../../../assets'
 import Loading from '../../Common/Loader';
 
 const Upload = () => {
@@ -20,14 +20,22 @@ const Upload = () => {
         // userColor,
         // setUserColor
     } = useContext(CaptureContext);
+
+    // get gallery from foler.
+    // console.log("test from upload:", importAll() );
     setPage("upload");
+
+
+    // if (page !== "upload") {
+    //     getGallery();
+    // }
     
     let history = useHistory();
     { !userID && 
         history.push("/Login")
     }
 
-    console.log("my location:" , myLocation);
+    // console.log("my location:" , myLocation);
     
     
     // for displaying different layout on image select.
@@ -43,8 +51,8 @@ const Upload = () => {
 
     // handles switching layout of displaying images by grid or singularly.
     const handleGrid = () => {
-        const temp = !grid;
-        setGrid(temp);
+        // const temp = !grid;
+        setGrid(!grid);
     }
 
     // handle submitting image
@@ -55,9 +63,11 @@ const Upload = () => {
         uploadImage(previewSource);
     }
 
-    console.log("unique name:" , uniqueName)
+    console.log("preview status:" , previewSource)
 
+    // console.log("unique name:" , uniqueName)
 
+    // this will upload the choosen file to cloudinary.
     const uploadImage = async (base64EncodedImage) => {
         await fetch('/image/uploadCapture', {
             method: 'POST',
@@ -114,16 +124,20 @@ const Upload = () => {
                 />
             </Icon>
             </Top>
-            {previewSource !== null && (
+            {/* {previewSource && ( */}
             <>
                 <Img 
                     src={previewSource} 
                     alt="chosen" 
                     // style={{ height: "200px" , width: "200px"}}
-                    style={{}}
                 />
             </>
-            )}
+            {/* )} */}
+                {/* <Gallery>
+                    <OneImage>
+                        for uploading directly all images to display. this would be a gallery to select images to upload from.
+                    </OneImage>
+                </Gallery> */}
             <Input 
                 type="file" 
                 name="image"
@@ -133,6 +147,7 @@ const Upload = () => {
                     const reader = new FileReader();
                     reader.readAsDataURL(e.target.files[0]);
                     reader.onloadend = () => {
+                        console.log("reader:", reader.result)
                         setPreviewSource(reader.result);
                     }
                 }}
@@ -218,6 +233,17 @@ const Img = styled.img`
     width: 300px;
     margin: 10px 0px 10px 0px;
     background: lightgrey;
+`
+
+const Gallery = styled.div`
+    display: inline-block;
+    border: 1px solid black;
+`
+
+const OneImage = styled.img`
+    height: 100%;
+    width: 100%;
+    border: 1px solid black;
 `
 
 const InputWrapper = styled.div`

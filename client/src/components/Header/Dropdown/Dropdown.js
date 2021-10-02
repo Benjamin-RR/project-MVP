@@ -44,12 +44,19 @@ const Dropdown = () => {
         // }    
     }
 
+    // handle account being clicked
+    const handleAccountClick = () => {
+        setDropdown(false)
+        // setAccountClick(true);
+        history.push("/Account")
+    }
     // handle friend being clicked
     const handleFriendClick = () => {
         setDropdown(false)
         setFriendClick(true);
         history.push("/Friends")
     }
+    // handle help being clicked
     const handleHelpClick = () => {
         setDropdown(false)
         history.push("/Help")
@@ -86,11 +93,12 @@ const Dropdown = () => {
                     onMouseLeave={handleMouseLeave}
                 >
                     <DropDownHide></DropDownHide>
-                    <DropDownItem>Account</DropDownItem>
+                    <DropDownItem
+                        onClick={handleAccountClick} type="submit"
+                    >Account</DropDownItem>
                     <DropDownItem
                         onClick={handleFriendClick} type="submit"
                     >Add a friend</DropDownItem>
-                    <DropDownItem>Achievements</DropDownItem>
                     <DropDownItem
                         onClick={handleHelpClick} type="submit"
                     >Help</DropDownItem>

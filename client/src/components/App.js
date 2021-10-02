@@ -22,6 +22,7 @@ import Terms from './Features/Terms/Terms'
 import Contact from './Features/Contact/Contact'
 import Page404 from './Page404';
 import Footer from './Footer';
+import Account from './Header/Dropdown/Options/Account'
 import Friends from './Header/Dropdown/Options/Friends'
 import Settings from './Header/Dropdown/Options/Settings'
 
@@ -54,6 +55,9 @@ const App = () => {
                     </Route>
                     <Route exact path="/Profile">
                         <Profile />
+                    </Route>
+                    <Route exact path="/Account">
+                        <Account />
                     </Route>
                     <Route exact path="/Friends">
                         <Friends />
