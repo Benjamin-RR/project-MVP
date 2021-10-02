@@ -2,12 +2,22 @@ import React, {useContext} from 'react';
 import {CaptureContext} from '../CaptureContext';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom'; 
+//components
+import Banner from './Banner';
+import Captures from './Captures';
+import Statistics from './Statistics';
+import Achievements from './Achievements';
+import Friends from './Friends';
+// icons
+
 
 const Profile = () => {
     const {
         page,
         setPage,
-        userID
+        userID,
+        mediaQ,
+        setMediaQ,
     } = useContext(CaptureContext);
     setPage("profile");
 
@@ -16,15 +26,69 @@ const Profile = () => {
         history.push("/Login")
     }
 
+    const data = JSON.parse(localStorage.getItem("CaptureInfo") );
+
+    console.log("mediaQ:" , mediaQ);
+
     return (
-        <Wrapper>
-            <div>Profile</div>
-        </Wrapper>
+        <>
+            { (mediaQ.matches === false) ? (
+                <Wrapper>
+                <TopToBottom>
+                    <Banner 
+                        data={data}
+                    />
+                    <LeftToRight>
+                        <Captures 
+                            data={data}
+                        />
+                        <Statistics 
+                            data={data}
+                        />
+                        <TopToBottom>
+                            <Achievements 
+                                data={data}
+                            />
+                            <Friends 
+                                data={data}
+                            />
+                        </TopToBottom>
+                    </LeftToRight>
+
+                </TopToBottom>
+            </Wrapper>
+            ):(
+                <Wrapper>
+                    <TopToBottom>
+                        <Banner 
+                            data={data}
+                        />
+                        <LeftToRight>
+                            <Captures 
+                                data={data}
+                            />
+                            <Statistics 
+                                data={data}
+                            />
+                            <TopToBottom>
+                                <Achievements 
+                                    data={data}
+                                />
+                                <Friends 
+                                    data={data}
+                                />
+                            </TopToBottom>
+                        </LeftToRight>
+
+                    </TopToBottom>
+                </Wrapper>
+            )}
+        </>
     )
 }
 
 const Wrapper = styled.div`
-    padding: 10px;
+    /* padding: 10px; */
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -32,5 +96,17 @@ const Wrapper = styled.div`
     width: 100%;
     border: 1px solid black;
 `
+
+const TopToBottom = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+`
+
+const LeftToRight = styled.div`
+    display: flex;
+    flex-direction: row;
+`
+
 
 export default Profile;

@@ -4,8 +4,8 @@ import styled from 'styled-components';
 
 const DefaultAvatar = ({name, color}) => {
 
-    // console.log("unique name:" , name);
-    // console.log("color:", color);
+    console.log("unique name:" , name);
+    console.log("color:", color);
 
 
     return(
@@ -30,7 +30,7 @@ const Wrapper = styled.div`
     justify-content: center;
     height: 100%;
     width: 100%;
-    /* border-radius: 50%; */
+    border-radius: 50%;
 `
 
 const AvatarWrapper = styled.div`

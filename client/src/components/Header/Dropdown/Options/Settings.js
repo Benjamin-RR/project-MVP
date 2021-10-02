@@ -61,7 +61,7 @@ const Settings = () => {
                                     }}
                                 >
                                     <BsToggleOff 
-                                        style={{ height: "100%", width: "100%", cursor: "pointer"}}
+                                        style={{ height: "100%", width: "100%", cursor: "pointer", color: "darkgrey"}}
                                     />
                                 </Switch>
                             )}
@@ -83,7 +83,7 @@ const Settings = () => {
                                     }}
                                 >
                                     <BsToggleOff 
-                                        style={{ height: "100%", width: "100%", cursor: "pointer"}}
+                                        style={{ height: "100%", width: "100%", cursor: "pointer", color: "darkgrey"}}
                                     />
                                 </Switch>
                             )}
