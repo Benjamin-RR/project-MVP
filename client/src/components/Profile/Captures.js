@@ -1,19 +1,28 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {CaptureContext} from '../CaptureContext';
 import styled from 'styled-components';
 import SingleCapture from '../Common/SingleCapture';
 import Loading from '../Common/Loader';
+import {Link} from 'react-router-dom';
 
 const Captures = ({feed}) => {
+    const {
+        page,
+        setPage,
+        userID,
+        // friendArray, 
+        // setFriendArray,
+        currentCapture,
+        setCurrentCapture,
+        badgeSetting, 
+        setBadgeSetting,
+    } = useContext(CaptureContext);
     
-    console.log("feed from captures:", feed)
-    // const dataToGive = feed.data;
-    // console.log("feed from captures:", dataToGive);
-    
-
     return (
         <Wrapper>
             <div>Captures</div>
             {(feed) ? (feed.map((data, index) => {
+                console.log("do they match?" , data.author, localStorage.getItem("uniqueName"), typeof data.author, typeof localStorage.getItem("uniqueName"))
                 return(
                     <div
                     key={index}
@@ -23,15 +32,17 @@ const Captures = ({feed}) => {
                                 data={data}
                             />
                         </Card>
-                        {/* <Rate
-                            // onClick={() => {
-                            //     localStorage.setItem("CaptureInfo", JSON.stringify(data) )
-                            // }}
-                            onClick={() => {
-                                setCurrentCapture(data)
-                            }}
-                            to="/Rate"
-                        >Rate</Rate> */}
+                        {data.author !== localStorage.getItem("uniqueName") && (
+                            <Rate
+                                // onClick={() => {
+                                //     localStorage.setItem("CaptureInfo", JSON.stringify(data) )
+                                // }}
+                                onClick={() => {
+                                    setCurrentCapture(data)
+                                }}
+                                to="/Rate"
+                            >Rate</Rate>
+                        )}
                     </div>
                 )
             })) : (
@@ -65,6 +76,27 @@ const Card = styled.div`
     /* padding: 5px; */
     margin: 5px;
     /* background: green; */
+`
+
+const Rate = styled(Link)`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    margin-bottom: 50px;
+    margin-left: auto;
+    margin-right: 20px;
+    width: 100px;
+    border-radius: 7px;
+    border: 1px solid black;
+    cursor: pointer;
+    text-decoration: none;
+    &:hover{
+        transform: scale(125%) ease-in-out 1000ms;
+    }
+    &:active{
+        transform: scale(95%);
+    }
 `
 
 export default Captures;
