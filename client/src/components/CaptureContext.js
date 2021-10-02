@@ -13,6 +13,7 @@ export const CaptureProvider = ({ children }) => {
     const [settingsClick, setSettingsClick] = useState(false);
     const [badgeSetting, setBadgeSetting] = useState(true);
     const [dynamicMapStyle, setDynamicMapStyle] = useState(true);
+    const [dynamicBanner, setDynamicBanner] = useState(false);
     
 
     // for dropdown
@@ -65,7 +66,9 @@ export const CaptureProvider = ({ children }) => {
             currentCapture,
             setCurrentCapture,
             profileOption,
-            setProfileOption
+            setProfileOption,
+            dynamicBanner,
+            setDynamicBanner
         }}>
             {children}
         </CaptureContext.Provider>

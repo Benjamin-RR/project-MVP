@@ -22,11 +22,13 @@ const Settings = () => {
         badgeSetting, 
         setBadgeSetting,
         dynamicMapStyle,
-        setDynamicMapStyle
+        setDynamicMapStyle,
+        dynamicBanner,
+        setDynamicBanner
     } = useContext(CaptureContext);
     setPage("settings");
 
-    console.log("badge:", badgeSetting, "map style:" , dynamicMapStyle);
+    console.log("BADGE:", badgeSetting, "MAP:" , dynamicMapStyle, "PROFILE:", dynamicBanner);
 
     return(
         <Wrapper>
@@ -41,6 +43,9 @@ const Settings = () => {
                             </Text>
                             <Text>Dynamic Map Style
                                 <SubText>Map style renders according to time of day.</SubText>
+                            </Text>
+                            <Text>Dynamic Profile Banner
+                                <SubText>When on, displays your most popular capture.</SubText>
                             </Text>
                         </Column>
                         <Column>
@@ -80,6 +85,28 @@ const Settings = () => {
                                 <Switch 
                                     onClick={() => {
                                         setDynamicMapStyle(!dynamicMapStyle);
+                                    }}
+                                >
+                                    <BsToggleOff 
+                                        style={{ height: "100%", width: "100%", cursor: "pointer", color: "darkgrey"}}
+                                    />
+                                </Switch>
+                            )}
+
+                            {dynamicBanner ? (
+                                <Switch 
+                                    onClick={() => {
+                                        setDynamicBanner(!dynamicBanner);
+                                    }}
+                                >
+                                    <BsToggleOn 
+                                        style={{ height: "100%", width: "100%", cursor: "pointer"}}
+                                    />
+                                </Switch>
+                            ):(
+                                <Switch 
+                                    onClick={() => {
+                                        setDynamicBanner(!dynamicBanner);
                                     }}
                                 >
                                     <BsToggleOff 
@@ -130,6 +157,7 @@ const SideBySide = styled.div`
 const Column = styled.div`
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
     padding: 10px;
     /* border: 1px solid black; */
 `
