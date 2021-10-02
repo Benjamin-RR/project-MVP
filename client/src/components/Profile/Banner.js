@@ -18,10 +18,12 @@ const Banner = ({data}) => {
         userID,
         mediaQ,
         setMediaQ,
+        profileOption,
+        setProfileOption
     } = useContext(CaptureContext);
-    const [selected, setSelected] = useState("Statistics")
+    // const [selected, setSelected] = useState("Statistics")
 
-    console.log("from banner:" , data);
+    // console.log("from banner:" , data);
 
     return (
         <>
@@ -42,7 +44,7 @@ const Banner = ({data}) => {
                     { (mediaQ.matches === false) && (
                         <IconWrapper>
                             <Icon>
-                                { selected === "Captures" ? (
+                                { profileOption === "Captures" ? (
                                     <TiCamera 
                                         style={{ height: "100%", width: "100%"}}
                                         // onClick={()=>{
@@ -53,14 +55,14 @@ const Banner = ({data}) => {
                                     <TiCameraOutline 
                                         style={{ height: "100%", width: "100%"}}
                                         onClick={()=>{
-                                            setSelected("Captures")
+                                            setProfileOption("Captures")
                                         }}
                                     />
                                 )}
                             </Icon>
 
                             <Icon>
-                            { selected === "Statistics" ? (
+                            { profileOption === "Statistics" ? (
                                     <RiNumbersFill 
                                         style={{ height: "100%", width: "100%"}}
                                     />
@@ -68,14 +70,14 @@ const Banner = ({data}) => {
                                     <RiNumbersLine 
                                         style={{ height: "100%", width: "100%"}}
                                         onClick={()=>{
-                                            setSelected("Statistics")
+                                            setProfileOption("Statistics")
                                         }}
                                     />
                                 )}
                             </Icon>
 
                             <Icon>
-                            { selected === "Friends" ? (
+                            { profileOption === "Friends" ? (
                                     <BsPeopleFill 
                                         style={{ height: "100%", width: "100%"}}
                                     />
@@ -83,7 +85,7 @@ const Banner = ({data}) => {
                                     <BsPeople 
                                         style={{ height: "100%", width: "100%"}}
                                         onClick={()=>{
-                                            setSelected("Friends")
+                                            setProfileOption("Friends")
                                         }}
                                     />
                                 )}

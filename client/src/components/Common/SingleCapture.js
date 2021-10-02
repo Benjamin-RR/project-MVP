@@ -19,16 +19,18 @@ const SingleCapture = (data) => {
         badgeSetting, 
         setBadgeSetting,
     } = useContext(CaptureContext);
-    localStorage.removeItem("coords");
+    // localStorage.removeItem("coords");
     localStorage.removeItem("CaptureInfo");
 
     const badge = `/verified.png`
     let marker = `/markerVerified.png`
 
-    console.log("BADGE:" , badgeSetting, typeof badgeSetting)
-    if (badgeSetting) {
-        console.log("TRUE");
-    }
+    // console.log("BADGE:" , badgeSetting, typeof badgeSetting)
+    // if (badgeSetting) {
+    //     console.log("TRUE");
+    // }
+
+    console.log("Data from single capture: " , data);
 
     return(
         <Wrapper2>

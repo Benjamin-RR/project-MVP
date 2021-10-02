@@ -46,7 +46,7 @@ const Footer = () => {
 
     // handles opening all footer link paths.
     const handleLink = (path) => {
-        console.log("check:", path.path);
+        // console.log("check:", path.path);
         if (path.type === "leave") {
             window.open(path.path, '_blank');
         }

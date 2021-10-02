@@ -4,8 +4,8 @@ import styled from 'styled-components';
 
 const DefaultAvatar = ({name, color}) => {
 
-    console.log("unique name:" , name);
-    console.log("color:", color);
+    // console.log("unique name:" , name);
+    // console.log("color:", color);
 
 
     return(

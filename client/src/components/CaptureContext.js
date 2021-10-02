@@ -9,6 +9,7 @@ export const CaptureProvider = ({ children }) => {
     // for handling page and settings
     const [mediaQ, setMediaQ] = useState(window.matchMedia('(min-width: 600px'))
     const [page, setPage] = useState("home");
+    // settings
     const [settingsClick, setSettingsClick] = useState(false);
     const [badgeSetting, setBadgeSetting] = useState(true);
     const [dynamicMapStyle, setDynamicMapStyle] = useState(true);
@@ -20,11 +21,6 @@ export const CaptureProvider = ({ children }) => {
 
     //for loging in
     const [userID, setUserID] = useState(localStorage.getItem("userID"));
-    // const [uniqueName, setUniqueName] = useState(localStorage.getItem("uniqueName"));
-    // const [userColor, setUserColor] = useState(localStorage.getItem("userColor"));
-    // const [friendArray, setFriendArray] = useState(null);
-    // let temp = localStorage.getItem("friends");
-    // if (temp && !appLoaded) setFriendArray(temp.split(","));
 
     // get user's current location
     const [myLocation, setMyLocation] = useState(null);
@@ -34,6 +30,9 @@ export const CaptureProvider = ({ children }) => {
 
     // to remember which one capture we are viewing.
     const [currentCapture, setCurrentCapture] = useState(null);
+
+    const [profileOption, setProfileOption] = useState("Statistics")
+
 
     // setAppLoaded(true);
 
@@ -64,7 +63,9 @@ export const CaptureProvider = ({ children }) => {
             // userColor,
             // setUserColor,
             currentCapture,
-            setCurrentCapture
+            setCurrentCapture,
+            profileOption,
+            setProfileOption
         }}>
             {children}
         </CaptureContext.Provider>

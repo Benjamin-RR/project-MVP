@@ -2,15 +2,16 @@ import React from 'react';
 import styled from 'styled-components';
 import SingleCapture from '../Common/SingleCapture';
 
-const Captures = () => {
+const Captures = ({data}) => {
     
+    console.log("data from captures:", data)
 
     return (
         <Wrapper>
             <div>Captures</div>
-            {/* <SingleCapture
+            <SingleCapture
                 data={data}
-            /> */}
+            />
         </Wrapper>
     )
 }

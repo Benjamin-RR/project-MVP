@@ -18,6 +18,8 @@ const Profile = () => {
         userID,
         mediaQ,
         setMediaQ,
+        profileOption,
+        setProfileOption
     } = useContext(CaptureContext);
     setPage("profile");
 
@@ -28,35 +30,41 @@ const Profile = () => {
 
     const data = JSON.parse(localStorage.getItem("CaptureInfo") );
 
-    console.log("mediaQ:" , mediaQ);
+    // console.log("mediaQ:" , mediaQ);
 
     return (
         <>
             { (mediaQ.matches === false) ? (
                 <Wrapper>
-                <TopToBottom>
-                    <Banner 
-                        data={data}
-                    />
-                    <LeftToRight>
-                        <Captures 
+                    <TopToBottom>
+                        <Banner 
                             data={data}
                         />
-                        <Statistics 
-                            data={data}
-                        />
-                        <TopToBottom>
-                            <Achievements 
-                                data={data}
-                            />
-                            <Friends 
-                                data={data}
-                            />
-                        </TopToBottom>
-                    </LeftToRight>
+                        <LeftToRight>
+                            {profileOption === "Captures" && (
+                                <Captures 
+                                    data={data}
+                                />
+                            )}
+                            {profileOption === "Statistics" && (
+                                <TopToBottom>
+                                    <Statistics 
+                                        data={data}
+                                    />
+                                    <Achievements 
+                                        data={data}
+                                    />
+                                </TopToBottom>
+                            )}
+                            {profileOption === "Friends" && (
+                                    <Friends 
+                                        data={data}
+                                    />
+                            )}
+                        </LeftToRight>
 
-                </TopToBottom>
-            </Wrapper>
+                    </TopToBottom>
+                </Wrapper>
             ):(
                 <Wrapper>
                     <TopToBottom>
@@ -67,17 +75,17 @@ const Profile = () => {
                             <Captures 
                                 data={data}
                             />
-                            <Statistics 
-                                data={data}
-                            />
                             <TopToBottom>
+                                <Statistics 
+                                    data={data}
+                                />
                                 <Achievements 
                                     data={data}
                                 />
+                            </TopToBottom>
                                 <Friends 
                                     data={data}
                                 />
-                            </TopToBottom>
                         </LeftToRight>
 
                     </TopToBottom>
