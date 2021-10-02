@@ -77,6 +77,7 @@ const Dropdown = () => {
         localStorage.removeItem("uniqueName");
         localStorage.removeItem("userColor");
         localStorage.removeItem("friends");
+        localStorage.removeItem("CaptureInfo")
         setUserID(null);
         // setUniqueName(null);
         // setUserColor(null)

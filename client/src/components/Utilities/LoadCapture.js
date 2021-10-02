@@ -3,12 +3,10 @@
 // giving this component an array of unique names will return all unique name's captures. there is no limit to how few or many you can ask it.
 
 //e.g.
-// [ { ron: [1,20]}, {},{}, {harry: [] }, {}, {granger: [3,4]}]
-// results
-// ron = all his captures between 1-20.
-// harry = all captures.
-// granger = just images 3 to 4.
+// ['ron'] // results: all ron's captures.
+// ['ron','harry','dumbledore'] // results: all of ron's, harry's, and dumbledoore's captures are taken.
 
+// all captures are stored into an array. e.g. [{ //capture info }, {},{}]
 
 
 export const LoadCapture = async (arrayToLoad) => {

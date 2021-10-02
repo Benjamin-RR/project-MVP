@@ -20,7 +20,7 @@ const SingleCapture = (data) => {
         setBadgeSetting,
     } = useContext(CaptureContext);
     // localStorage.removeItem("coords");
-    localStorage.removeItem("CaptureInfo");
+    // localStorage.removeItem("CaptureInfo");
 
     const badge = `/verified.png`
     let marker = `/markerVerified.png`

@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import {CaptureContext} from '../CaptureContext';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom'; 
@@ -8,7 +8,9 @@ import Captures from './Captures';
 import Statistics from './Statistics';
 import Achievements from './Achievements';
 import Friends from './Friends';
-// icons
+// utility
+import {LoadCapture} from '../Utilities/LoadCapture';
+
 
 
 const Profile = () => {
@@ -28,7 +30,16 @@ const Profile = () => {
         history.push("/Login")
     }
 
-    const data = JSON.parse(localStorage.getItem("CaptureInfo") );
+    const data = (JSON.parse(localStorage.getItem("CaptureInfo")).data );
+    const [feed, setFeed] = useState(null);
+
+    console.log("data from profile:" , data)
+
+    useEffect( async ()=> {
+        const results = await LoadCapture([data.author])
+        console.log("results:" , results);
+        setFeed(results)
+    }, [])
 
     // console.log("mediaQ:" , mediaQ);
 
@@ -43,7 +54,7 @@ const Profile = () => {
                         <LeftToRight>
                             {profileOption === "Captures" && (
                                 <Captures 
-                                    data={data}
+                                    feed={feed}
                                 />
                             )}
                             {profileOption === "Statistics" && (
@@ -73,7 +84,7 @@ const Profile = () => {
                         />
                         <LeftToRight>
                             <Captures 
-                                data={data}
+                                feed={feed}
                             />
                             <TopToBottom>
                                 <Statistics 
@@ -100,7 +111,7 @@ const Wrapper = styled.div`
     display: flex;
     justify-content: space-around;
     align-items: center;
-    height: var(--defaultHeight);
+    /* height: var(--defaultHeight); */
     width: 100%;
     border: 1px solid black;
 `

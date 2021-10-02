@@ -28,17 +28,22 @@ const Banner = ({data}) => {
     return (
         <>
             <Wrapper>
+                <img 
+                    src={`/banner.jpg`} 
+                    alt="Profile Banner"
+                    style={{ width: "100%", height: "100%", position: "absolute", objectFit: "cover", zIndex: "-1"}}
+                />
                 <TopToBottom>
                     <LeftToRight>
                         <Avatar>
                             <DefaultAvatar 
-                                name={data.data.author}
-                                color={data.data.userColor}
+                                name={data.author}
+                                color={data.userColor}
                                 // style={{ height: "40px" , width: "40px"}}
                             />
                         </Avatar>
                         <UniqueName>
-                            {data.data.author}
+                            {data.author}
                         </UniqueName>
                     </LeftToRight>
                     { (mediaQ.matches === false) && (
@@ -104,13 +109,15 @@ const Wrapper = styled.div`
     /* justify-content: space-around;
     align-items: center; */
     height: 150px;
-    width: 100vw;
-    border: 1px solid black;
+    width: 100%;
+    /* border: 1px solid black; */
+    position: relative;
 `
 
 const TopToBottom = styled.div`
     display: flex;
     flex-direction: column;
+    width: 100%;
 `
 
 const LeftToRight = styled.div`
@@ -128,7 +135,7 @@ const Avatar = styled.div`
 `
 
 const UniqueName = styled.div`
-    border: 1px solid black;
+    /* border: 1px solid black; */
     margin-left: 10px;
     height: 50px;
     width: 100px;
@@ -139,9 +146,9 @@ const UniqueName = styled.div`
 const IconWrapper = styled.div`
     display: flex;
     align-items: center;
-    height: 100%;
-    border: 1px solid black;
-    /* margin-left: auto; */
+    /* height: 100%; */
+    /* border: 1px solid black; */
+    margin-left: auto;
 `
 
 const Icon = styled.div`

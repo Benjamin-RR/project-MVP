@@ -31,17 +31,8 @@ const Home = () => {
         // window.location.reload();
     }
     
-    // let history = useHistory();
-    // { !userID && 
-    //     history.push("/Login")
-    // }
-    
     // Load images and animal data into their arrays, set page to loaded so we can render everything below. (gets called once).
     useEffect( async ()=> {
-        // await loadCaptures()
-        // if (localStorage.getItem("friends").includes(',')) {
-        //     setFriendArray(localStorage.getItem("friends").split(','))
-        // }
         const results = await LoadCapture(friendArray)
         setFeed(results)
     }, [])
