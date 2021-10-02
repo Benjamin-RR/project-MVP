@@ -6,6 +6,7 @@ import {Image} from 'cloudinary-react';
 import DefaultAvatar from './DefaultAvatar';
 // import Badge from '/verified.png'
 
+
 const SingleCapture = (data) => {
     const {
         page,
@@ -22,11 +23,6 @@ const SingleCapture = (data) => {
     const badge = `/verified.png`
     let marker = `/markerVerified.png`
 
-    console.log("Data in single capture component:" , data);
-
-    // TO DO:
-    // 1. user unique name who posted it (links to their profile)
-    // 2. image links to map where image was taken (lat, long)
     return(
         <Wrapper2>
             <Wrapper>
@@ -152,12 +148,17 @@ const Badge = styled.img`
     src: 'url("/verified.png)';
 `
 
-const Avatar = styled.div`
-    height: var(--IconHeight);
-    width: var(--IconWidth);
-    display: flex;
+const Avatar = styled(Link)`
+    /* height: var(--IconHeight);
+    width: var(--IconWidth); */
+    height: 50px;
+    width: 50px;
+    /* display: flex;
     justify-content: center;
     align-items: center;
+    padding: 5px; */
+    text-decoration: none;
+    /* border: 1px solid black; */
 `
 
 const Bottom = styled.div`
@@ -186,7 +187,8 @@ const TimeStamp = styled.div`
 
 const Text = styled.div`
     margin-top: 10px;
-    border: 1px solid black;
+    padding: 5px;
+    /* border: 1px solid black; */
     width: 100%;
     height: 100px;
     background: lightgreen; 

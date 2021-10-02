@@ -18,9 +18,12 @@ const Rate = () => {
         setCurrentCapture,
     } = useContext(CaptureContext);
 
+    // use history to push to homepage if user forced their way here (from a page that wasn't homepage), to avoid render crash.
     setPage("rate");
 
     console.log("current capture is:" , currentCapture);
+
+    console.log("Window pos:" , window.pageYOffset)
 
     const [stars, setStars] = useState(0);
     const [starVote, setStarVote] = useState(0);
@@ -265,6 +268,7 @@ const Wrapper = styled.div`
     /* height: var(--defaultHeight); */
     width: 100%;
     border: 1px solid black;
+    offset-position: -200px;
 `
 
 const Text = styled.div`

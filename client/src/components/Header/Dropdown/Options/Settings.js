@@ -1,6 +1,9 @@
 import React, {useContext} from 'react'
 import { CaptureContext } from '../../../CaptureContext'
 import styled from 'styled-components';
+// icons
+import {BsToggleOn} from 'react-icons';
+import {BsToggleOff} from 'react-icons';
 
 const Settings = () => {
     const {

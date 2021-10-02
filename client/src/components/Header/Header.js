@@ -190,6 +190,7 @@ const TitleWrapper = styled(Link)`
 
 const IconWrapper = styled.div`
     display: flex;
+    align-items: center;
     /* border: 1px solid black; */
 `
 
@@ -204,8 +205,8 @@ const Icon = styled(Link)`
 
 const UserAvatar = styled.div`
     margin: 5px;
-    height: 30px;
-    width: 30px;
+    height: 60px;
+    width: 60px;
     /* border: 1px solid black; */
     cursor: pointer;
     position: relative;

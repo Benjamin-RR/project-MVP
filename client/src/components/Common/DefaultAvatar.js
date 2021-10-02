@@ -10,30 +10,15 @@ const DefaultAvatar = ({name, color}) => {
 
     return(
         <Wrapper>
-            <AvatarWrapper>
-
-                <UserAvatarDefault
-                    style={{ 
-                        position: "absolute",
-                        background: `${color}`,
-                        color: 'white',
-                        fontWeight: "900"
-                    }}
-                    >
+            <AvatarWrapper
+                style={{ background: `${color}`, }}
+            >
+                <AvatarLetterWhite>
                     {name.split(name.charAt(2))[0].toUpperCase().split('')[0]+"  "+name.split(name.charAt(2))[0].toUpperCase().split('')[1]}
-                </UserAvatarDefault>
-                <UserAvatarDefault
-                    style={{ 
-                        fontWeight: "900",
-                        postion: "absolute",
-                        fontSize: "1.3em",
-                        zIndex: "115",
-                        color: "black",
-                        background: "transparent",
-                    }}
-                >
+                </AvatarLetterWhite>
+                <AvatarLetterBlack>
                     {name.split(name.charAt(2))[0].toUpperCase()}
-                </UserAvatarDefault>
+                </AvatarLetterBlack>
             </AvatarWrapper>
         </Wrapper>
     )
@@ -43,25 +28,52 @@ const Wrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    height: 100%;
+    width: 100%;
+    /* border-radius: 50%; */
 `
 
 const AvatarWrapper = styled.div`
-    margin: 5px;
-    height: 30px;
-    width: 30px;
     /* border: 1px solid black; */
+    width: 100%;
+    height: 100%;
     cursor: pointer;
     position: relative;
+    text-decoration: none;
+    border-radius: 50%;
+    /* border: 1px solid black; */
+    `
+
+const AvatarLetterWhite = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    /* border-radius: 50%; */
+    text-decoration: none;
+    position: absolute;
+    color: white;
+    font-weight: 900;
+    font-size: 1.1em;
 `
 
-const UserAvatarDefault = styled.div`
+const AvatarLetterBlack = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100%;
     width: 100%;
-    /* background: blue; */
-    border-radius: 50%;
+    /* border-radius: 50%; */
+    text-decoration: none;
+    font-weight: 900;
+    position: absolute;
+    font-size: 1.3em;
+    z-index: 115;
+    color: black;
+    background: transparent;
+    /* border: 1px solid black; */
 `
 
 export default DefaultAvatar;
