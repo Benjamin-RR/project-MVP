@@ -23,21 +23,7 @@ const Home = () => {
         history.push("/Login")
     }
 
-    // let newFriendList;
-    // if (localStorage.getItem("friends").includes(',')) {
-    //     newFriendList = localStorage.getItem("friends").split(',');
-    // } else {
-    //     newFriendList = localStorage.getItem("friends");
-    // }
-
-    // const [friendArray, setFriendArray] = useState(localStorage.getItem("friends").split(','));
-    // console.log(JSON.parse(localStorage.getItem("friends") ) );
-
-    // const [friendArray, setFriendArray] = useState(localStorage.getItem("friends"));
-    // const [friendArray, setFriendArray] = useState(localStorage.getItem("friends"));
     const [friendArray, setFriendArray] = useState(JSON.parse(localStorage.getItem("friends") ));
-
-
     const [feed, setFeed] = useState(null);
     const [homeLoading, setHomeLoading] = useState(true);
 
@@ -52,10 +38,8 @@ const Home = () => {
         // const results = await LoadCapture(friendArray)
         LoadCapture(friendArray)
         .then((data) => {
-            // console.log("check:", data);
             setFeed(data);
             setHomeLoading(false);
-            console.log("DATA:" , data)
         })
         // setFeed(results)
         // setHomeLoading(true);
@@ -65,7 +49,7 @@ const Home = () => {
     //     setHomeLoad(true)
     // }
 
-    console.log("FEED:" , feed, friendArray, typeof friendArray);
+    // console.log("FEED:" , feed, friendArray, typeof friendArray);
     
     
     return (

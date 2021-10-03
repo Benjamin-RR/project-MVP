@@ -406,60 +406,86 @@ const getAnimal = async (req, res) => {
 const captureVote = async (req, res) => {
     console.log("CAPTURE VOTE:", req.body)
     try{
-    const client = await new MongoClient(MONGO_URI, options);
-    await client.connect();
-    const db = client.db("Capture");
+        // connect to mongo database.
+        const client = await new MongoClient(MONGO_URI, options);
+        await client.connect();
+        const db = client.db("Capture");
 
+    // get old user data of VOTER.
+    let uniqueName = req.body.voter
+    const oldVoterData = await db.collection("users").findOne({uniqueName})
 
-    // receive vote and star vote.
-    // update that user's capture info.
-    // update the one voting data.
+    // update old user data of VOTER into a new object.
+    let trues = Number(oldVoterData.moreStats.numTruthified)
+    let falses = Number(oldVoterData.moreStats.numFalsified)
+    let uncertains = Number(oldVoterData.moreStats.numIndecisive)
+    if (req.body.vote.vote === "FALSE") {
+        falses = falses+1
+    }
+    if (req.body.vote.vote === "TRUE") {
+        trues = trues+1
+    }
+    if (req.body.vote.vote === "UNSURE") {
+        uncertains = uncertains+1
+    }
+    let query = { uniqueName }
+    let update = { $set: { 
+            "moreStats": {
+                numOfRatingsGiven: Number(oldVoterData.moreStats.numOfRatingsGiven)+1,
+                numTruthified: trues,
+                numFalsified: falses,
+                numIndecisive: uncertains,
+                numOfStarsGiven: Number(oldVoterData.moreStats.numOfStarsGiven)+Number(req.body.vote.stars),
+                numLoggedOn: Number(oldVoterData.moreStats.numLoggedOn),
+                avgHoursPerDay: Number(oldVoterData.moreStats.avgHoursPerDay),
+                numMapSearches: Number(oldVoterData.moreStats.numMapSearches),
+                numMapUses: Number(oldVoterData.moreStats.numMapUses),
+            }
+        }
+    }
+    // update VOTER with new object into mongoDB.
+    const updatedVoter = await db.collection("users").updateOne(query, update)
 
-    // verify the seat attempting to be booked, isn't already booked.
-    // let _id = req.body.seat
-    // let query = {_id}
-    const oldUserData = await db.collection("Capture").findOne(req.body.uniqueName)
-    
-    
-    // // get old seat id.
-    // _id = req.body._id
-    // query = {_id}
-    // const oldFlightInfo = await db.collection("reservations").findOne(query)
-    // const oldSeatID = oldFlightInfo._id
-    
-    // // change old seat availability to true.
-    // _id = oldFlightInfo.seat
-    // query = { _id}
-    // let newValues = { $set: { isAvailable: true } };
-    // await db.collection("SA231").updateOne(query, newValues);
-    
-    // // change new seat to availability to false.
-    // _id = req.body.seat
-    // query = { _id}
-    // newValues = { $set: { isAvailable: false } };
-    // await db.collection("SA231").updateOne(query, newValues);
-        
-    // // update reservation info.
-    //     _id = req.body._id;
-    //     query = { _id };
-    //     newValues = {
-    //     $set: {
-    //         seat: req.body.seat,
-    //         givenName: req.body.givenName,
-    //         surname: req.body.surname,
-    //         email: req.body.email,
-    //     },
-    //     };
-    // await db.collection("reservations").updateOne(query, newValues);
-    // res.status(200).json({ status: 200, data: req.body, message: "update success." });
+    // get old user data of AUTHOR.
+    uniqueName = req.body.author
+    const oldAuthorData = await db.collection("users").findOne({uniqueName})
+    console.log("old author data:" , oldAuthorData);
+    // update old user data of AUTHOR into a new object.
+    trues = Number(oldAuthorData.captures.numOfTrues)
+    falses = Number(oldAuthorData.captures.numOfFalses)
+    uncertains = Number(oldAuthorData.captures.numOfUncertains)
+    if (req.body.vote.vote === "FALSE") {
+        falses = falses+1
+    }
+    if (req.body.vote.vote === "TRUE") {
+        trues = trues+1
+    }
+    if (req.body.vote.vote === "UNSURE") {
+        uncertains = uncertains+1
+    } 
+    query = { uniqueName }
+    update = { $set: { 
+            "captures": {
+                numOfTrues: trues,
+                numOfFalses: falses,
+                numOfUncertains: uncertains,
+                numOfStars: Number(oldAuthorData.captures.numOfStars)+Number(req.body.vote.stars),
+            }
+        }
+    }
+    console.log("AUTHOR QUERY, UPDATE:", query, update);
+    // update AUTHOR with new object into mongoDB.
+    const updatedAuthor = await db.collection("users").updateOne(query, update);
+
+    res.status(200).json({ status: 200, data: req.body, message: "vote casted successfully!" });
     client.close();
     }
     catch {
-
         res.status(400).json({     
             status: 400,
             data: req.body,
-            error: `An error occured. Be sure to provide all expected keys: _id, flight, seat, givenName, surname, email. (and their value pairs.)`,
+            error: `An error occured during your casted vote.`,
+            message: `An error occured during your casted vote.`
         })
     }
 }

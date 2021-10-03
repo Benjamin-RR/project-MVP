@@ -1,5 +1,5 @@
-import React, {useContext} from 'react';
-import { CaptureContext } from '../CaptureContext';
+// import React, {useContext} from 'react';
+// import { CaptureContext } from '../CaptureContext';
 
 // will connect and sign up or sign in depending on user's selection.
 const Connect = async({
@@ -13,25 +13,7 @@ const Connect = async({
     friendArray, 
     setFriendArray,
 }) => {
-    // const {
-    //     page,
-    //     setPage,
-    //     userID,
-    //     setUserID,
-    //     mediaQ,
-    //     setMediaQ,
-    //     uniqueName, 
-    //     setUniqueName
-    // } = useContext(CaptureContext);
     let connectStatus = "good";
-
-    
-    // // used to handle successful log on.
-    // const successfulConnect = () => {
-    //     // save current logged on user to local storage.
-    //     localStorage.setItem("userID", data.data._id);
-    //     localStorage.setItem("uniqueName", data.data.uniqueName)
-    // }
 
     // Attempt a new user sign up and either:
     // 1: Succeed. 2: Fail (email already existing). 3: let user know server is having issues.
@@ -68,9 +50,7 @@ const Connect = async({
                 localStorage.setItem("userID", data.data._id);
                 localStorage.setItem("uniqueName", data.data.uniqueName)
                 localStorage.setItem("userColor", newUserColor)
-                // localStorage.setItem("friends", [ uniqueName ])
                 localStorage.setItem("friends", JSON.stringify(uniqueName) )
-
             }
             if (data.status === 400) {
                 connectStatus = data.message;
@@ -100,16 +80,7 @@ const Connect = async({
                     localStorage.setItem("userID", data.data._id);
                     localStorage.setItem("uniqueName", data.data.uniqueName)
                     localStorage.setItem("userColor", data.data.avatarSrc.userColor)
-                    // setUserColor(data.data.avatarSrc.userColor)
                     localStorage.setItem("friends", JSON.stringify(data.data.friends) )
-
-                    // if ( localStorage.getItem("friends").includes(',')) {
-                    //     console.log("attempting to split... ", localStorage.getItem("friends"));
-
-                    //     // localStorage.setItem("friends");
-                    // };
-                    
-                    // setFriendArray(data.data.friends)
                 }
                 if (data.status === 400) {
                     connectStatus = data.message;

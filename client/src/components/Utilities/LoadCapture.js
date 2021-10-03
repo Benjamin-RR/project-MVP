@@ -1,23 +1,16 @@
 // LOAD CAPTURES
 
-// giving this component an array of unique names will return all unique name's captures. there is no limit to how few or many you can ask it.
-
+// Uses an array of uniqueNames to fetch each uniqueName's Captures. Range: (1 - infinite)
 //e.g.
 // ['ron'] // results: all ron's captures.
 // ['ron','harry','dumbledore'] // results: all of ron's, harry's, and dumbledoore's captures are taken.
 
-// all captures are stored into an array. e.g. [{ //capture info }, {},{}]
-
-
+// each caputre (an object) are stored into an array. e.g. [ { //capture info }, {}, {} ]
 export const LoadCapture = async (arrayToLoad) => {
     const friendArray = arrayToLoad;
     let feedArray = [];
     // const [feed, setFeed] = useState(null);
-    let feed = [];
-
     let animalDataArray = [];
-    // const [friendArray, setFriendArray] = useState(localStorage.getItem("friends").split(','));
-
 
     try{
         // get each user data (includes animal captures) and put into a new array.

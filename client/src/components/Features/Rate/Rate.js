@@ -2,6 +2,8 @@ import React, {useState, useEffect, useContext} from 'react';
 import { CaptureContext } from '../../CaptureContext';
 import styled from 'styled-components';
 import SingleCapture from '../../Common/SingleCapture';
+import { useHistory } from 'react-router-dom'; 
+
 
 // icons
 import {BsStar} from 'react-icons/bs';
@@ -17,17 +19,19 @@ const Rate = () => {
         currentCapture,
         setCurrentCapture,
     } = useContext(CaptureContext);
+    let history = useHistory();
 
-    // use history to push to homepage if user forced their way here (from a page that wasn't homepage), to avoid render crash.
+
+    // use history to push to homepage if user forced their way here (from a page that wasn't homepage), to avoid render crash or cheating and voting on their own capture.
     setPage("rate");
 
     // console.log("current capture is:" , currentCapture);
-
     // console.log("Window pos:" , window.pageYOffset)
 
     const [stars, setStars] = useState(0);
     const [starVote, setStarVote] = useState(0);
     const [vote, setVote] = useState(null);
+    const [castingVote, setCastingVote] = useState(false);
     
 
     // HANDLE SUBMIT / STAR CLICK
@@ -35,23 +39,25 @@ const Rate = () => {
         e.preventDefault();
         setStarVote(stars)
         console.log("stars on click:", stars);
-        areWeGood();
+        // areWeGood();
     }
 
     // HANDLE SUBMIT / VOTE CLICK
     const handleVoteClick = (e) => {
         // e.preventDefault();
         // setVote(e.target.value)
-        areWeGood();
+        console.log("vote:" , vote);
+        // areWeGood();
     }
 
     // checks to see if we are good to move on and submit
-    const areWeGood = () => {
-        if (!starVote && !vote) {
-            console.log("NOT READY")
-            return;
-        } else {
-            console.log("ALL GOOD!")
+    const submitVote = () => {
+        // if (!starVote || !vote) {
+        //     console.log("CAST:" , starVote, vote);
+        //     console.log("NOT READY")
+        //     return;
+        // } else {
+            console.log("SUBMITTING!")
             // submit vote and update mongoDB accordingly.
                 fetch(`capture/vote`, {
                     method: 'PUT',
@@ -59,14 +65,12 @@ const Rate = () => {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
-                        names: 
-                        [
-                            (localStorage.getItem("uniqueName")),
-                            currentCapture.author
-                        ],
+                        voter: localStorage.getItem("uniqueName"),
+                        author: currentCapture.author,
                         vote: {
                             vote : vote,
-                            stars : starVote
+                            stars : starVote,
+                            captureId : currentCapture._id
                         }
                     }),
                 })
@@ -88,7 +92,16 @@ const Rate = () => {
                 });
 
             // console.log("READY")
-        }
+        // }
+        return;
+    }
+
+    if (starVote && vote ) {
+        setCastingVote(true);
+        submitVote();
+        setStarVote(0);
+        setVote(null);
+        history.goBack();
     }
 
     return(
