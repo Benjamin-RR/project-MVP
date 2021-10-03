@@ -39,7 +39,5 @@ export const LoadUsers = async (arrayToLoad) => {
     } catch (error) {
         console.error("Error:" , error);
     }
-    console.log("user info array:" , usersInfoArray);
-
     return usersInfoArray;
 }

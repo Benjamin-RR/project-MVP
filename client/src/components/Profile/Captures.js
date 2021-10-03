@@ -38,6 +38,7 @@ const Captures = ({feed}) => {
                                 to="/Rate"
                             >Rate</Rate>
                         )}
+                        <div style={{ marginBottom: "50px"}} ></div>
                     </div>
                 )
             })) : (

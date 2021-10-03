@@ -30,8 +30,6 @@ const SingleCapture = (data) => {
     //     console.log("TRUE");
     // }
 
-    console.log("Data from single capture: " , data);
-
     return(
         <Wrapper2>
             <Wrapper>

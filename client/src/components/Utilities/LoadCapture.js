@@ -41,16 +41,11 @@ export const LoadCapture = async (arrayToLoad) => {
                 return(animalDataArray)
             })
             .then((animalDataArray) => {
-                console.log("Double check:", animalDataArray);
                 animalDataArray.forEach(person => {
-                    console.log("person:", person)
                     person.captures.animals.forEach((animal => {
                         feedArray.push(animal);
                     }))
                 })
-                // setFeed(feedArray);
-                // feed.push()
-                // console.log("feed array:" , feedArray);
             })
             .catch((error) => {
                 console.log("A server side error occured while attempting to fetch animal data.");
@@ -59,7 +54,5 @@ export const LoadCapture = async (arrayToLoad) => {
     } catch (error) {
         console.error("Error:" , error);
     }
-    console.log("feed array:" , feedArray);
-
     return feedArray;
 }

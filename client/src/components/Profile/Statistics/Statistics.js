@@ -1,83 +1,150 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import styled from "styled-components";
 import Stat from "./Stat";
+import Loader from '../../Common/Loader';
 
 const Statistics = ({data}) => {
 
-    console.log("data on statistics:" , data)
+    console.log("statistics data:" , data)
 
     return(
         <Wrapper>
-            <Title>Statistics</Title>
-            
-            <Section>
-                { data.author === localStorage.getItem("uniqueName") ? (
-                    <SubTitle>Your Authentic Score</SubTitle>
-                ):(
-                    <SubTitle>{data.author}'s Authentic Score</SubTitle>
-                )}
-                <Content>
-                    <Stat 
-                        title="Total Captures"
-                        num="27"
-                        total="27"
-                        style="bar"
-                    />                
-                </Content>
-            </Section>
+            { data ? (
+                <>
+                    { data.map((data, index) => {
+                        return(
+                            <>
+                                <Title>Statistics</Title>
+                                
+                                <Section>
+                                    { data.uniqueName === localStorage.getItem("uniqueName") ? (
+                                        <SubTitle>Your Authentic Score</SubTitle>
+                                    ):(
+                                        <SubTitle>{data.uniqueName}'s Authentic Score</SubTitle>
+                                    )}
+                                    <Content>
+                                        <Stat 
+                                            num={data.captures.numOfTrues}
+                                            total={(data.captures.numOfTrues)+(data.captures.numOfFalses)}
+                                        />                
+                                    </Content>
+                                </Section>
 
-            <Section>
-                { data.author === localStorage.getItem("uniqueName") ? (
-                    <SubTitle>On Your Captures</SubTitle>
-                ):(
-                    <SubTitle>On {data.author}'s Captures</SubTitle>
-                )}
-                <Content>
-                    <Stat 
-                        title="Total Captures"
-                        num="27"
-                        total="27"
-                        style="bar"
-                    />
-                </Content>
-            </Section>
+                                <Section>
+                                    { data.uniqueName === localStorage.getItem("uniqueName") ? (
+                                        <SubTitle>On Your Captures</SubTitle>
+                                    ):(
+                                        <>
+                                            <div></div>
+                                            <SubTitle>On {data.uniqueName}'s Captures</SubTitle>
+                                        </>
+                                    )}
+                                    <Content>
+                                        <Stat 
+                                            title="Total"
+                                            num={data.captures.total}
+                                            total={data.captures.total}
+                                        />
+                                        <Stat 
+                                            title="Locations"
+                                            num={data.captures.numOfLocations}
+                                        />
+                                        <Stat 
+                                            title="Certified"
+                                            num={data.captures.numOfTrues}
+                                            total={(data.captures.numOfTrues)+(data.captures.numOfFalses)+(data.captures.numOfUncertains)}
+                                        />
+                                        <Stat 
+                                            title="Refuted"
+                                            num={data.captures.numOfFalses}
+                                            total={(data.captures.numOfTrues)+(data.captures.numOfFalses)+(data.captures.numOfUncertains)}
+                                            flip="true"
+                                        />
+                                        <Stat 
+                                            title="Unclear Captures"
+                                            num={data.captures.numOfUncertains}
+                                            total={(data.captures.numOfTrues)+(data.captures.numOfFalses)+(data.captures.numOfUncertains)}
+                                        />
+                                        <Stat 
+                                            title="Stars Received"
+                                            num={data.captures.numOfStars}
+                                            total={((data.captures.numOfTrues)+(data.captures.numOfFalses)+(data.captures.numOfUncertains))*5}
+                                        />
+                                        <Stat 
+                                            title="Documentations"
+                                            num={data.captures.documentations}
+                                            total={data.captures.total}
+                                        />
+                                    </Content>
+                                </Section>
 
-            <Section>
-                <SubTitle>On Rating Others</SubTitle>
-                <Content>
-                    <Stat 
-                        title="Total Captures"
-                        num="27"
-                        total="27"
-                        style="bar"
-                    />
-                </Content>
-            </Section>
+                                <Section>
+                                    <SubTitle>On Rating Others</SubTitle>
+                                    <Content>
+                                        <Stat 
+                                            title="Ratings Given"
+                                            num={data.moreStats.numOfRatingsGiven}
+                                        />
+                                        <Stat 
+                                            title="Trues Given"
+                                            num={data.moreStats.numTruthified}
+                                            total={data.moreStats.numOfRatingsGiven}
+                                        />
+                                        <Stat 
+                                            title="Falses Given"
+                                            num={data.moreStats.numFalsified}
+                                            total={data.moreStats.numOfRatingsGiven}
+                                            flip="true"
+                                        />
+                                        <Stat 
+                                            title="Uncertain Given"
+                                            num={data.moreStats.numIndecisive}
+                                            total={data.moreStats.numOfRatingsGiven}
+                                        />
+                                        <Stat 
+                                            title="Stars Given"
+                                            num={data.moreStats.numOfStarsGiven}
+                                            total={(data.moreStats.numOfRatingsGiven)*5}
+                                        />
+                                    </Content>
+                                </Section>
+
+                                <Section>
+                                    <SubTitle>App Usage</SubTitle>
+                                    <Content>
+                                        <Stat 
+                                            title="Log ins"
+                                            num={data.moreStats.numLoggedOn}
+                                        />
+                                        <Stat 
+                                            title="Map Usages"
+                                            num={data.moreStats.numMapUses}
+                                        />
+                                        <Stat 
+                                            title="Map Searches"
+                                            num={data.moreStats.numMapSearches}
+                                            total={data.moreStats.numMapUses}
+                                        />
+                                        <Stat 
+                                            title="Usage per hour"
+                                            num={data.moreStats.avgHoursPerDay}
+                                            total="24"
+                                            flip="true"
+                                        />
+                                    </Content>
+                                </Section>
+                            </>
+                        )
+                    })}
+
+                </>
+            ):(
+                <Loader />
+            )}
 
         </Wrapper>
     )
 }
-    // ON YOUR CAPTURES
-    // total: 0,
-    // numOflocations: 0,
-    // authenticScore: 0,
-    // rank: 0,
-    // numOfTrues: 0,
-    // numOfFalses: 0,
-    // numOfUncertains: 0,
-    // numOfStars: 0,
-    // documentations: 0,
-    // types: 0,
-
-    // MORE STATS
-    // numOfRatingsGiven: 0, 
-    // numFalsified: 0, 
-    // numTruthified: 0, 
-    // numIndecisive: 0, 
-    // numOfStarsGiven: 0, 
-    // numLoggedOn: 0, 
-    // numMapSearches: 0, 
-    // numMapUses: 0, 
 
 const Wrapper = styled.div`
     padding: 10px;
@@ -98,7 +165,7 @@ const Title = styled.div`
 
 const Section = styled.div`
     border: 1px solid black;
-    margin: 5px;
+    margin: 20px;
     padding: 5px;
     width: 100%;
 `

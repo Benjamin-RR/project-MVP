@@ -84,7 +84,7 @@ const addNewUser = async (req, res) => {
             ...req.body,
             captures: {
                 total: 0,
-                numOflocations: 0,
+                numOfLocations: 0,
                 authenticScore: 0,
                 rank: 0,
                 numOfTrues: 0,
@@ -102,8 +102,9 @@ const addNewUser = async (req, res) => {
                 numIndecisive: 0, 
                 numOfStarsGiven: 0, 
                 numLoggedOn: 0, 
+                avgHoursPerDay: 0,
                 numMapSearches: 0, 
-                numMapUses: 0, 
+                numMapUses: 0,
             },
             achievements: {
                 AnimalLover: false, 

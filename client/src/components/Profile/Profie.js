@@ -12,6 +12,7 @@ import Friends from './Friends';
 import {LoadCapture} from '../Utilities/LoadCapture';
 import { LoadUsers } from '../Utilities/LoadUsers';
 
+import Loader from '../Common/Loader';
 
 
 const Profile = () => {
@@ -36,80 +37,90 @@ const Profile = () => {
     const [captureFeed, setCaptureFeed] = useState(null);
     const [userInfoFeed, setUserInfoFeed] = useState(null);
 
-
-    console.log("data from profile:" , data)
-
     useEffect( async ()=> {
         // for rendering this profile's captures.
         const thisProfileCaptures = await LoadCapture([data.author])
-        console.log("results:" , thisProfileCaptures);
+        // console.log("RESULT CAPTURES:" , thisProfileCaptures);
         setCaptureFeed(thisProfileCaptures)
         // for getting all stats/achievements of this profile
         const thisProfileInfo = await LoadUsers([data.author])
-        console.log("results:" , thisProfileInfo);
+
+        // console.log("NEW:" , thisProfileInfo);
+        // thisProfileCaptures.forEach(()=> {
+        //     console.log("test")
+        // })
+
+        console.log("RESULT USER INFO:" , thisProfileInfo);
         setUserInfoFeed(thisProfileInfo)
     }, [])
 
-    // console.log("mediaQ:" , mediaQ);
+    // console.log("FOR STATISTICS:" , userInfoFeed )
+    console.log("check states:", captureFeed, userInfoFeed);
 
     return (
         <>
-            { (mediaQ.matches === false) ? (
-                <Wrapper>
-                    <TopToBottom>
-                        <Banner 
-                            data={data}
-                        />
-                        <LeftToRight>
-                            {profileOption === "Captures" && (
-                                <Captures 
-                                feed={captureFeed}
-                                />
-                            )}
-                            {profileOption === "Statistics" && (
-                                <TopToBottom>
-                                    <Statistics 
-                                        data={data}
-                                    />
-                                    <Achievements 
-                                        data={data}
-                                    />
-                                </TopToBottom>
-                            )}
-                            {profileOption === "Friends" && (
-                                    <Friends 
-                                        data={data}
-                                    />
-                            )}
-                        </LeftToRight>
-
-                    </TopToBottom>
-                </Wrapper>
-            ):(
-                <Wrapper>
-                    <TopToBottom>
-                        <Banner 
-                            data={data}
-                        />
-                        <LeftToRight>
-                            <Captures 
-                                feed={captureFeed}
-                            />
+            {(captureFeed && userInfoFeed) ? (
+                <div>
+                    { (mediaQ.matches === false) ? (
+                        <Wrapper>
                             <TopToBottom>
-                                <Statistics 
+                                <Banner 
                                     data={data}
                                 />
-                                <Achievements 
-                                    data={data}
-                                />
+                                <LeftToRight>
+                                    {profileOption === "Captures" && (
+                                        <Captures 
+                                        feed={captureFeed}
+                                        />
+                                    )}
+                                    {profileOption === "Statistics" && (
+                                        <TopToBottom>
+                                            <Statistics 
+                                                data={userInfoFeed}
+                                            />
+                                            <Achievements 
+                                                data={userInfoFeed}
+                                            />
+                                        </TopToBottom>
+                                    )}
+                                    {profileOption === "Friends" && (
+                                            <Friends 
+                                                data={userInfoFeed}
+                                            />
+                                    )}
+                                </LeftToRight>
+        
                             </TopToBottom>
-                                <Friends 
+                        </Wrapper>
+                    ):(
+                        <Wrapper>
+                            <TopToBottom>
+                                <Banner 
                                     data={data}
                                 />
-                        </LeftToRight>
-
-                    </TopToBottom>
-                </Wrapper>
+                                <LeftToRight>
+                                    <Captures 
+                                        feed={captureFeed}
+                                    />
+                                    <TopToBottom>
+                                        <Statistics 
+                                            data={userInfoFeed}
+                                        />
+                                        <Achievements 
+                                            data={userInfoFeed}
+                                        />
+                                    </TopToBottom>
+                                        <Friends 
+                                            data={userInfoFeed}
+                                        />
+                                </LeftToRight>
+        
+                            </TopToBottom>
+                        </Wrapper>
+                    )}
+                </div>
+            ):(
+                <Loader />
             )}
         </>
     )
