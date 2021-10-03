@@ -21,9 +21,9 @@ const Rate = () => {
     // use history to push to homepage if user forced their way here (from a page that wasn't homepage), to avoid render crash.
     setPage("rate");
 
-    console.log("current capture is:" , currentCapture);
+    // console.log("current capture is:" , currentCapture);
 
-    console.log("Window pos:" , window.pageYOffset)
+    // console.log("Window pos:" , window.pageYOffset)
 
     const [stars, setStars] = useState(0);
     const [starVote, setStarVote] = useState(0);
@@ -35,29 +35,61 @@ const Rate = () => {
         e.preventDefault();
         setStarVote(stars)
         console.log("stars on click:", stars);
-        // areWeGood();
+        areWeGood();
     }
 
     // HANDLE SUBMIT / VOTE CLICK
     const handleVoteClick = (e) => {
         // e.preventDefault();
         // setVote(e.target.value)
-        // areWeGood();
+        areWeGood();
     }
 
     // checks to see if we are good to move on and submit
-    // const areWeGood = () => {
-        if (!starVote || !vote) {
+    const areWeGood = () => {
+        if (!starVote && !vote) {
             console.log("NOT READY")
-            // return;
+            return;
         } else {
+            console.log("ALL GOOD!")
+            // submit vote and update mongoDB accordingly.
+                fetch(`capture/vote`, {
+                    method: 'PUT',
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        names: 
+                        [
+                            (localStorage.getItem("uniqueName")),
+                            currentCapture.author
+                        ],
+                        vote: {
+                            vote : vote,
+                            stars : starVote
+                        }
+                    }),
+                })
+                .then((res) => res.json())
+                .then((data) => {
+                    if (data.status === 200) {
+                        console.log("SUCCESS!", data);
+                    }
+                    if (data.status === 400) {
 
-            console.log("READY")
+                    }
+                    // setConfirmation(data.data);
+                    // setConfirmationLoaded(true);
+                    // setFlightNumber("");
+                    console.log("success:", data)
+                })
+                .catch((error) => {
+                    console.log("Error", error);
+                });
+
+            // console.log("READY")
         }
-    // }
-
-    console.log("STARS:" , stars, "STAR VOTE:" , starVote);
-
+    }
 
     return(
         <Wrapper>
@@ -68,7 +100,7 @@ const Rate = () => {
                         <Revote
                             onClick={() => {
                                 setVote(null);
-                                handleVoteClick();
+                                // handleVoteClick();
                             }}
                         >REVOTE</Revote>
                     ):(

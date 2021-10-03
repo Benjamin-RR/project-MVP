@@ -22,9 +22,17 @@ const Home = () => {
     { !userID && 
         history.push("/Login")
     }
+
+    // let newFriendList;
+    // if (localStorage.getItem("friends").includes(',')) {
+    //     newFriendList = localStorage.getItem("friends").split(',');
+    // } else {
+    //     newFriendList = localStorage.getItem("friends");
+    // }
+
     const [friendArray, setFriendArray] = useState(localStorage.getItem("friends").split(','));
     const [feed, setFeed] = useState(null);
-    const [homeLoad, setHomeLoad] = useState(false);
+    const [homeLoading, setHomeLoading] = useState(true);
 
     if (page !== "home") {
         setPage("home");
@@ -34,16 +42,29 @@ const Home = () => {
     
     // Load images and animal data into their arrays, set page to loaded so we can render everything below. (gets called once).
     useEffect( async ()=> {
-        const results = await LoadCapture(friendArray)
-        setFeed(results)
-        // setHomeLoad(true);
+        // const results = await LoadCapture(friendArray)
+        LoadCapture(friendArray)
+        .then((data) => {
+            // console.log("check:", data);
+            setFeed(data);
+            setHomeLoading(false);
+
+        })
+        // setFeed(results)
+        // setHomeLoading(true);
     }, [])
+
+    // if (feed && !homeLoad) {
+    //     setHomeLoad(true)
+    // }
+
+    console.log("FEED:" , feed);
     
     
     return (
         <Wrapper>
             <div>Captures</div>
-            {(feed) ? (feed.map((data, index) => {
+            {(feed && !homeLoading) ? (feed.map((data, index) => {
                 return(
                     <CaptureContent
                     key={index}
@@ -53,15 +74,19 @@ const Home = () => {
                                 data={data}
                             />
                         </Card>
-                        <Rate
-                            // onClick={() => {
-                            //     localStorage.setItem("CaptureInfo", JSON.stringify(data) )
-                            // }}
-                            onClick={() => {
-                                setCurrentCapture(data)
-                            }}
-                            to="/Rate"
-                        >Rate</Rate>
+                        { data.author !== (localStorage.getItem("uniqueName")) ? (
+                            <Rate
+                                // onClick={() => {
+                                //     localStorage.setItem("CaptureInfo", JSON.stringify(data) )
+                                // }}
+                                onClick={() => {
+                                    setCurrentCapture(data)
+                                }}
+                                to="/Rate"
+                            >Rate</Rate>
+                        ) : (
+                            <div style={{ marginBottom: "50px"}} ></div>
+                        )}
                     </CaptureContent>
                 )
             })) : (

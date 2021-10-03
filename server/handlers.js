@@ -398,28 +398,71 @@ const getAnimal = async (req, res) => {
     }
 }
 
-// const getUser = async (req, res) => {
-//     try{
-//         const client = await new MongoClient(MONGO_URI, options);
-//         await client.connect();
-//         const db = client.db("Capture");
-//         const author = req.body.friend
-//         console.log("check:", author);
-//         const animal = await db.collection("users").findOne( {author} );
-//         // if animal found, sound back info.
-//         console.log("Animal:" , animal);
-//         animal ? (
-//             res.status(200).json({ status: 200, data: animal, message: "matched found."})
-//         ) : (
-//             res.status(400).json({ status: 400, data: req.body, message: "animal not found"})
-//         )
-//         client.close();
-//     }
-//     catch {
-//         res.status(500).json({ status: 500, data: req.body, message: "sorry we are having server issues."})
-//         client.close();
-//     }
-// }
+//////////////////////////////////////////////
+//                                          //
+//           VOTE ON A CAPTURE              //
+//                                          //
+//////////////////////////////////////////////
+const captureVote = async (req, res) => {
+    console.log("CAPTURE VOTE:", req.body)
+    try{
+    const client = await new MongoClient(MONGO_URI, options);
+    await client.connect();
+    const db = client.db("Capture");
+
+
+    // receive vote and star vote.
+    // update that user's capture info.
+    // update the one voting data.
+
+    // verify the seat attempting to be booked, isn't already booked.
+    // let _id = req.body.seat
+    // let query = {_id}
+    const oldUserData = await db.collection("Capture").findOne(req.body.uniqueName)
+    
+    
+    // // get old seat id.
+    // _id = req.body._id
+    // query = {_id}
+    // const oldFlightInfo = await db.collection("reservations").findOne(query)
+    // const oldSeatID = oldFlightInfo._id
+    
+    // // change old seat availability to true.
+    // _id = oldFlightInfo.seat
+    // query = { _id}
+    // let newValues = { $set: { isAvailable: true } };
+    // await db.collection("SA231").updateOne(query, newValues);
+    
+    // // change new seat to availability to false.
+    // _id = req.body.seat
+    // query = { _id}
+    // newValues = { $set: { isAvailable: false } };
+    // await db.collection("SA231").updateOne(query, newValues);
+        
+    // // update reservation info.
+    //     _id = req.body._id;
+    //     query = { _id };
+    //     newValues = {
+    //     $set: {
+    //         seat: req.body.seat,
+    //         givenName: req.body.givenName,
+    //         surname: req.body.surname,
+    //         email: req.body.email,
+    //     },
+    //     };
+    // await db.collection("reservations").updateOne(query, newValues);
+    // res.status(200).json({ status: 200, data: req.body, message: "update success." });
+    client.close();
+    }
+    catch {
+
+        res.status(400).json({     
+            status: 400,
+            data: req.body,
+            error: `An error occured. Be sure to provide all expected keys: _id, flight, seat, givenName, surname, email. (and their value pairs.)`,
+        })
+    }
+}
 
 module.exports = {
     signInUser,
@@ -433,4 +476,5 @@ module.exports = {
     getUserInfo,
     getAnimal,
     // getUser,
+    captureVote,
 };

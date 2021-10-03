@@ -16,7 +16,8 @@ const {
     addFriend,
     getUserInfo, 
     getAnimal,
-    // getUser
+    // getUser,
+    captureVote,
 } = require("./handlers");
 
 const PORT = process.env.PORT 
@@ -39,10 +40,7 @@ express()
     .use(express.urlencoded({ extended: true, limit: '50mb' }))
     .use("/", express.static(__dirname + "/"))
 
-    // REST endpoints
-    // .use(require('./routes/items'))
-    // .use(require('./routes/companies'))
-    // .use(require('./routes/purchases'))
+    // Rest endpoints.
     .post("/user/signIn", signInUser)
     .post("/user/new", addNewUser)
     .post("/image/uploadCapture", addCaptureImage)
@@ -54,6 +52,7 @@ express()
     .post("/user/info", getUserInfo)
     .post('/animal', getAnimal)     // get animal info // has been nuked...
     // .post('/user', getUser)
+    .put("/capture/vote", captureVote)
 
 
     // This is the catch all Endpoint
