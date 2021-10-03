@@ -20,20 +20,24 @@ const DefaultAvatar = ({name, color}) => {
     }
     const thisColor = `radial-gradient(circle, rgba(250,250,250,1) 0%, ${hexToRgbA(color)} 50%`;
 
+    // console.log("CHECK AVATAR:" , name);
+
     return(
         <Wrapper>
-            <AvatarWrapper
-                style={{ background: `${color}`, }}
-            >
-                {/* <AvatarLetterWhite>
-                    {name.split(name.charAt(2))[0].toUpperCase().split('')[0]+"  "+name.split(name.charAt(2))[0].toUpperCase().split('')[1]}
-                </AvatarLetterWhite> */}
-                <AvatarLetterBlack
-                    style={{ background: `${thisColor}` }}
+            { name && (
+                <AvatarWrapper
+                    style={{ background: `${color}`, }}
                 >
-                    {name.split(name.charAt(2))[0].toUpperCase()}
-                </AvatarLetterBlack>
-            </AvatarWrapper>
+                    {/* <AvatarLetterWhite>
+                        {name.split(name.charAt(2))[0].toUpperCase().split('')[0]+"  "+name.split(name.charAt(2))[0].toUpperCase().split('')[1]}
+                    </AvatarLetterWhite> */}
+                    <AvatarLetterBlack
+                        style={{ background: `${thisColor}` }}
+                    >
+                        {name.split(name.charAt(2))[0].toUpperCase()}
+                    </AvatarLetterBlack>
+                </AvatarWrapper>
+            )}
         </Wrapper>
     )
 }

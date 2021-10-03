@@ -46,7 +46,7 @@ const Connect = async({
             }
             return color;
         }
-        newUserColor = Color;
+        const newUserColor = Color();
 
         await fetch(`/user/new`, {
             method: "POST",
@@ -58,7 +58,7 @@ const Connect = async({
                 password: password,
                 uniqueName: uniqueName,
                 displayName: displayName,
-                avatarSrc: {color: newUserColor},
+                avatarSrc: {userColor: newUserColor},
             }),
         })
             .then((response) => response.json())
@@ -68,7 +68,9 @@ const Connect = async({
                 localStorage.setItem("userID", data.data._id);
                 localStorage.setItem("uniqueName", data.data.uniqueName)
                 localStorage.setItem("userColor", newUserColor)
-                localStorage.setItem("friends", [ uniqueName ])
+                // localStorage.setItem("friends", [ uniqueName ])
+                localStorage.setItem("friends", JSON.stringify(uniqueName) )
+
             }
             if (data.status === 400) {
                 connectStatus = data.message;
@@ -99,7 +101,14 @@ const Connect = async({
                     localStorage.setItem("uniqueName", data.data.uniqueName)
                     localStorage.setItem("userColor", data.data.avatarSrc.userColor)
                     // setUserColor(data.data.avatarSrc.userColor)
-                    localStorage.setItem("friends", data.data.friends)
+                    localStorage.setItem("friends", JSON.stringify(data.data.friends) )
+
+                    // if ( localStorage.getItem("friends").includes(',')) {
+                    //     console.log("attempting to split... ", localStorage.getItem("friends"));
+
+                    //     // localStorage.setItem("friends");
+                    // };
+                    
                     // setFriendArray(data.data.friends)
                 }
                 if (data.status === 400) {
