@@ -12,6 +12,8 @@ export const LoadCapture = async (arrayToLoad) => {
     // const [feed, setFeed] = useState(null);
     let animalDataArray = [];
 
+    console.log("received:" , arrayToLoad);
+
     try{
         // get each user data (includes animal captures) and put into a new array.
         friendArray.forEach( async (friend) => {
@@ -24,6 +26,7 @@ export const LoadCapture = async (arrayToLoad) => {
             })
             .then((response) => response.json())
             .then((data) => {
+                console.log("data:" , data);
                 if (data.status === 200) {
                     const userData = data.data;
                         animalDataArray.push(userData);
@@ -35,13 +38,14 @@ export const LoadCapture = async (arrayToLoad) => {
             })
             .then((animalDataArray) => {
                 animalDataArray.forEach(person => {
+                    console.log("person:", person);
                     person.captures.animals.forEach((animal => {
                         feedArray.push(animal);
                     }))
                 })
             })
             .catch((error) => {
-                console.log("A server side error occured while attempting to fetch animal data.");
+                console.log("ERROR:", error, "Occured while attempting to fetch all user/s animal captures in LoadCapture.js component.");
             });
         })
     } catch (error) {

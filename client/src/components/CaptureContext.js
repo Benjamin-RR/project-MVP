@@ -26,9 +26,11 @@ export const CaptureProvider = ({ children }) => {
 
     // get user's current location
     const [myLocation, setMyLocation] = useState(null);
-    navigator.geolocation.getCurrentPosition((position) => {
-        setMyLocation(position)
-    }, () => null)
+    if (!myLocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+            setMyLocation(position)
+        }, () => null)
+    }
 
     // to remember which one capture we are viewing.
     const [currentCapture, setCurrentCapture] = useState(null);

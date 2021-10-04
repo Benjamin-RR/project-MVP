@@ -33,7 +33,7 @@ export const LoadUsers = async (arrayToLoad) => {
                 return(usersInfoArray)
             })
             .catch((error) => {
-                console.log("A server side error occured while attempting to fetch animal data.");
+                console.log("An error occured while fetching user/s info.");
             });
         })
     } catch (error) {
