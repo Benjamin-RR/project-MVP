@@ -28,6 +28,7 @@ export const CaptureProvider = ({ children }) => {
     if (!myLocation) {
         navigator.geolocation.getCurrentPosition((position) => {
             setMyLocation(position)
+            console.log("LOCATION:" , position)
         }, () => null)
     }
 
@@ -72,6 +73,8 @@ export const CaptureProvider = ({ children }) => {
             setDynamicBanner,
             statsOnRatingOthers,
             setStatsOnRatingOthers,
+            appLoaded, 
+            setAppLoaded
         }}>
             {children}
         </CaptureContext.Provider>

@@ -1,5 +1,4 @@
 "use strict";
-
 const { MongoClient } = require("mongodb");
 
 require("dotenv").config();
@@ -22,6 +21,7 @@ const {
 //              SIGN IN USER                //
 //                                          //
 //////////////////////////////////////////////
+// verify email exists in DB using req.body.email and verifies password matches using req.body.password. signs in.
 const signInUser = async (req, res) => {
     let signInStatus = "good";
     // Validate email is indeed good.
@@ -55,6 +55,7 @@ const signInUser = async (req, res) => {
 //              ADD NEW USER                //
 //                                          //
 //////////////////////////////////////////////
+// verify email and uniqune name (from req.body) do not already exist in DB, then add user.
 const addNewUser = async (req, res) => {
     // verify this email account is not already taken.
     const client = await new MongoClient(MONGO_URI, options);
@@ -101,8 +102,10 @@ const addNewUser = async (req, res) => {
                 numTruthified: 0, 
                 numIndecisive: 0, 
                 numOfStarsGiven: 0, 
-                numLoggedOn: 0, 
+                numLoggedOn: 1, 
                 avgHoursPerDay: 0,
+                userSince: 0,
+                minutesUsed: 0,
                 numMapSearches: 0, 
                 numMapUses: 0,
             },
@@ -144,6 +147,10 @@ const addNewUser = async (req, res) => {
 //           ADD CAPTURED IMAGE             //
 //                                          //
 //////////////////////////////////////////////
+// adds image to cloudinary
+// creates new animal capture object.
+// find (by uniqueName) and get user's array of captures and adds new capture to that array.
+// update user's statistics. (e.g. total captures)
 const addCaptureImage = async (req, res) => {
     try{
         // upload image to cloudinary
@@ -151,9 +158,8 @@ const addCaptureImage = async (req, res) => {
         const uploadedResponse = await cloudinary.uploader.upload(fileStr, {
             upload_preset: 'Capture'
         })
-        console.log("upload response:" , uploadedResponse);
 
-        // create new animal document on mongoDB
+        // connect to mongoDB
         const client = await new MongoClient(MONGO_URI, options);
         await client.connect();
         const db = client.db("Capture");
@@ -165,19 +171,16 @@ const addCaptureImage = async (req, res) => {
             public_id: uploadedResponse.public_id,
             ...req.body
         }
-        // await db.collection("animals").insertOne(newCapture);
 
         // get old user data.
         const uniqueName = req.body.author
         const oldUserData = await db.collection("users").findOne({ uniqueName });
         // store all animals into an array, then push the new one in.
         let animalArray = oldUserData.captures.animals
-        // animalArray.push(uploadedResponse.public_id)
         animalArray.push(newCapture);
         
-        const query = { uniqueName }
-
         // update animal array.
+        const query = { uniqueName }
         let update = { $set: { "captures.animals": animalArray}}
         await db.collection("users").updateOne(query, update)
 
@@ -203,6 +206,7 @@ const addCaptureImage = async (req, res) => {
 //            ADD AVATAR IMAGE              //
 //                                          //
 //////////////////////////////////////////////
+// finds documents by uniqueName and updates user's avatar color or image.
 const addAvatarImage = async (req, res) => {
 //     try{
 //         // upload image to cloudinary
@@ -231,17 +235,17 @@ const addAvatarImage = async (req, res) => {
 //                                          //
 //////////////////////////////////////////////
 const downloadImage = async (req, res) => {
-    try{
-        const {resources} = await cloudinary.search.expression('folder:animals')
-        // .sort_by('public_id', 'desc')
-        // .max_results(30)
-        // .execute();
-        // const publicIds = resources.map(file=> file.public_id);
-        // res.send(publicIds);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({message: "download failed."})
-    }
+    // try{
+    //     const {resources} = await cloudinary.search.expression('folder:animals')
+    //     // .sort_by('public_id', 'desc')
+    //     // .max_results(30)
+    //     // .execute();
+    //     // const publicIds = resources.map(file=> file.public_id);
+    //     // res.send(publicIds);
+    // } catch (err) {
+    //     console.error(err);
+    //     res.status(500).json({message: "download failed."})
+    // }
 }
 
 //////////////////////////////////////////////
@@ -265,38 +269,27 @@ const downloadImages = async (req, res) => {
 
 //////////////////////////////////////////////
 //                                          //
-//              UPDATE USER                 //
-//                                          //
-//////////////////////////////////////////////
-const userUpdate = async (req, res) => {
-
-}
-
-//////////////////////////////////////////////
-//                                          //
 //              ADD FRIEND                  //
 //                                          //
 //////////////////////////////////////////////
+// func. searches for a unique name OR email, updates that user with friend req pending, and querying user with friend req waiting.
 const addFriend = async (req, res) => {
+    // try{
+    // const client = await new MongoClient(MONGO_URI, options);
+    // await client.connect();
+    // const db = client.db("Capture");
+    // // attempt to find friend being searched.
 
-    try{
-    const client = await new MongoClient(MONGO_URI, options);
-    await client.connect();
-    const db = client.db("Capture");
-
-    // attempt to find friend being searched.
-
-    
-    // res.status(200).json({ status: 200, data: req.body, message: "update success." });
-    client.close();
-    }
-    catch {
-        res.status(400).json({     
-            status: 400,
-            data: req.body,
-            error: `An error occured.`,
-        })
-    }
+    // // res.status(200).json({ status: 200, data: req.body, message: "update success." });
+    // client.close();
+    // }
+    // catch {
+    //     res.status(400).json({     
+    //         status: 400,
+    //         data: req.body,
+    //         error: `An error occured.`,
+    //     })
+    // }
 }
 
 //////////////////////////////////////////////
@@ -304,10 +297,9 @@ const addFriend = async (req, res) => {
 //             GET USER INFO                //
 //                                          //
 //////////////////////////////////////////////
+// func. finds a user with matching unique name, and gets it's entire document.
 const getUserInfo = async (req, res) => {
-    // console.log("get user info:", req.body);
     try{
-        // console.log("check:", req.body);
         const client = await new MongoClient(MONGO_URI, options);
         await client.connect();
         const db = client.db("Capture");
@@ -333,34 +325,35 @@ const getUserInfo = async (req, res) => {
 //            GET ANIMAL INFO               //
 //                                          //
 //////////////////////////////////////////////
-const getAnimal = async (req, res) => {
-    try{
-        const client = await new MongoClient(MONGO_URI, options);
-        await client.connect();
-        const db = client.db("Capture");
-        const author = req.body.friend
-        console.log("check:", author);
-        const animal = await db.collection("animals").findOne( {author} );
-        // if animal found, sound back info.
-        console.log("Animal:" , animal);
-        animal ? (
-            res.status(200).json({ status: 200, data: animal, message: "matched found."})
-        ) : (
-            res.status(400).json({ status: 400, data: req.body, message: "animal not found"})
-        )
-        client.close();
-    }
-    catch {
-        res.status(500).json({ status: 500, data: req.body, message: "sorry we are having server issues."})
-        client.close();
-    }
-}
+// const getAnimal = async (req, res) => {
+//     try{
+//         const client = await new MongoClient(MONGO_URI, options);
+//         await client.connect();
+//         const db = client.db("Capture");
+//         const author = req.body.friend
+//         console.log("check:", author);
+//         const animal = await db.collection("animals").findOne( {author} );
+//         // if animal found, send back info.
+//         console.log("Animal:" , animal);
+//         animal ? (
+//             res.status(200).json({ status: 200, data: animal, message: "matched found."})
+//         ) : (
+//             res.status(400).json({ status: 400, data: req.body, message: "animal not found"})
+//         )
+//         client.close();
+//     }
+//     catch {
+//         res.status(500).json({ status: 500, data: req.body, message: "sorry we are having server issues."})
+//         client.close();
+//     }
+// }
 
 //////////////////////////////////////////////
 //                                          //
 //           VOTE ON A CAPTURE              //
 //                                          //
 //////////////////////////////////////////////
+// func. recevies req.body (the casted vote) and updates: the capture, the author of capture, and the voter.
 const captureVote = async (req, res) => {
     console.log("CAPTURE VOTE:", req.body)
     try{
@@ -509,17 +502,26 @@ const captureVote = async (req, res) => {
     }
 }
 
+//////////////////////////////////////////////
+//                                          //
+//              GET CAPTURES                //
+//                                          //
+//////////////////////////////////////////////
+const getCaptures = () => {
+
+}
+
 module.exports = {
     signInUser,
     addNewUser,
     addCaptureImage,
-    addAvatarImage,     // not doing much yet.
+    addAvatarImage,     // not doing much (plans for using in future feature.)
     downloadImage,      // not doing much yet.
-    downloadImages,
-    userUpdate,         // not doing much yet.
-    addFriend,          // not doing much yet.
+    downloadImages,     // not doing much yet.
+    addFriend,          // not doing much (plans for using in future feature.)
     getUserInfo,
     getAnimal,
     // getUser,
     captureVote,
+    getCaptures
 };

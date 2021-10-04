@@ -11,11 +11,11 @@ const {
     addAvatarImage,
     downloadImage,
     downloadImages,
-    userUpdate,
     addFriend,
     getUserInfo, 
     getAnimal,
     captureVote,
+    getCaptures,
 } = require("./handlers");
 
 const PORT = process.env.PORT 
@@ -39,19 +39,20 @@ express()
     .use("/", express.static(__dirname + "/"))
 
     // Rest endpoints.
+    // USER
     .post("/user/signIn", signInUser)
     .post("/user/new", addNewUser)
-    .post("/image/uploadCapture", addCaptureImage)
-    .post("/image/uploadAvatar", addAvatarImage)
-    .get("/image/download", downloadImage)
-    .get("/image/downloadMany", downloadImages)
-    .post("/user/update", userUpdate)
-    .put("/user/addFriend", addFriend)
     .post("/user/info", getUserInfo)
-    .post('/animal', getAnimal)     // get animal info // has been nuked...
-    // .post('/user', getUser)
+    .put("/user/addFriend", addFriend)
+    // CAPTURES
+    .post("/image/uploadCapture", addCaptureImage)
     .put("/capture/vote", captureVote)
-
+    .get("/captures", getCaptures)
+    // OTHER
+    .post("/image/uploadAvatar", addAvatarImage)
+    // .get("/image/download", downloadImage)           // never has done anything. delete if never used.
+    // .get("/image/downloadMany", downloadImages)      // never has done anything. delete if never used.
+    // .post('/animal', getAnimal)     // get animal info // has been nuked...
 
     // This is the catch all Endpoint
     .get("*", (req, res) => {

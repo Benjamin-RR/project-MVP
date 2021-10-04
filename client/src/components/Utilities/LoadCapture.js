@@ -12,7 +12,7 @@ export const LoadCapture = async (arrayToLoad) => {
     // const [feed, setFeed] = useState(null);
     let animalDataArray = [];
 
-    console.log("received:" , arrayToLoad);
+    // console.log("received:" , arrayToLoad);
 
     try{
         // get each user data (includes animal captures) and put into a new array.
@@ -26,19 +26,21 @@ export const LoadCapture = async (arrayToLoad) => {
             })
             .then((response) => response.json())
             .then((data) => {
-                console.log("data:" , data);
+                // console.log("data:" , data);
                 if (data.status === 200) {
                     const userData = data.data;
                         animalDataArray.push(userData);
+                        // console.log("user data:" , userData);
                 }
                 if (data.status === 400) {
                     console.log("error:" , data.message);
                 }
+                // console.log("animal data array:" , animalDataArray);
                 return(animalDataArray)
             })
             .then((animalDataArray) => {
                 animalDataArray.forEach(person => {
-                    console.log("person:", person);
+                    // console.log("person:", person);
                     person.captures.animals.forEach((animal => {
                         feedArray.push(animal);
                     }))
@@ -51,5 +53,7 @@ export const LoadCapture = async (arrayToLoad) => {
     } catch (error) {
         console.error("Error:" , error);
     }
+    // console.log("feed array:" , feedArray);
+    // console.log("feed array filtered:"  )
     return feedArray;
 }

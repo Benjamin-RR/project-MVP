@@ -20,28 +20,28 @@ const SingleCapture = (data, disableAvatar, disableMap) => {
         setBadgeSetting,
     } = useContext(CaptureContext);
 
-    console.log("single capture data:" , data, disableAvatar, disableMap)
+    // console.log("single capture data:" , data, disableAvatar, disableMap)
 
     const badge = `/verified.png`
     let marker = `/markerVerified.png`
 
-    // console.log("BADGE:" , badgeSetting, typeof badgeSetting)
-    // if (badgeSetting) {
-    //     console.log("TRUE");
+    // if (disableMap) {
+    //     console.log("disableMap TRUE", disableMap)
+    // } else {
+    //     console.log("disableMap FALSE", disableMap);
     // }
-    if (disableMap) {
-        console.log("TRUE")
-    } else {
-        console.log("FALSE", disableMap);
-
-    }
+    // if (disableAvatar) {
+    //     console.log("disableAvatar TRUE", disableAvatar)
+    // } else {
+    //     console.log("disableAvatar FALSE", disableAvatar);
+    // }
 
     return(
         <Wrapper2>
             <Wrapper>
                 <Top>
                     <AvatarAndAuthor>
-                        {disableAvatar ? (
+                        {disableAvatar === true ? (
                             <DisabledAvatar>
                                 <DefaultAvatar 
                                     name={data.data.author}
@@ -66,7 +66,7 @@ const SingleCapture = (data, disableAvatar, disableMap) => {
                     
                     <Animal>{data.data.capture.animalName}</Animal>
                 </Top>
-                {disableMap ? (
+                {disableMap === true ? (
                     <DisabledImageWrapper>
                         <Image
                             alt="img"

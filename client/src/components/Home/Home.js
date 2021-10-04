@@ -16,7 +16,9 @@ const Home = () => {
         // friendArray, 
         // setFriendArray,
         currentCapture,
-        setCurrentCapture
+        setCurrentCapture,
+        appLoaded, 
+        setAppLoaded
     } = useContext(CaptureContext);
     let history = useHistory();
     { !userID && 
