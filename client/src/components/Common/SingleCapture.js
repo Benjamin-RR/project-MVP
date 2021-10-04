@@ -7,7 +7,7 @@ import DefaultAvatar from './DefaultAvatar';
 // import Badge from '/verified.png'
 
 
-const SingleCapture = (data) => {
+const SingleCapture = (data, disableAvatar, disableMap) => {
     const {
         page,
         setPage,
@@ -19,8 +19,8 @@ const SingleCapture = (data) => {
         badgeSetting, 
         setBadgeSetting,
     } = useContext(CaptureContext);
-    // localStorage.removeItem("coords");
-    // localStorage.removeItem("CaptureInfo");
+
+    console.log("single capture data:" , data, disableAvatar, disableMap)
 
     const badge = `/verified.png`
     let marker = `/markerVerified.png`
@@ -29,43 +29,70 @@ const SingleCapture = (data) => {
     // if (badgeSetting) {
     //     console.log("TRUE");
     // }
+    if (disableMap) {
+        console.log("TRUE")
+    } else {
+        console.log("FALSE", disableMap);
+
+    }
 
     return(
         <Wrapper2>
             <Wrapper>
                 <Top>
                     <AvatarAndAuthor>
-                        <Avatar
-                            onClick={() => {
-                                localStorage.setItem("CaptureInfo", JSON.stringify(data) )
-                            }}
-                            to="/Profile"
-                        >
-                            <DefaultAvatar 
-                                name={data.data.author}
-                                color={data.data.userColor}
-                            />
-                        </Avatar>
+                        {disableAvatar ? (
+                            <DisabledAvatar>
+                                <DefaultAvatar 
+                                    name={data.data.author}
+                                    color={data.data.userColor}
+                                />
+                            </DisabledAvatar>
+                        ):(
+                            <Avatar
+                                onClick={() => {
+                                    localStorage.setItem("CaptureInfo", JSON.stringify(data) )
+                                }}
+                                to="/Profile"
+                            >
+                                <DefaultAvatar 
+                                    name={data.data.author}
+                                    color={data.data.userColor}
+                                />
+                            </Avatar>
+                        )}
                         <Author>{data.data.author}</Author>
                     </AvatarAndAuthor>
                     
                     <Animal>{data.data.capture.animalName}</Animal>
                 </Top>
-                <ImageWrapper
-                    onClick={() => {
-                        localStorage.setItem("CaptureInfo", JSON.stringify(data) )
-                    }}
-                    to="/Explore"
-                >
-                    <Image
-                        alt="img"
-                        cloudName="capturecapture"
-                        publicId={data.data.public_id}
-                        width="300"
-                        crop="scale"
-                        // style={{ display: "flex" , justifyContent: "center", alignItems: "center"}}
-                    />
-                </ImageWrapper>
+                {disableMap ? (
+                    <DisabledImageWrapper>
+                        <Image
+                            alt="img"
+                            cloudName="capturecapture"
+                            publicId={data.data.public_id}
+                            width="300"
+                            crop="scale"
+                        />
+                    </DisabledImageWrapper>
+                ):(
+                    <ImageWrapper
+                        onClick={() => {
+                            localStorage.setItem("CaptureInfo", JSON.stringify(data) )
+                        }}
+                        to="/Explore"
+                    >
+                        <Image
+                            alt="img"
+                            cloudName="capturecapture"
+                            publicId={data.data.public_id}
+                            width="300"
+                            crop="scale"
+                            // style={{ display: "flex" , justifyContent: "center", alignItems: "center"}}
+                        />
+                    </ImageWrapper>
+                )}
                 {(data.data.capture.verified && badgeSetting ) && (
                     <Badge 
                         src={badge}
@@ -138,6 +165,14 @@ const Animal = styled.div`
     padding-bottom: 5px;
 `
 
+const DisabledImageWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid black;
+    cursor: pointer;
+`
+
 const ImageWrapper = styled(Link)`
     display: flex;
     align-items: center;
@@ -154,6 +189,11 @@ const Badge = styled.img`
     left: 255px;
     /* background: red; */
     src: 'url("/verified.png)';
+`
+
+const DisabledAvatar = styled.div`
+    height: 40px;
+    width: 40px;
 `
 
 const Avatar = styled(Link)`

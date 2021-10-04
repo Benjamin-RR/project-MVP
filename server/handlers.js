@@ -438,9 +438,7 @@ const captureVote = async (req, res) => {
         }
     }
     // update AUTHOR PERSONAL statistics with new object into mongoDB.
-    // const updatedAuthor = await db.collection("users").updateOne(query, update);
-    // console.log("Author Personal Update:" , update);
-
+    const updatedAuthor = await db.collection("users").updateOne(query, update);
 
     // get old ANIMAL CAPTURE data using captureId.    
     query = {"captures.animals._id" : req.body.vote.captureId}
@@ -451,20 +449,19 @@ const captureVote = async (req, res) => {
             animalToUpdate = animal;
         }
     })
-    console.log ("animal to update:", animalToUpdate);
-
+    
     // Find and change value for casted vote of "TRUE","FALSE","UNSURE".
-    trues = Number(animalToUpdate.captures.true)
-    falses = Number(animalToUpdate.captures.false)
-    uncertains = Number(animalToUpdate.captures.uncertain)
+    trues = Number(animalToUpdate.capture.true)
+    falses = Number(animalToUpdate.capture.false)
+    uncertains = Number(animalToUpdate.capture.uncertain)
     if (req.body.vote.vote === "FALSE") {
-        falses = falses+1
+        falses = falses+1;
     }
     if (req.body.vote.vote === "TRUE") {
-        trues = trues+1
+        trues = trues+1;
     }
     if (req.body.vote.vote === "UNSURE") {
-        uncertains = uncertains+1
+        uncertains = uncertains+1;
     } 
 
     // determine if this capture is now verified or not.
@@ -476,9 +473,9 @@ const captureVote = async (req, res) => {
     }
 
     // update old data of AUTHOR's ANIMAL CAPTURE statistics into a new object.
-    // query = { uniqueName }   // query stays the same.
+    // query = {"captures.animals._id" : req.body.vote.captureId}   // doesn't change.
     update = { $set: { 
-            "capture": {
+            "captures.animals.$.capture": {
                 location: animalToUpdate.capture.location,
                 authenticScore: animalToUpdate.capture.authenticScore,
                 rank: animalToUpdate.capture.rank,
@@ -497,10 +494,7 @@ const captureVote = async (req, res) => {
         }
     }
     // update AUTHOR ANIMAL CAPTURE statistics with new object into mongoDB.
-    // const updatedAnimalCapture = await db.collection("users").updateOne(query, update);
-    console.log("Author Animal Capture Query:" , query);
-    console.log("Author Animal Capture Update:" , update);
-
+    const updatedAnimalCapture = await db.collection("users").updateOne(query, update);
 
     res.status(200).json({ status: 200, data: req.body, message: "vote casted successfully!" });
     client.close();

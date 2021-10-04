@@ -16,7 +16,6 @@ export const CaptureProvider = ({ children }) => {
     const [dynamicBanner, setDynamicBanner] = useState(false);
     const [statsOnRatingOthers, setStatsOnRatingOthers] = useState(true);
     
-
     // for dropdown
     const [dropdown, setDropdown] = useState(false);
     const [friendClick, setFriendClick] = useState(false);
@@ -34,7 +33,6 @@ export const CaptureProvider = ({ children }) => {
 
     // to remember which one capture we are viewing.
     const [currentCapture, setCurrentCapture] = useState(null);
-
     const [profileOption, setProfileOption] = useState("Statistics")
 
 

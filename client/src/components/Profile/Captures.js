@@ -52,10 +52,7 @@ const Wrapper = styled.div`
     padding: 10px;
     display: flex;
     flex-direction: column;
-
-    justify-content: space-around;
     align-items: center;
-    /* height: 100%; */
     width: 100%;
     border: 1px solid black;
 `

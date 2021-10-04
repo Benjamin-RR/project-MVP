@@ -156,6 +156,7 @@ const Header = () => {
                         >
                             <DefaultAvatar 
                                 name={uniqueName}
+                                color={userColor}
                             />
                         </UserAvatar>
                     </IconWrapper>

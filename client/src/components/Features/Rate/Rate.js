@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import SingleCapture from '../../Common/SingleCapture';
 import { useHistory } from 'react-router-dom'; 
 
-
 // icons
 import {BsStar} from 'react-icons/bs';
 import {BsStarFill} from 'react-icons/bs';
@@ -80,7 +79,7 @@ const Rate = () => {
                         console.log("SUCCESS!", data);
                     }
                     if (data.status === 400) {
-
+                        console.log("Pandar's box, an error has occured.", data.error)
                     }
                     // setConfirmation(data.data);
                     // setConfirmationLoaded(true);
@@ -160,6 +159,8 @@ const Rate = () => {
                 <Card>
                     <SingleCapture 
                         data={currentCapture}
+                        disableAvatar={true}
+                        disableMap={true}
                     />
                 </Card>
 

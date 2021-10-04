@@ -29,25 +29,24 @@ const Home = () => {
 
     if (page !== "home") {
         setPage("home");
-        // setFeed(null);
         // window.location.reload();
     }
     
     // Load images and animal data into their arrays, set page to loaded so we can render everything below. (gets called once).
     useEffect( async ()=> {
-        // const results = await LoadCapture(friendArray)
-        LoadCapture(friendArray)
-        .then((data) => {
-            setFeed(data);
-            setHomeLoading(false);
-        })
-        // setFeed(results)
-        // setHomeLoading(true);
+        const results = await LoadCapture(friendArray)
+        // LoadCapture(friendArray)
+        // .then((data) => {
+        //     setFeed(data);
+        //     setHomeLoading(false);
+        // })
+        setFeed(results)
+        // setHomeLoading(false);
     }, [])
 
-    // if (feed && !homeLoad) {
-    //     setHomeLoad(true)
-    // }
+    if (feed && homeLoading) {
+        setHomeLoading(false)
+    }
 
     // console.log("FEED:" , feed, friendArray, typeof friendArray);
     
