@@ -10,7 +10,7 @@ import moment from 'moment';
 // import HeatmapLayer from "react-google-maps/lib/components/visualization/HeatmapLayer";
 
 
-function thisMap() {
+function thisMap(from) {
     const {
         page,
         setPage,
@@ -18,38 +18,31 @@ function thisMap() {
         myLocation,
         setMyLocation,
         dynamicMapStyle,
-        setDynamicMapStyle
+        setDynamicMapStyle,
+        currentCapture, 
+        setCurrentCapture
     } = useContext(CaptureContext);
     const libraries = ["places"];
-    
-    // find map centered position (either user's position OR captured image position)
+    const [mapDataLoading, setMapDataLoading] = useState(true);
     let position;   // used to center map.
-    let data = JSON.parse(localStorage.getItem("CaptureInfo") );
-
-    // if data from a single capture brought us to this map
-    if (data) {
-        data = [data.data];
-        console.log("DATA FROM SINGLE CAPTURE:" , data[0]);
-        position = {lat: data[0].capture.location.lat, lng: data[0].capture.location.lng}
-    } 
-    else 
-    // if we clicked on the explore / map ourselves.
-    {
-        console.log("MY LOCATION:" , myLocation);
+    let data = [];
+    if (currentCapture) {
+        data=[currentCapture.data]
+        position= { lat: currentCapture.data.capture.location.lat , lng: currentCapture.data.capture.location.lng }
+    } else {
         position = { lat: myLocation.coords.latitude, lng: myLocation.coords.longitude }
     }
-    
+
     // get array of captures for later rendering.
     useEffect(()=> {
-        
+        setMapDataLoading(false);
     }, [])
-
 
     // const consoleLog = (log) => {
     //     return log
     // }
     // console.log(consoleLog("Console log test"));
-    
+
 
     // lat: myLocation.coords.latitude, lng: myLocation.coords.longitude
 
@@ -62,6 +55,7 @@ function thisMap() {
     // if (!isLoaded) return "Loading Maps";
 
     // return <div>map!</div>;
+
 
     // find time, find style dependable upon that time (dawn, day, dusk, night) OR if dynamic style is turned on.
     const Time = moment().calendar()
@@ -132,10 +126,11 @@ function thisMap() {
 
 
     
-
+    
     return(
         <>
-            { (myLocation || data) ? (
+            {/* { (myLocation || data ) ? ( */}
+            { !mapDataLoading ? ( 
                 <GoogleMap
                     defaultZoom={10}
                     defaultCenter={position}
@@ -146,25 +141,21 @@ function thisMap() {
                     }}
                 >
                     { data.map((each, indx) => {
-                        console.log("MAPPED DATA of each:", each);
-                        // console.log("lat, lng", each, data.capture.location.lat, data.capture.locaction.lng);
-                        <Marker 
-                            key={Math.floor(Math.random) * 99999999}
-                            // position={{ lat: data[indx].capture.location.lat, lng: data[indx].capture.location.lng }}
-                            position={{ lat: data[0].capture.location.lat, lng: data[0].capture.location.lng }}
+                        return(
+                            <Marker 
+                                key={Math.floor(Math.random) * 99999999}
+                                position={{ lat: each.capture.location.lat, lng: each.capture.location.lng }}
+                                icon={{
+                                    // url: `${marker}`,
+                                    url: `/markerVerified.png`,
+                                    scaledSize: new window.google.maps.Size(48, 70),
+                                }}
+                                onClick={() => {
+                                    setSelectedMarker(location)
+                                }}
+                            /> 
+                        )
 
-                            // position={{ lat: data.capture.location.lat, lng: data.capture.locaction.lng }}
-                            // position={position}
-
-                            icon={{
-                                // url: `${marker}`,
-                                url: `/markerVerified.png`,
-                                scaledSize: new window.google.maps.Size(48, 70),
-                            }}
-                            onClick={() => {
-                                setSelectedMarker(location)
-                            }}
-                        />  
                     })}
 
                     { selectedMarker && (

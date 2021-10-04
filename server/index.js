@@ -15,7 +15,7 @@ const {
     getUserInfo, 
     getAnimal,
     captureVote,
-    getCaptures,
+    getCapturesForMap,
 } = require("./handlers");
 
 const PORT = process.env.PORT 
@@ -47,7 +47,7 @@ express()
     // CAPTURES
     .post("/image/uploadCapture", addCaptureImage)
     .put("/capture/vote", captureVote)
-    .get("/captures", getCaptures)
+    .get("/captures", getCapturesForMap)
     // OTHER
     .post("/image/uploadAvatar", addAvatarImage)
     // .get("/image/download", downloadImage)           // never has done anything. delete if never used.

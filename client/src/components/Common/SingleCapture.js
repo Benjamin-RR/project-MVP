@@ -80,6 +80,7 @@ const SingleCapture = (data, disableAvatar, disableMap) => {
                     <ImageWrapper
                         onClick={() => {
                             localStorage.setItem("CaptureInfo", JSON.stringify(data) )
+                            setCurrentCapture(data);
                         }}
                         to="/Explore"
                     >

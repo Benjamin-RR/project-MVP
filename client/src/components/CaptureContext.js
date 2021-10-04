@@ -28,7 +28,7 @@ export const CaptureProvider = ({ children }) => {
     if (!myLocation) {
         navigator.geolocation.getCurrentPosition((position) => {
             setMyLocation(position)
-            console.log("LOCATION:" , position)
+            // console.log("LOCATION:" , position)
         }, () => null)
     }
 

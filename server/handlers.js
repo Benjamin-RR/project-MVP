@@ -504,12 +504,22 @@ const captureVote = async (req, res) => {
 
 //////////////////////////////////////////////
 //                                          //
-//              GET CAPTURES                //
+//          GET CAPTURES FOR MAP            //
 //                                          //
 //////////////////////////////////////////////
-const getCaptures = () => {
+// using query of lat long, gets up to 100 capture documents into an array closes to the center point are prioritiezed.
+const getCapturesForMap = () => {
+    // connect to mongo database.
+    const client = await new MongoClient(MONGO_URI, options);
+    await client.connect();
+    const db = client.db("Capture");
 
-}
+    
+    
+
+    client.close();
+    console.log("disconnected!");
+};
 
 module.exports = {
     signInUser,
@@ -520,8 +530,8 @@ module.exports = {
     downloadImages,     // not doing much yet.
     addFriend,          // not doing much (plans for using in future feature.)
     getUserInfo,
-    getAnimal,
+    // getAnimal,
     // getUser,
     captureVote,
-    getCaptures
+    getCapturesForMap
 };

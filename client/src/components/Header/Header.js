@@ -30,6 +30,8 @@ const Header = () => {
         // setUserColor,
         // uniqueName, 
         // setUniqueName,
+        currentCapture,
+        setCurrentCapture,
     } = useContext(CaptureContext);
     const [userColor, setUserColor] = useState(localStorage.getItem("userColor"));
     const [uniqueName, setUniqueName] = useState(localStorage.getItem("uniqueName"));
@@ -117,7 +119,12 @@ const Header = () => {
                             )}
                         </Icon>
 
-                        <Icon to="/Explore" >
+                        <Icon 
+                            onClick={() => {
+                                setCurrentCapture(null);
+                            }}
+                            to="/Explore"
+                        >
                         { page === "explore" ? (
                                 <AiFillCompass 
                                     style={{ height: "100%", width: "100%"}}
