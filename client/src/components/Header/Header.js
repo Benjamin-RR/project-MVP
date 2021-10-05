@@ -41,7 +41,7 @@ const Header = () => {
     if (mediaQ.matches === false) {
         headerHeight = "100%"
     } else {
-        headerHeight = `150px`
+        headerHeight = `100px`
     }
     mediaQ.onchange = (e) => {
         // window.location.reload();

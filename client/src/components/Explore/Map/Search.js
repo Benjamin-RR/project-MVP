@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
+import { CaptureContext } from '../../CaptureContext';
 import styled from 'styled-components';
 // icons
 import {BiSearch} from 'react-icons/bi';
@@ -7,17 +8,45 @@ import {RiCheckboxCircleLine} from 'react-icons/ri';
 import {RiCheckboxCircleFill} from 'react-icons/ri';
 
 const Search = () => {
+    const {
+        page,
+        setPage,
+        userID,
+        myLocation,
+        setMyLocation,
+        dynamicMapStyle,
+        setDynamicMapStyle,
+        currentCapture, 
+        setCurrentCapture,
+        searchSize, 
+        setSearchSize,
+        searchQuery,
+        setSearchQuery
+    } = useContext(CaptureContext);
     const [searchActive, setSearchActive] = useState(false);
-    const [searchQuery, setSearchQuery] = useState({certified: false, unCertified: false, animal: null, user: null})
+    // const [searchQuery, setSearchQuery] = useState({certified: false, unCertified: false, animal: null, user: null})
 
+    // gets search size for map searches.
+    const getSearchSize = () => {
+        if (searchSize.width === "45px") {
+            setSearchSize({width: "200px", height: "190px"});
+        } else {
+            setSearchSize({width: "45px", height: "45px"});
+        }
+    }
+
+    console.log("search query:" , searchQuery);
 
     return(
-        <Wrapper>
+        <Wrapper
+            style={{width: `${searchSize.width}`, height: `${searchSize.height}`, cursor: "pointer"}}
+        >
 
             <SideToSide>
                 <Icon
                     onClick={()=>{
                         setSearchActive(!searchActive);
+                        getSearchSize();
                     }}
                 >
                     { searchActive ? (
@@ -40,18 +69,38 @@ const Search = () => {
 
                     <SideToSide>
                         <Text>Certified</Text>
-                        <Icon>
-                            <RiCheckboxCircleLine 
-                                style={{height: "100%", width: "100%"}}
-                            />
+                        <Icon
+                            onClick={()=> {
+                                setSearchQuery({...searchQuery, certified: !searchQuery.certified})
+                            }}
+                        >
+                            {searchQuery.certified ? (
+                                <RiCheckboxCircleFill 
+                                    style={{height: "100%", width: "100%" , color: "darkgreen"}}
+                                />
+                            ):(
+                                <RiCheckboxCircleLine 
+                                    style={{height: "100%", width: "100%"}}
+                                />
+                            )}
                         </Icon>
                     </SideToSide>
                     <SideToSide>
                         <Text>Uncertified</Text>
-                        <Icon>
-                            <RiCheckboxCircleLine 
-                                style={{height: "100%", width: "100%"}}
-                            />
+                        <Icon
+                            onClick={()=> {
+                                setSearchQuery({...searchQuery, unCertified: !searchQuery.unCertified})
+                            }}
+                        >
+                            {searchQuery.unCertified ? (
+                                <RiCheckboxCircleFill 
+                                    style={{height: "100%", width: "100%" , color: "darkgreen"}}
+                                />
+                            ):(
+                                <RiCheckboxCircleLine 
+                                    style={{height: "100%", width: "100%"}}
+                                />
+                            )}
                         </Icon>
                     </SideToSide>
 
@@ -96,7 +145,8 @@ const SearchTitle = styled.div`
     font-weight: 900;
     font-size: 1.2em;
     padding: 5px;
-    border: 1px solid black;
+    border-bottom: 1px solid grey;
+    /* border: 1px solid black; */
 `
 
 const Icon = styled.div`
@@ -105,29 +155,29 @@ const Icon = styled.div`
     height: 35px;
     width: 35px;
     
-    border: 1px solid black;
+    /* border: 1px solid black; */
 `
 
 const SearchContent = styled.div`
-    border: 1px solid black;
+    /* border: 1px solid black; */
     height: 100%;
     width: 100%;
     z-index: 21;
 `
 
-const Column = styled.div`
-    display: flex;
-    flex-direction: column;
-    padding: 5px 0px 5px 0px;
-    border: 1px solid black;
-
-`
+// const Column = styled.div`
+//     display: flex;
+//     flex-direction: column;
+//     padding: 5px 0px 5px 0px;
+//     border: 1px solid black;
+// `
 
 const Text = styled.div`
     display: flex;
     align-items: center;
     height: 30px;
-    border: 1px solid black;
+    margin-left: 5px;
+    /* border: 1px solid black; */
 `
 
 const Input = styled.input`

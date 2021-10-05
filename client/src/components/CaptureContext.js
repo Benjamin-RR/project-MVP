@@ -10,6 +10,11 @@ export const CaptureProvider = ({ children }) => {
     const [mediaQ, setMediaQ] = useState(window.matchMedia('(min-width: 600px'))
     const [page, setPage] = useState("home");
     const [homeHasLoaded, setHomeHasLoaded] = useState(false);
+
+    // for google map
+    const [searchSize, setSearchSize] = useState({width: "45px", height: "45px"});
+    const [searchQuery, setSearchQuery] = useState({certified: false, unCertified: false, animal: null, user: null})
+
     // settings
     const [settingsClick, setSettingsClick] = useState(false);
     const [badgeSetting, setBadgeSetting] = useState(true);
@@ -77,7 +82,11 @@ export const CaptureProvider = ({ children }) => {
             appLoaded, 
             setAppLoaded,
             homeHasLoaded, 
-            setHomeHasLoaded
+            setHomeHasLoaded,
+            searchSize, 
+            setSearchSize,
+            searchQuery, 
+            setSearchQuery
         }}>
             {children}
         </CaptureContext.Provider>

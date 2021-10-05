@@ -23,7 +23,9 @@ function thisMap(from) {
         dynamicMapStyle,
         setDynamicMapStyle,
         currentCapture, 
-        setCurrentCapture
+        setCurrentCapture,
+        searchSize, 
+        setSearchSize
     } = useContext(CaptureContext);
     const libraries = ["places"];
     const [mapDataLoading, setMapDataLoading] = useState(true);
@@ -186,28 +188,24 @@ function thisMap(from) {
 const TheMap = withScriptjs(withGoogleMap(thisMap))
 
 export default function Map() {
-    const [searchSize, setSearchSize] = useState({width: "45px", height: "45px"});
-
-
-
-    const getSearchSize = () => {
-        if (searchSize.width === "45px") {
-            setSearchSize({width: "200px", height: "300px"});
-        } else {
-            setSearchSize({width: "45px", height: "45px"});
-        }
-    }
-
-    console.log("search size:" , searchSize);
+    const {
+        page,
+        setPage,
+        userID,
+        myLocation,
+        setMyLocation,
+        dynamicMapStyle,
+        setDynamicMapStyle,
+        currentCapture, 
+        setCurrentCapture,
+        searchSize, 
+        setSearchSize
+    } = useContext(CaptureContext);
+    
 
     return (
         <MapWrapper>
-            <SearchWrapper
-                onClick={()=>{
-                    getSearchSize();
-                }}
-                style={{width: `${searchSize.width}`, height: `${searchSize.height}`, cursor: "pointer"}}
-            >
+            <SearchWrapper>
                 <Search />
             </SearchWrapper>
             <TheMap
@@ -230,7 +228,6 @@ const SearchWrapper = styled.div`
     display: flex;
     position: absolute;
     height: 45px;
-
 `
 
 const InfoStyle = styled.div`

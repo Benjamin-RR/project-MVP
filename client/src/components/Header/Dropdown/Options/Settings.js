@@ -30,7 +30,7 @@ const Settings = () => {
     } = useContext(CaptureContext);
     setPage("settings");
 
-    console.log("BADGE:", badgeSetting, "MAP:" , dynamicMapStyle, "PROFILE:", dynamicBanner, "OTHERS:", statsOnRatingOthers);
+    // console.log("BADGE:", badgeSetting, "MAP:" , dynamicMapStyle, "PROFILE:", dynamicBanner, "OTHERS:", statsOnRatingOthers);
 
     return(
         <Wrapper>

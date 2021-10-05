@@ -7,7 +7,7 @@
 
 // each caputre (an object) are stored into an array. e.g. [ { //capture info }, {}, {} ]
 export const LoadCapture = async (arrayToLoad) => {
-    console.log("array to load" , arrayToLoad, typeof arrayToLoad);
+    // console.log("array to load" , arrayToLoad, typeof arrayToLoad);
     const friendArray = arrayToLoad;
     let feedArray = [];
     // const [feed, setFeed] = useState(null);
@@ -28,11 +28,11 @@ export const LoadCapture = async (arrayToLoad) => {
             })
             .then((response) => response.json())
             .then((data) => {
-                console.log("data:" , data);
+                // console.log("data:" , data);
                 if (data.status === 200) {
                     const userData = data.data;
                     animalDataArray.push(userData);
-                    console.log("user data:" , userData);
+                    // console.log("user data:" , userData);
                 }
                 if (data.status === 400) {
                     console.log("error:" , data.message);
