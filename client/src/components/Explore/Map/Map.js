@@ -10,6 +10,7 @@ import moment from 'moment';
 // import HeatmapLayer from "react-google-maps/lib/components/visualization/HeatmapLayer";
 import {getCapturesForMap} from './Fetch';
 import {Image} from 'cloudinary-react';
+import Search from "./Search";
 
 
 function thisMap(from) {
@@ -28,6 +29,7 @@ function thisMap(from) {
     const [mapDataLoading, setMapDataLoading] = useState(true);
     const [selectedMarker, setSelectedMarker] = useState(null);
     const [captureArray, setCaptureArray] = useState(null);
+
 
     // get position for map, and data (an array of captures to render)
     let position;   // used to center map.
@@ -75,6 +77,9 @@ function thisMap(from) {
         return answer;
     }
     const MarkerDoc = `/markerDoc.png`      // alternative marker for future update.
+
+
+    
     
 
     // var heatmapData = [
@@ -133,7 +138,7 @@ function thisMap(from) {
                     }}
                 >
                     { captureArray.map((each, indx) => {
-                        console.log("each:" , each);
+                        // console.log("each:" , each);
                         return(
                             <Marker 
                                 key={Math.floor(Math.random) * 99999999}
@@ -181,9 +186,30 @@ function thisMap(from) {
 const TheMap = withScriptjs(withGoogleMap(thisMap))
 
 export default function Map() {
+    const [searchWidth, setSearchWidth] = useState("45px");
+
+
+
+    const getSearchWidth = () => {
+        if (searchWidth === "45px") {
+            setSearchWidth("100%");
+        } else {
+            setSearchWidth("45px");
+        }
+    }
+
+    console.log("search width:" , searchWidth);
 
     return (
         <MapWrapper>
+            <SearchWrapper
+                onClick={()=>{
+                    getSearchWidth();
+                }}
+                style={{width: `${searchWidth}` , cursor: "pointer"}}
+            >
+                <Search />
+            </SearchWrapper>
             <TheMap
                 googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_KEY}`}
                 loadingElement={<div style={{ height: "100%" }} />}
@@ -198,6 +224,13 @@ export default function Map() {
 const MapWrapper = styled.div`
     height: 100%;
     width: 100%;
+`
+
+const SearchWrapper = styled.div`
+    display: flex;
+    position: absolute;
+    height: 45px;
+
 `
 
 const InfoStyle = styled.div`
