@@ -38,6 +38,7 @@ const Home = () => {
     
     // Load images and animal data into their arrays, set page to loaded so we can render everything below. (gets called once).
     useEffect( async ()=> {
+        console.log("IN HOME:" , friendArray);
         const results = await LoadCapture(friendArray)
         // LoadCapture(friendArray)
         // .then((data) => {

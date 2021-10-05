@@ -17,6 +17,7 @@ const {
     captureVote,
     getCapturesForMap,
     getAllUniqueNames,
+    getAllUsers,
 } = require("./handlers");
 
 const PORT = process.env.PORT 
@@ -46,6 +47,7 @@ express()
     .post("/user/info", getUserInfo)
     .put("/user/addFriend", addFriend)
     .get("/user/names", getAllUniqueNames)
+    .get("/users", getAllUsers)
     // CAPTURES
     .post("/image/uploadCapture", addCaptureImage)
     .put("/capture/vote", captureVote)

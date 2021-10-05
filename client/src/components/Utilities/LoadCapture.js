@@ -14,10 +14,11 @@ export const LoadCapture = async (arrayToLoad) => {
     let animalDataArray = [];
 
     // console.log("received:" , arrayToLoad);
-
     try{
         // get each user data (includes animal captures) and put into a new array.
         friendArray.forEach( async (friend) => {
+            // console.log("LOADCAPTURE:" , friend);
+
             await fetch('/user/info', {
                 method: 'POST',
                 body: JSON.stringify({
@@ -27,11 +28,11 @@ export const LoadCapture = async (arrayToLoad) => {
             })
             .then((response) => response.json())
             .then((data) => {
-                // console.log("data:" , data);
+                console.log("data:" , data);
                 if (data.status === 200) {
                     const userData = data.data;
-                        animalDataArray.push(userData);
-                        console.log("user data:" , userData);
+                    animalDataArray.push(userData);
+                    console.log("user data:" , userData);
                 }
                 if (data.status === 400) {
                     console.log("error:" , data.message);

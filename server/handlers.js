@@ -504,19 +504,34 @@ const captureVote = async (req, res) => {
 
 //////////////////////////////////////////////
 //                                          //
-//          GET CAPTURES FOR MAP            //
+//        GET ALL CAPTURES FOR MAP          //
 //                                          //
 //////////////////////////////////////////////
 // using query of lat long, gets up to 100 capture documents into an array closes to the center point are prioritiezed.
-const getCapturesForMap = async (res, req) => {
-    // connect to mongo database.
-
-    // const client = await new MongoClient(MONGO_URI, options);
-    // await client.connect();
-    // const db = client.db("Capture");
-
-    // client.close();
-    // console.log("disconnected!");
+const getCapturesForMap = async (req, res) => {
+    try{
+        // connect to mongoDB
+        const client = await new MongoClient(MONGO_URI, options);
+        await client.connect();
+        const db = client.db("Capture");
+        
+        const animalCaptures = await db.collection('users').find('captures').toArray();
+        console.log("all:" , animalCaptures, animalCaptures.length);
+        const answer = [];
+        animalCaptures.forEach(name => {
+            answer.push(name.uniqueName);
+        })
+        console.log("answer:" , answer);
+        if (animalCaptures) {
+            res.status(200).json({ status: 200, data: animalCaptures, message: 'success!'});
+        } else {
+            res.status(404).json({ status: 404, error: "nothing found.", message: "error in fetching."})
+        }
+        client.close();
+    }
+    catch (err) {
+        res.status(500).json({ status: 500, error: err, message: "sorry we are having server issues."})
+    }
 };
 
 //////////////////////////////////////////////
@@ -553,6 +568,36 @@ const getAllUniqueNames = async (req, res) => {
     }
 }
 
+//////////////////////////////////////////////
+//                                          //
+//              GET ALL USERS               //
+//                                          //
+//////////////////////////////////////////////
+// fetches all users in DB. if this project ever grows this endpoint MUST be changed to limit results.
+const getAllUsers = async (req, res) => {
+    // connect to mongo database.
+    try{
+        // connect to mongoDB
+        const client = await new MongoClient(MONGO_URI, options);
+        await client.connect();
+        const db = client.db("Capture");
+        
+        const allUsers = await db.collection('users').find().toArray();
+        console.log("all:" , allUsers, allUsers.length);
+        
+        console.log("answer:" , allUsers);
+        if (allUsers) {
+            res.status(200).json({ status: 200, data: allUsers, message: 'success!'});
+        } else {
+            res.status(404).json({ status: 404, error: "nothing found.", message: "error in fetching."})
+        }
+        client.close();
+    }
+    catch (err) {
+        res.status(500).json({ status: 500, error: err, message: "sorry we are having server issues."})
+    }
+}
+
 module.exports = {
     signInUser,
     addNewUser,
@@ -567,4 +612,5 @@ module.exports = {
     captureVote,
     getCapturesForMap,
     getAllUniqueNames,
+    getAllUsers
 };

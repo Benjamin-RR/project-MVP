@@ -1,64 +1,32 @@
-import { LoadCapture } from "../../Utilities/LoadCapture";
-import { LoadNames } from "../../Utilities/LoadNames";
 
-// gets captures for map, centered on coords given.
-// unused value 'position' will be used in a future update when mongoDB gets too large, query results will prioritize based off of position.
 export const getCapturesForMap = async (position) => {
+    
+    let users;
+    const allCaptures = [];
+    await fetch('/users')
+    .then((res) => res.json())
+    .then((data) => {
+        // console.log("fetch results:", data.data);
+        // store values from here.
+        users = data.data;
+        // AnimalCaptureArray.push(data.data);
+    })
+    .catch((error) => {
+        if (error) {
+            // set error response here.
+        }
+    });
+    // console.log("users in fetch" , users);
 
-    // ATTEMPT MINUS ONE
-    const one = async () => {
-        return await LoadNames();
-    }
-    const two = async (names) => {
-        return await LoadCapture(names);
-    }
-    const first = await one();
-    console.log("first:" , first);
-    const second = await two({first});
-    console.log("second:" , second);
-    return second;
+    users.forEach(user => {
+        // console.log("user info:" , user);
+        // console.log('user info2:', user.captures.animals);
+        (user.captures.animals).forEach(capture => {
+            console.log("ANIMAL:" , capture);
+            allCaptures.push(capture)
+        })
+    })
+    console.log("allCaptures:" , allCaptures);
 
-
-    // ATTEMPT ZERO
-    // const answer = await LoadCapture(LoadNames());
-    // console.log("answer in fetch:" , answer);
-    // return answer;
-
-
-    // ATTEMPT ONE
-    // const names = await LoadNames();
-    // console.log("names in map fetch:" , names)
-
-    // const two = await LoadCapture(names);
-    // console.log("names in fetch2:" , two);
-
-    // return two;
-
-
-    // ATTEMPT TWO
-    // LoadNames()
-    //     .then((data) => {
-    //         console.log("in fetch:" , data);
-    //         LoadCapture(data)
-    //         .then((data) => {})
-    //         console.log("in fetch2:" , data);
-    //     })
-    //     .then((data) => {
-    //         return data;
-    //     })
-
-    // ATTEMPT THREE
-    // LoadNames()
-    //     .then((data) => {
-    //         console.log("in fetch:" , data);
-    //         LoadCapture(data)
-    //         .then((data) => {
-
-    //             console.log("in fetch2:" , data);
-    //             return data;
-    //         })
-    //     })
-
-
-    // return LoadCapture(LoadNames());
+    return allCaptures;
 }
