@@ -9,6 +9,7 @@ import Loader from '../../Common/Loader'
 import moment from 'moment';
 // import HeatmapLayer from "react-google-maps/lib/components/visualization/HeatmapLayer";
 import {getCapturesForMap} from './Fetch';
+import {Image} from 'cloudinary-react';
 
 
 function thisMap(from) {
@@ -26,12 +27,12 @@ function thisMap(from) {
     const libraries = ["places"];
     const [mapDataLoading, setMapDataLoading] = useState(true);
     const [selectedMarker, setSelectedMarker] = useState(null);
+    const [captureArray, setCaptureArray] = useState(null);
 
     // get position for map, and data (an array of captures to render)
     let position;   // used to center map.
-    let data = [];
     if (currentCapture) {
-        data=[currentCapture.data]
+        setCaptureArray(currentCapture.data);
         position= { lat: currentCapture.data.capture.location.lat , lng: currentCapture.data.capture.location.lng }
     } else {
         position = { lat: myLocation.coords.latitude, lng: myLocation.coords.longitude }
@@ -40,13 +41,12 @@ function thisMap(from) {
     // get array of captures for later rendering.
     useEffect( async ()=> {
         if (!currentCapture) {
-            data = await getCapturesForMap(position);
-            console.log("data received in Maps:" , data);
+            const data = await getCapturesForMap(position);
+            // console.log("data received in Maps:" , data);
+            setCaptureArray(data);
         }
         setMapDataLoading(false);
     }, [])
-
-
 
     // find time, find style dependable upon that time (dawn, day, dusk, night) OR if dynamic style is turned on.
     const Time = moment().calendar()
@@ -119,13 +119,9 @@ function thisMap(from) {
     // //     Color.rgb(102, 225, 0), //green
     // //     Color.rgb(225, 0, 0) //red
     // // }
-
-
-    
     
     return(
         <>
-            {/* { (myLocation || data ) ? ( */}
             { !mapDataLoading ? ( 
                 <GoogleMap
                     defaultZoom={10}
@@ -136,7 +132,7 @@ function thisMap(from) {
                         disableDefaultUI: true
                     }}
                 >
-                    { data.map((each, indx) => {
+                    { captureArray.map((each, indx) => {
                         console.log("each:" , each);
                         return(
                             <Marker 
@@ -147,24 +143,31 @@ function thisMap(from) {
                                     scaledSize: new window.google.maps.Size(48, 70),
                                 }}
                                 onClick={() => {
-                                    setSelectedMarker(location)
+                                    setSelectedMarker(each)
                                 }}
                             /> 
                         )
                     })}
                     { selectedMarker && (
                         <InfoWindow
-                            position={{ lat: data.capture.location.lat, lng: data.capture.location.lng }}
+                            position={{ lat: selectedMarker.capture.location.lat, lng: selectedMarker.capture.location.lng }}
                             onCloseClick={()=>{
                                 setSelectedMarker(null);
                             }}
                         >
-                            <div>
-                                <div>animal</div>
-                                <div>by user</div>
-                                <div>time stamp</div>
-                                <div>image</div>
-                            </div>
+                            <InfoStyle>
+                                <h3>{selectedMarker.capture.animalName}</h3>
+                                <Text>Captured by {selectedMarker.author} {moment(`${selectedMarker.timeStamp}`).startOf('day').fromNow()}.</Text>
+                                <ImageWrapper>
+                                    <Image
+                                        alt="img"
+                                        cloudName="capturecapture"
+                                        publicId={selectedMarker.public_id}
+                                        width="100"
+                                        crop="scale"
+                                    />
+                                </ImageWrapper>
+                            </InfoStyle>
                         </InfoWindow>
                     )}
                 </GoogleMap>
@@ -195,4 +198,21 @@ export default function Map() {
 const MapWrapper = styled.div`
     height: 100%;
     width: 100%;
+`
+
+const InfoStyle = styled.div`
+    background: lightgrey;
+    border-radius: 5px;
+    padding: 5px;
+`
+
+const ImageWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`
+
+const Text = styled.div`
+    display: flex;
+    padding: 3px;
 `

@@ -22,11 +22,11 @@ export const getCapturesForMap = async (position) => {
         // console.log("user info:" , user);
         // console.log('user info2:', user.captures.animals);
         (user.captures.animals).forEach(capture => {
-            console.log("ANIMAL:" , capture);
+            // console.log("ANIMAL:" , capture);
             allCaptures.push(capture)
         })
     })
-    console.log("allCaptures:" , allCaptures);
+    // console.log("allCaptures:" , allCaptures);
 
     return allCaptures;
 }
