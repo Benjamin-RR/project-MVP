@@ -87,8 +87,7 @@ const Header = () => {
             <TitleWrapper
                 to="/"
             >
-                <h1>Capture</h1>
-                <h2>Your animal of desire</h2>
+                <h1>Go Capture</h1>
             </TitleWrapper>
 
             { userID ? (

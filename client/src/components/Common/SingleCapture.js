@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom';
 import {Image} from 'cloudinary-react';
 import DefaultAvatar from './DefaultAvatar';
 // import Badge from '/verified.png'
+import { CardStyles } from './CardStyles/CardStyles';
 
 
 const SingleCapture = (data, disableAvatar, disableMap) => {
@@ -23,21 +24,16 @@ const SingleCapture = (data, disableAvatar, disableMap) => {
     // console.log("single capture data:" , data, disableAvatar, disableMap)
 
     const badge = `/verified.png`
-
-    // if (disableMap) {
-    //     console.log("disableMap TRUE", disableMap)
-    // } else {
-    //     console.log("disableMap FALSE", disableMap);
-    // }
-    // if (disableAvatar) {
-    //     console.log("disableAvatar TRUE", disableAvatar)
-    // } else {
-    //     console.log("disableAvatar FALSE", disableAvatar);
-    // }
+    
+    // CardStyles(data.data);
 
     return(
-        <Wrapper2>
-            <Wrapper>
+        <Wrapper2
+            style={{ background: `${CardStyles(data.data)}` , filter: "brightness(2.0)"}}
+        >
+            <Wrapper
+                style={{ background: `${CardStyles(data.data)}` , filter: "brightness(0.5)"}}
+            >
                 <Top>
                     <AvatarAndAuthor>
                         {disableAvatar === true ? (
@@ -102,7 +98,9 @@ const SingleCapture = (data, disableAvatar, disableMap) => {
                     <Details>
                         <TimeStamp>{data.data.timeStamp}</TimeStamp>
                         {data.data.capture.documentation && (
-                            <Text>{data.data.capture.documentation}</Text>
+                            <Text
+                                style={{ background: `${CardStyles(data.data)}` , filter: "brightness(2.0)"}}
+                            >{data.data.capture.documentation}</Text>
                         )}
                     </Details>
                 </Bottom>
@@ -120,7 +118,7 @@ const Wrapper = styled.div`
     /* height: var(--defaultHeight); */
     width: 100%;
     background: green;
-    border: 1px solid black;
+    border: 2px solid black;
     position: relative;
 `
 
@@ -128,7 +126,7 @@ const Wrapper2 = styled.div`
     background: lightgreen;
     height: 100%;
     width: 100%;
-    padding: 4px;
+    padding: 7px;
 `
 
 const Top = styled.div`

@@ -33,7 +33,7 @@ const Wrapper = styled.div`
     height: 100%;
     width: 100%;
     z-index: 20;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     padding-left: 5px;
 `
 const Icon = styled.div`
