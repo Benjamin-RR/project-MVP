@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import { CaptureContext } from '../../CaptureContext';
 import styled from 'styled-components';
 // icons
@@ -21,10 +21,14 @@ const Search = () => {
         searchSize, 
         setSearchSize,
         searchQuery,
-        setSearchQuery
+        setSearchQuery,
+        // mapDataLoading, 
+        // setMapDataLoading
     } = useContext(CaptureContext);
     const [searchActive, setSearchActive] = useState(false);
-    // const [searchQuery, setSearchQuery] = useState({certified: false, unCertified: false, animal: null, user: null})
+    const [animalSearch, setAnimalSearch] = useState(searchQuery.animal);
+    const [userSearch, setUserSearch] = useState(searchQuery.user);
+    const [confirmTimer, setConfirmTimer] = useState(null);
 
     // gets search size for map searches.
     const getSearchSize = () => {
@@ -35,7 +39,23 @@ const Search = () => {
         }
     }
 
-    console.log("search query:" , searchQuery);
+    useEffect(()=>{
+        setSearchSize({width: "45px", height: "45px"})
+    },[])
+
+    // we will not send our search query until user has stopped typing for 2 seconds.
+    const startTimer = () => {
+        clearTimeout(confirmTimer);
+        const submitTimer = setTimeout( function() {sendSearchQuery(); }, 2000);
+        setConfirmTimer(submitTimer);
+    }
+    // sends search query.
+    const sendSearchQuery = () => {
+        // setMapDataLoading(true)
+        setSearchQuery({...searchQuery, animal: animalSearch, user: userSearch});
+    }
+
+    console.log("checking search:" , searchSize)
 
     return(
         <Wrapper
@@ -107,10 +127,20 @@ const Search = () => {
                         <Input
                             type="text"
                             placeholder="Animal"
+                            value={animalSearch}
+                            onChange={(e) => {
+                                setAnimalSearch(e.target.value)
+                                startTimer();
+                            }}
                         />
                         <Input
                             type="text"
                             placeholder="User"
+                            value={userSearch}
+                            onChange={(e)=>{
+                                setUserSearch(e.target.value)
+                                startTimer();
+                            }}
                         />
 
                 </SearchContent>

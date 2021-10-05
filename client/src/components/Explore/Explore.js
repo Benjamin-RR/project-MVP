@@ -8,14 +8,25 @@ const Explore = () => {
     const {
         page,
         setPage,
-        userID
+        userID,
+        firstMapLoad,
+        setSearchSize,
+        setSearchQuery,
+        setFirstMapLoad,
+        // setMapDataLoading
     } = useContext(CaptureContext);
     setPage("explore");
+    // setSearchSize({width: "45px", height: "45px"})
+    // setSearchQuery({certified: false, unCertified: false, animal: "", user: ""})
+    setFirstMapLoad(true);
+    // setMapDataLoading(true);
 
     let history = useHistory();
     { !userID && 
         history.push("/Login")
     }
+
+    
 
     return (
         <Wrapper>

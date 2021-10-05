@@ -25,32 +25,128 @@ function thisMap(from) {
         currentCapture, 
         setCurrentCapture,
         searchSize, 
-        setSearchSize
+        setSearchSize,
+        searchQuery, 
+        setSearchQuery,
+        // mapDataLoading, 
+        // setMapDataLoading,
+        firstMapLoad, 
+        setFirstMapLoad
     } = useContext(CaptureContext);
     const libraries = ["places"];
     const [mapDataLoading, setMapDataLoading] = useState(true);
     const [selectedMarker, setSelectedMarker] = useState(null);
+    const [AllCaptureArray, setAllCaptureArray] = useState(null);
     const [captureArray, setCaptureArray] = useState(null);
+    const [refreshMap, setRefreshMap] = useState(true);
 
 
-    // get position for map, and data (an array of captures to render)
+
+    // get center position for map.
     let position;   // used to center map.
-    if (currentCapture) {
+    if (currentCapture && firstMapLoad) {
         setCaptureArray(currentCapture.data);
         position= { lat: currentCapture.data.capture.location.lat , lng: currentCapture.data.capture.location.lng }
     } else {
         position = { lat: myLocation.coords.latitude, lng: myLocation.coords.longitude }
     }
 
-    // get array of captures for later rendering.
+    setFirstMapLoad(false);
+
+
+
+    // filter data with search query
+    const filterDataWithSearchQuery = () => {
+        let finalAnswer = [];
+        console.log("captureArray received to FILTER:" , AllCaptureArray);
+        console.log("searchQuery received to FILTER:" , searchQuery);
+        let verified = false;
+        let unverified = false;
+        
+        // searchQuery {certified: false, unCertified: false, animal: null, user: null}
+        if (searchQuery.certified) {
+            verified = true;
+            let answer = AllCaptureArray.filter(verifiedCaptures)
+            function verifiedCaptures(capture){
+                return (
+                    capture.capture.verified
+                )
+            }
+            answer.forEach(capture => {
+                finalAnswer.push(capture);
+            })
+        }
+        if (searchQuery.unCertified) {
+            unverified = true;
+            let answer = AllCaptureArray.filter(unVerifiedCaptures)
+            function unVerifiedCaptures(capture){
+                return (
+                    !capture.capture.verified
+                )
+            }
+            answer.forEach(capture => {
+                finalAnswer.push(capture);
+            })
+        }
+
+        if (!verified && !unverified) {
+            finalAnswer = AllCaptureArray;
+        }
+
+        if (searchQuery.animal.length > 0) {
+            finalAnswer = finalAnswer.filter(animal)
+            function animal(capture){
+                return (
+                    (capture.capture.animalName).toLowerCase() === (searchQuery.animal).toLowerCase()
+                )
+            }
+        }
+        
+        if (searchQuery.user.length > 0) {
+            finalAnswer = finalAnswer.filter(user)
+            function user(capture){
+                return (
+                    (capture.author).toLowerCase() === (searchQuery.user).toLowerCase()
+                )
+            }
+        }
+        // if (!finalAnswer) {
+        //     finalAnswer = [];
+        // }
+        console.log("answer:" , finalAnswer);
+        
+        setCaptureArray(finalAnswer);
+        // setPage('explore');
+        // return answer;
+    }
+    
+
+    // get new array of captures by filter, if a search query is present.
+    useEffect(()=> {
+        // console.log("did we receive a query?");
+        console.log("SEARCH QUERY:" , searchQuery);
+            // console.log("are we beginning the filters?");
+            // console.log("checking here");
+            if (captureArray) {
+                filterDataWithSearchQuery();
+                setMapDataLoading(false);
+            }
+    },[searchQuery]);
+    // {certified: false, unCertified: false, animal: null, user: null}
+
+
+    // get array of captures for later rendering. (set map data loading now to false.)
     useEffect( async ()=> {
         if (!currentCapture) {
             const data = await getCapturesForMap(position);
             // console.log("data received in Maps:" , data);
-            setCaptureArray(data);
+            const filtered = filterDataWithSearchQuery(data);
+            setCaptureArray(data);      // changes for filter
+            setAllCaptureArray(data);   // never changes
         }
         setMapDataLoading(false);
     }, [])
+
 
     // find time, find style dependable upon that time (dawn, day, dusk, night) OR if dynamic style is turned on.
     const Time = moment().calendar()
@@ -68,6 +164,7 @@ function thisMap(from) {
         mapStyle = Day;
     }
 
+
     // function gets marker image by value passed to it which is the verifed value from any Capture obj.
     const getMarker = (byVerification) => {
         let answer;
@@ -78,55 +175,9 @@ function thisMap(from) {
         }
         return answer;
     }
-    const MarkerDoc = `/markerDoc.png`      // alternative marker for future update.
 
 
-    
-    
-
-    // var heatmapData = [
-    //     new google.maps.LatLng(37.782, -122.447),
-    //     new google.maps.LatLng(37.782, -122.445),
-    //     new google.maps.LatLng(37.782, -122.443),
-    //     new google.maps.LatLng(37.782, -122.441),
-    //     new google.maps.LatLng(37.782, -122.439),
-    //     new google.maps.LatLng(37.782, -122.437),
-    //     new google.maps.LatLng(37.782, -122.435),
-    //     new google.maps.LatLng(37.785, -122.447),
-    //     new google.maps.LatLng(37.785, -122.445),
-    //     new google.maps.LatLng(37.785, -122.443),
-    //     new google.maps.LatLng(37.785, -122.441),
-    //     new google.maps.LatLng(37.785, -122.439),
-    //     new google.maps.LatLng(37.785, -122.437),
-    //     new google.maps.LatLng(37.785, -122.435)
-    // ];
-    
-    // var sanFrancisco = new google.maps.LatLng(37.774546, -122.433523);
-    
-    // map = new google.maps.Map(document.getElementById('map'), {
-    //     center: sanFrancisco,
-    //     zoom: 13,
-    //     mapTypeId: 'satellite'
-    // });
-    
-    // var heatmap = new google.maps.visualization.HeatmapLayer({
-    //     data: heatmapData
-    // });
-    // heatmap.setMap(map);
-
-    // mProvider = new HeatmapTileProvider.Builder()
-    //     .data(data)
-    //     .gradient(gradient)
-    //     .build();
-
-    // mOverlay = mMap.addTileOverlay(
-    //     new TileOverlayOptions().tileProvider(mProvider));
-    
-    // // int[] colors = {
-    // //     Color.rgb(102, 225, 0), //green
-    // //     Color.rgb(225, 0, 0) //red
-    // // }
-    
+    console.log("DATA THAT WILL RENDER ON MAP:" , captureArray);
     return(
         <>
             { !mapDataLoading ? ( 
@@ -143,7 +194,7 @@ function thisMap(from) {
                         // console.log("each:" , each);
                         return(
                             <Marker 
-                                key={Math.floor(Math.random) * 99999999}
+                                key={indx}
                                 position={{ lat: each.capture.location.lat, lng: each.capture.location.lng }}
                                 icon={{
                                     url: `${getMarker(each.capture.verified)}`,
@@ -179,7 +230,8 @@ function thisMap(from) {
                     )}
                 </GoogleMap>
             ) : (
-                <Loader />
+                <div></div>
+                // <Loader />
             )}
         </>
     )

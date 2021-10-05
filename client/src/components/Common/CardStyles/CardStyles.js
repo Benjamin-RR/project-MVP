@@ -30,6 +30,6 @@ export const CardStyles = (data) => {
             color=`Brown`
         }
     }
-    console.log("each color:" , color)
+    // console.log("each color:" , color)
     return color;
 };

@@ -13,7 +13,10 @@ export const CaptureProvider = ({ children }) => {
 
     // for google map
     const [searchSize, setSearchSize] = useState({width: "45px", height: "45px"});
-    const [searchQuery, setSearchQuery] = useState({certified: false, unCertified: false, animal: null, user: null})
+    const [searchQuery, setSearchQuery] = useState({certified: false, unCertified: false, animal: "", user: ""})
+    // const [mapDataLoading, setMapDataLoading] = useState(true);
+    const [firstMapLoad, setFirstMapLoad] = useState(true);
+    // const [mapPosition, setMapPosition] = useState()
 
     // settings
     const [settingsClick, setSettingsClick] = useState(false);
@@ -86,7 +89,11 @@ export const CaptureProvider = ({ children }) => {
             searchSize, 
             setSearchSize,
             searchQuery, 
-            setSearchQuery
+            setSearchQuery,
+            // mapDataLoading, 
+            // setMapDataLoading,
+            firstMapLoad,
+            setFirstMapLoad
         }}>
             {children}
         </CaptureContext.Provider>
