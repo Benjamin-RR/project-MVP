@@ -186,27 +186,27 @@ function thisMap(from) {
 const TheMap = withScriptjs(withGoogleMap(thisMap))
 
 export default function Map() {
-    const [searchWidth, setSearchWidth] = useState("45px");
+    const [searchSize, setSearchSize] = useState({width: "45px", height: "45px"});
 
 
 
-    const getSearchWidth = () => {
-        if (searchWidth === "45px") {
-            setSearchWidth("100%");
+    const getSearchSize = () => {
+        if (searchSize.width === "45px") {
+            setSearchSize({width: "200px", height: "300px"});
         } else {
-            setSearchWidth("45px");
+            setSearchSize({width: "45px", height: "45px"});
         }
     }
 
-    console.log("search width:" , searchWidth);
+    console.log("search size:" , searchSize);
 
     return (
         <MapWrapper>
             <SearchWrapper
                 onClick={()=>{
-                    getSearchWidth();
+                    getSearchSize();
                 }}
-                style={{width: `${searchWidth}` , cursor: "pointer"}}
+                style={{width: `${searchSize.width}`, height: `${searchSize.height}`, cursor: "pointer"}}
             >
                 <Search />
             </SearchWrapper>

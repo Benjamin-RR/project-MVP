@@ -6,6 +6,7 @@ import Loading from '../Common/Loader';
 import SingleCapture from '../Common/SingleCapture';
 import {LoadCapture} from '../Utilities/LoadCapture';
 import {Link} from 'react-router-dom';
+import YourFriends from './FriendList';
 
 
 const Home = () => {

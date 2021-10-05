@@ -27,7 +27,7 @@ export const CardStyles = (data) => {
         }
     } else {
         if (data.capture.false > 6) {
-            color=`red`
+            color=`Brown`
         }
     }
     console.log("each color:" , color)
