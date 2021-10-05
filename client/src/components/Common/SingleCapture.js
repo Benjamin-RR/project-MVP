@@ -23,7 +23,6 @@ const SingleCapture = (data, disableAvatar, disableMap) => {
     // console.log("single capture data:" , data, disableAvatar, disableMap)
 
     const badge = `/verified.png`
-    let marker = `/markerVerified.png`
 
     // if (disableMap) {
     //     console.log("disableMap TRUE", disableMap)

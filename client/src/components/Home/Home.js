@@ -18,7 +18,9 @@ const Home = () => {
         currentCapture,
         setCurrentCapture,
         appLoaded, 
-        setAppLoaded
+        setAppLoaded,
+        homeHasLoaded, 
+        setHomeHasLoaded
     } = useContext(CaptureContext);
     let history = useHistory();
     { !userID && 
@@ -47,7 +49,9 @@ const Home = () => {
     }, [])
 
     if (feed && homeLoading) {
-        setHomeLoading(false)
+        setHomeLoading(false);
+        // setHomeHasLoaded(true);
+        // setPage("home");
     }
 
     // console.log("FEED:" , feed, friendArray, typeof friendArray);

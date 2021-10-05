@@ -508,18 +508,50 @@ const captureVote = async (req, res) => {
 //                                          //
 //////////////////////////////////////////////
 // using query of lat long, gets up to 100 capture documents into an array closes to the center point are prioritiezed.
-const getCapturesForMap = () => {
+const getCapturesForMap = async (res, req) => {
     // connect to mongo database.
-    const client = await new MongoClient(MONGO_URI, options);
-    await client.connect();
-    const db = client.db("Capture");
 
-    
-    
+    // const client = await new MongoClient(MONGO_URI, options);
+    // await client.connect();
+    // const db = client.db("Capture");
 
-    client.close();
-    console.log("disconnected!");
+    // client.close();
+    // console.log("disconnected!");
 };
+
+//////////////////////////////////////////////
+//                                          //
+//          GET ALL UNIQUE NAMES            //
+//                                          //
+//////////////////////////////////////////////
+// fetches all unique names in DB. if this project ever grows this endpoint MUST be changed to limit results by quantity.
+const getAllUniqueNames = async (req, res) => {
+    // connect to mongo database.
+    try{
+        // connect to mongoDB
+        const client = await new MongoClient(MONGO_URI, options);
+        await client.connect();
+        const db = client.db("Capture");
+        console.log("YAY!");
+        
+        const uniqueNames = await db.collection('users').find().toArray();
+        console.log("all:" , uniqueNames, uniqueNames.length);
+        const answer = [];
+        uniqueNames.forEach(name => {
+            answer.push(name.uniqueName);
+        })
+        console.log("answer:" , answer);
+        if (uniqueNames) {
+            res.status(200).json({ status: 200, data: answer, message: 'success!'});
+        } else {
+            res.status(404).json({ status: 404, error: "nothing found.", message: "error in fetching."})
+        }
+        client.close();
+    }
+    catch (err) {
+        res.status(500).json({ status: 500, error: err, message: "sorry we are having server issues."})
+    }
+}
 
 module.exports = {
     signInUser,
@@ -533,5 +565,6 @@ module.exports = {
     // getAnimal,
     // getUser,
     captureVote,
-    getCapturesForMap
+    getCapturesForMap,
+    getAllUniqueNames,
 };

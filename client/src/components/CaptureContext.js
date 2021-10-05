@@ -9,6 +9,7 @@ export const CaptureProvider = ({ children }) => {
     // for handling page and settings
     const [mediaQ, setMediaQ] = useState(window.matchMedia('(min-width: 600px'))
     const [page, setPage] = useState("home");
+    const [homeHasLoaded, setHomeHasLoaded] = useState(false);
     // settings
     const [settingsClick, setSettingsClick] = useState(false);
     const [badgeSetting, setBadgeSetting] = useState(true);
@@ -74,7 +75,9 @@ export const CaptureProvider = ({ children }) => {
             statsOnRatingOthers,
             setStatsOnRatingOthers,
             appLoaded, 
-            setAppLoaded
+            setAppLoaded,
+            homeHasLoaded, 
+            setHomeHasLoaded
         }}>
             {children}
         </CaptureContext.Provider>

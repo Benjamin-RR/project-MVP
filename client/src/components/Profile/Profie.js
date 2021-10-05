@@ -23,7 +23,9 @@ const Profile = () => {
         mediaQ,
         setMediaQ,
         profileOption,
-        setProfileOption
+        setProfileOption,
+        currentCapture,
+        setCurrentCapture
     } = useContext(CaptureContext);
     setPage("profile");
 
@@ -31,7 +33,7 @@ const Profile = () => {
     { !userID && 
         history.push("/Login")
     }
-
+    // const data = currentCapture;
     const data = (JSON.parse(localStorage.getItem("CaptureInfo")).data );
     const [feed, setFeed] = useState(null);
     const [captureFeed, setCaptureFeed] = useState(null);

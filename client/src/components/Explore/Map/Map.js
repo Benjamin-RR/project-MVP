@@ -1,13 +1,14 @@
 import React, {useEffect, useContext, useState} from "react";
-import { CaptureContext } from "../CaptureContext";
+import { CaptureContext } from "../../CaptureContext";
 import { GoogleMap , withScriptjs, withGoogleMap, Marker, InfoWindow} from 'react-google-maps';
 import Midnight from './Styles/Midnight';
 import Day from './Styles/Day';
 import Rise from './Styles/Rise';
 import styled from "styled-components";
-import Loader from '../Common/Loader'
+import Loader from '../../Common/Loader'
 import moment from 'moment';
 // import HeatmapLayer from "react-google-maps/lib/components/visualization/HeatmapLayer";
+import {getCapturesForMap} from './Fetch';
 
 
 function thisMap(from) {
@@ -24,6 +25,9 @@ function thisMap(from) {
     } = useContext(CaptureContext);
     const libraries = ["places"];
     const [mapDataLoading, setMapDataLoading] = useState(true);
+    const [selectedMarker, setSelectedMarker] = useState(null);
+
+    // get position for map, and data (an array of captures to render)
     let position;   // used to center map.
     let data = [];
     if (currentCapture) {
@@ -34,27 +38,14 @@ function thisMap(from) {
     }
 
     // get array of captures for later rendering.
-    useEffect(()=> {
+    useEffect( async ()=> {
+        if (!currentCapture) {
+            data = await getCapturesForMap(position);
+            console.log("data received in Maps:" , data);
+        }
         setMapDataLoading(false);
     }, [])
 
-    // const consoleLog = (log) => {
-    //     return log
-    // }
-    // console.log(consoleLog("Console log test"));
-
-
-    // lat: myLocation.coords.latitude, lng: myLocation.coords.longitude
-
-    // const {isLoaded, loadError} = useLoadScript({
-    //     googleMapsApiKey: process.env.REACT_APP_GOOGLE_HEATMAP_KEY,
-    //     libraries, 
-    // })
-
-    // if (loadError) return "Error loading maps";
-    // if (!isLoaded) return "Loading Maps";
-
-    // return <div>map!</div>;
 
 
     // find time, find style dependable upon that time (dawn, day, dusk, night) OR if dynamic style is turned on.
@@ -73,13 +64,18 @@ function thisMap(from) {
         mapStyle = Day;
     }
 
-    // find marker -- will be dynamic later.
-    let marker = `/markerVerified.png`
-    // marker = `/markerUnverified.png`
-    // marker = `/markerDoc.png`
-
-
-    const [selectedMarker, setSelectedMarker] = useState(null);
+    // function gets marker image by value passed to it which is the verifed value from any Capture obj.
+    const getMarker = (byVerification) => {
+        let answer;
+        if (byVerification) {
+            answer=`/markerVerified.png`
+        } else {
+            answer=`/markerUnverified.png`
+        }
+        return answer;
+    }
+    const MarkerDoc = `/markerDoc.png`      // alternative marker for future update.
+    
 
     // var heatmapData = [
     //     new google.maps.LatLng(37.782, -122.447),
@@ -141,13 +137,13 @@ function thisMap(from) {
                     }}
                 >
                     { data.map((each, indx) => {
+                        console.log("each:" , each);
                         return(
                             <Marker 
                                 key={Math.floor(Math.random) * 99999999}
                                 position={{ lat: each.capture.location.lat, lng: each.capture.location.lng }}
                                 icon={{
-                                    // url: `${marker}`,
-                                    url: `/markerVerified.png`,
+                                    url: `${getMarker(each.capture.verified)}`,
                                     scaledSize: new window.google.maps.Size(48, 70),
                                 }}
                                 onClick={() => {
@@ -155,9 +151,7 @@ function thisMap(from) {
                                 }}
                             /> 
                         )
-
                     })}
-
                     { selectedMarker && (
                         <InfoWindow
                             position={{ lat: data.capture.location.lat, lng: data.capture.location.lng }}

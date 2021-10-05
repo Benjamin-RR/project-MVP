@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import { CaptureContext } from '../CaptureContext';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom'; 
-import Map from './Map'
+import Map from './Map/Map'
 
 const Explore = () => {
     const {
