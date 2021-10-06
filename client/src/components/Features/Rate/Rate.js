@@ -13,8 +13,6 @@ const Rate = () => {
         page,
         setPage,
         userID,
-        // friendArray,
-        // setFriendArray,
         currentCapture,
         setCurrentCapture,
     } = useContext(CaptureContext);
@@ -115,43 +113,30 @@ const Rate = () => {
                         <Revote
                             onClick={() => {
                                 setVote(null);
-                                // handleVoteClick();
                             }}
                         >REVOTE</Revote>
                     ):(
                         <>
                             <Button
                                 type="submit"
-                                // onMouseEnter={(e) => {
-                                //     setVote("UNSURE")
-                                // }}
                                 onClick={() => {
                                     setVote("UNSURE");
                                     handleVoteClick();
-                                    // areWeGood();
                                 }}
                             >UNSURE</Button>
                             <LeftToRight>
                                 <Button
                                     type="submit"
-                                    // onMouseEnter={(e) => {
-                                    //     setVote("TRUE")
-                                    // }}
                                     onClick={() => {
                                         setVote("TRUE");
                                         handleVoteClick();
-                                        // areWeGood();
                                     }}
                             >TRUE</Button>
                                 <Button
                                     type="submit"
-                                    // onMouseEnter={(e) => {
-                                    //     setVote("FALSE")
-                                    // }}
                                     onClick={() => {
                                         setVote("FALSE");
                                         handleVoteClick();
-                                        // areWeGood();
                                     }}
                                 >FALSE</Button>
                             </LeftToRight>
@@ -312,7 +297,7 @@ const Wrapper = styled.div`
     padding: 10px;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    /* justify-content: space-around; */
     align-items: center;
     /* height: var(--defaultHeight); */
     width: 100%;
@@ -338,12 +323,12 @@ const ContentWrapper = styled.div`
     padding: 10px;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    /* justify-content: space-around; */
     align-items: center;
     /* height: 400px; */
     /* width: 100%; */
     border: 1px solid black;
-    background: grey;
+    /* background: grey; */
     background-color: var(--background-color-alternative);
     background-image: var(--background-image-alternative);
 `
@@ -356,7 +341,10 @@ const Top = styled.div`
 const Button = styled.button`
     width: 100%;
     cursor: pointer;
+    background-color: var(--color-light);
+    border: 1px solid black;
     &:hover{
+        background-color: var(--color-dark);
         color: goldenrod;
         /* transform: scale(105%); */
         transform: rotate(1.009turn) scale(120%);
@@ -378,7 +366,7 @@ const LeftToRight = styled.div`
 const Card = styled.div`
     /* height: 100%; */
     width: 100%;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     margin: 5px;
 `
 

@@ -75,17 +75,10 @@ const Home = () => {
                             />
                         </Card>
                         { data.author !== (localStorage.getItem("uniqueName")) ? (
-                            // <Button 
-                            //     name="Rate"
-                            //     data={data}
-                            // />
-                            // <Rate
-                            //     onClick={() => {
-                            //         setCurrentCapture(data)
-                            //     }}
-                            //     to="/Rate"
-                            // >Rate</Rate>
-                            <div></div>
+                            <Button 
+                                name="Rate"
+                                data={data}
+                            />
                         ) : (
                             <div style={{ marginBottom: "50px"}} ></div>
                         )}
@@ -135,29 +128,5 @@ const Card = styled.div`
     margin: 5px;
     /* background: green; */
 `
-
-// const Rate = styled(Link)`
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     padding: 5px;
-//     margin-bottom: 50px;
-//     margin-left: auto;
-//     margin-right: 20px;
-//     width: 100px;
-//     border-radius: 7px;
-//     border: 1px solid white;
-//     color: white;
-//     cursor: pointer;
-//     text-decoration: none;
-//     &:hover{
-//         background: white;
-//         color: black;
-//         transform: scale(125%) ease-in-out 1000ms;
-//     }
-//     &:active{
-//         transform: scale(95%);
-//     }
-// `
 
 export default Home;

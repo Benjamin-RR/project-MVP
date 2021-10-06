@@ -1,17 +1,17 @@
 import React, {useContext} from 'react';
-// import { CaptureContext } from '../CaptureContext';
+import { CaptureContext } from '../CaptureContext';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-const Button = (name, data) => {
-    console.log("in button", name, data.data);
+const Button = ({name, data}) => {
+    console.log("in button", name, data);
     const {
         setCurrentCapture,
     } = useContext(CaptureContext);
     return(
         <ThisButton
             onClick={() => {
-                setCurrentCapture(data.data)
+                setCurrentCapture(data)
             }}
             to="/Rate"
         >{name}

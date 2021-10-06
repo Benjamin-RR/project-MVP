@@ -109,6 +109,7 @@ const Main = styled.div`
     width: 100vw; */
     background-color: var(--background-color-default);
     background-image: var(--background-image-default);
+    background-attachment: fixed;
 `
 
 export default App;
