@@ -31,7 +31,7 @@ const Banner = ({data}) => {
                 <img 
                     src={`/banner.jpg`} 
                     alt="Profile Banner"
-                    style={{ width: "100%", height: "100%", position: "absolute", objectFit: "cover", zIndex: "-1"}}
+                    style={{ width: "100%", height: "100%", position: "absolute", objectFit: "cover", zIndex: "0"}}
                 />
                 <TopToBottom>
                     <LeftToRight>
@@ -149,6 +149,7 @@ const IconWrapper = styled.div`
     /* height: 100%; */
     /* border: 1px solid black; */
     margin-left: auto;
+    z-index: 2;
 `
 
 const Icon = styled.div`

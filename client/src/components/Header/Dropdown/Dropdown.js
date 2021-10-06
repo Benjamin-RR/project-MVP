@@ -31,10 +31,12 @@ const Dropdown = () => {
     mediaQ.onchange = (e) => {
         // window.location.reload();
     }
-    let thisTop = '0px';
+    let thisTop = '32px';
     if (mediaQ.matches) {
-        thisTop = '85px'
+        thisTop = '60px'
     }
+    // top: 60px;
+
 
     // handle dropdown
     const handleMouseEnter = () => {
@@ -91,11 +93,12 @@ const Dropdown = () => {
 
     return(
         <Wrapper
-            style={{ top: {thisTop}}}
+            style={{ top: `${thisTop}` }}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >
-            <DropDownHide></DropDownHide>
+            <DropDownHide />
+            <DropDownHide />
             <DropDownItem
                 onClick={handleAccountClick} type="submit"
             >Account</DropDownItem>
@@ -123,7 +126,7 @@ const Wrapper = styled.div`
     /* border: 1px solid black; */
     position: absolute;
     right: 10px;
-    top: 80px;
+    /* top: 60px; */
     z-index: 10;
 `
 
@@ -132,13 +135,13 @@ const DropDownItem = styled.button`
     padding: 10px;
     width: 100%;
     cursor: pointer;
-    background: darkgreen;
+    background: var(--color-dark);
     color: white;
     border: none;
     font-weight: 900;
     font-size: 1em;
     &:hover {
-        background: green;
+        background: var(--color-light);
     }
     &:active {
         transform: scale(0.9);

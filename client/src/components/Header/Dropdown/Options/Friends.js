@@ -82,7 +82,7 @@ const FriendWrapper = styled.div`
     top: 200px;
     left: 10px;
     border: 1px solid black;
-    background: green;
+    background: var(--color-light);
     border-radius: 10px;
     /* z-index: 10; */
 `

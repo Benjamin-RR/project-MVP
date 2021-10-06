@@ -66,7 +66,7 @@ const Card = styled.div`
     align-items: center;
     /* height: 400px; */
     width: 320px;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     /* padding: 5px; */
     margin: 5px;
     /* background: green; */

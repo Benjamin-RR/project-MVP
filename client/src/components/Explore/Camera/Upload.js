@@ -23,7 +23,6 @@ const Upload = () => {
 
     useEffect(() => {
         setPage("upload");
-
     },[])
 
     // get gallery from folder.
@@ -33,9 +32,6 @@ const Upload = () => {
     { !userID && 
         history.push("/Login")
     }
-
-    // console.log("my location:" , myLocation);
-    
     
     // for displaying different layout on image select.
     const [grid, setGrid] = useState(false)

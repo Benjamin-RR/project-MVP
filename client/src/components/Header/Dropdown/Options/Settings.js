@@ -74,7 +74,7 @@ const Settings = () => {
                                     }}
                                 >
                                     <BsToggleOff 
-                                        style={{ height: "100%", width: "100%", cursor: "pointer", color: "darkgrey"}}
+                                        style={{ height: "100%", width: "100%", cursor: "pointer", color: `var(--color-dark)`}}
                                     />
                                 </Switch>
                             )}
@@ -96,7 +96,7 @@ const Settings = () => {
                                     }}
                                 >
                                     <BsToggleOff 
-                                        style={{ height: "100%", width: "100%", cursor: "pointer", color: "darkgrey"}}
+                                        style={{ height: "100%", width: "100%", cursor: "pointer", color: `var(--color-dark)`}}
                                     />
                                 </Switch>
                             )}
@@ -118,7 +118,7 @@ const Settings = () => {
                                     }}
                                 >
                                     <BsToggleOff 
-                                        style={{ height: "100%", width: "100%", cursor: "pointer", color: "darkgrey"}}
+                                        style={{ height: "100%", width: "100%", cursor: "pointer", color: `var(--color-dark)`}}
                                     />
                                 </Switch>
                             )}
@@ -140,7 +140,7 @@ const Settings = () => {
                                     }}
                                 >
                                     <BsToggleOff 
-                                        style={{ height: "100%", width: "100%", cursor: "pointer", color: "darkgrey"}}
+                                        style={{ height: "100%", width: "100%", cursor: "pointer", color: `var(--color-dark)`}}
                                     />
                                 </Switch>
                             )}

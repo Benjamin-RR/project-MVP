@@ -91,7 +91,7 @@ const Header = () => {
             >
                 <img 
                     src='/Title.png'
-                    style={{ height: "50px" , width: "250px"}}
+                    style={{ height: "50px" , width: "100%"}}
                 />
             </TitleWrapper>
 
@@ -111,7 +111,7 @@ const Header = () => {
                             )}
                         </Icon>
 
-                        <Icon to="/DM" >
+                        {/* <Icon to="/DM" >
                         { page === "dm" ? (
                                 <MdMessage 
                                     style={{ height: "100%", width: "100%"}}
@@ -121,7 +121,7 @@ const Header = () => {
                                     style={{ height: "100%", width: "100%"}}
                                 />
                             )}
-                        </Icon>
+                        </Icon> */}
 
                         <Icon 
                             onClick={() => {
@@ -141,7 +141,7 @@ const Header = () => {
                             )}
                         </Icon>
 
-                        <Icon to="/Leaderboard" >
+                        {/* <Icon to="/Leaderboard" >
                         { page === "leaderboard" ? (
                                 <AiFillTrophy 
                                     style={{ height: "100%", width: "100%"}}
@@ -151,7 +151,7 @@ const Header = () => {
                                     style={{ height: "100%", width: "100%"}}
                                 />
                             )}
-                        </Icon>
+                        </Icon> */}
 
                         <UserAvatar
                             onClick={() => {
@@ -219,8 +219,8 @@ const Icon = styled(Link)`
 
 const UserAvatar = styled.div`
     margin: 5px;
-    height: 60px;
-    width: 60px;
+    height: 40px;
+    width: 40px;
     /* border: 1px solid black; */
     cursor: pointer;
     position: relative;

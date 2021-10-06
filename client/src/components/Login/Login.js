@@ -289,14 +289,14 @@ const ButtonWrap = styled.div`
 const Button = styled.button`
     margin: 5px;
     height: 40px;
-    background: rgb(36, 65, 109);
+    background: var(--color-light);
     color: white;
     border: 1px solid black;
     border-radius: 5px;
     font-size: 1.5em;
     cursor: pointer;
     &:hover{
-        background: rgb(16, 40, 80);
+        background: var(--color-dark);
     }
     &:active{
         transform: scale(95%);

@@ -2,6 +2,8 @@ import { createGlobalStyle } from "styled-components";
 
 export default createGlobalStyle`
     :root{
+        --color-light: rgb(36, 65, 109);
+        --color-dark:  rgb(16, 40, 80);
         --defaultHeight: 500px;
         --IconHeight: 30px;
         --IconWidth: 30px;
