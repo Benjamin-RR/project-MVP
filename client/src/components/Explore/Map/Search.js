@@ -22,13 +22,17 @@ const Search = () => {
         setSearchSize,
         searchQuery,
         setSearchQuery,
-        // mapDataLoading, 
-        // setMapDataLoading
+        mapDataLoading, 
+        setMapDataLoading,
+        captureArray, 
+        setCaptureArray,
+        // refreshPins, 
+        // setRefreshPins,
     } = useContext(CaptureContext);
-    const [searchActive, setSearchActive] = useState(false);
-    const [animalSearch, setAnimalSearch] = useState(searchQuery.animal);
-    const [userSearch, setUserSearch] = useState(searchQuery.user);
-    const [confirmTimer, setConfirmTimer] = useState(null);
+    const [searchActive, setSearchActive] = useState(false);                // for clicking on search icon.
+    const [animalSearch, setAnimalSearch] = useState(searchQuery.animal);   // query of animal name being searched.
+    const [userSearch, setUserSearch] = useState(searchQuery.user);         // query of user being searched.
+    const [confirmTimer, setConfirmTimer] = useState(null);                 // after typing words, 2sec later the query is sent.
 
     // gets search size for map searches.
     const getSearchSize = () => {
@@ -39,6 +43,7 @@ const Search = () => {
         }
     }
 
+    // on load of this component should always be this size.
     useEffect(()=>{
         setSearchSize({width: "45px", height: "45px"})
     },[])
@@ -51,8 +56,15 @@ const Search = () => {
     }
     // sends search query.
     const sendSearchQuery = () => {
-        // setMapDataLoading(true)
+        setMapToReload();
         setSearchQuery({...searchQuery, animal: animalSearch, user: userSearch});
+    }
+
+    // attempting to reset map for a reload of values.
+    const setMapToReload = () => {
+        setMapDataLoading(true);
+        setCaptureArray(null); 
+        // setRefreshPins(true);
     }
 
 
@@ -91,6 +103,7 @@ const Search = () => {
                         <Icon
                             onClick={()=> {
                                 setSearchQuery({...searchQuery, certified: !searchQuery.certified})
+                                setMapToReload();
                             }}
                         >
                             {searchQuery.certified ? (
@@ -109,6 +122,7 @@ const Search = () => {
                         <Icon
                             onClick={()=> {
                                 setSearchQuery({...searchQuery, unCertified: !searchQuery.unCertified})
+                                setMapToReload();
                             }}
                         >
                             {searchQuery.unCertified ? (

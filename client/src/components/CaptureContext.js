@@ -13,11 +13,13 @@ export const CaptureProvider = ({ children }) => {
 
     // for google map
     const [searchSize, setSearchSize] = useState({width: "45px", height: "45px"});
-    const [searchQuery, setSearchQuery] = useState({certified: false, unCertified: false, animal: "", user: ""})
-    // const [mapDataLoading, setMapDataLoading] = useState(true);
+    const [searchQuery, setSearchQuery] = useState({certified: true, unCertified: false, animal: "", user: ""})
+    const [mapDataLoading, setMapDataLoading] = useState(true);
     const [firstMapLoad, setFirstMapLoad] = useState(true);
     // const [mapPosition, setMapPosition] = useState()
     const [comingFrom, setComingFrom] = useState(null)
+    const [captureArray, setCaptureArray] = useState(null);
+    const [refreshPins, setRefreshPins] = useState(false);
 
     // settings
     const [settingsClick, setSettingsClick] = useState(false);
@@ -91,12 +93,16 @@ export const CaptureProvider = ({ children }) => {
             setSearchSize,
             searchQuery, 
             setSearchQuery,
-            // mapDataLoading, 
-            // setMapDataLoading,
+            mapDataLoading, 
+            setMapDataLoading,
             firstMapLoad,
             setFirstMapLoad,
             comingFrom,
-            setComingFrom
+            setComingFrom,
+            captureArray, 
+            setCaptureArray,
+            // refreshPins, 
+            // setRefreshPins,
         }}>
             {children}
         </CaptureContext.Provider>

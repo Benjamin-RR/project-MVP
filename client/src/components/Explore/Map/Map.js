@@ -11,6 +11,7 @@ import {getCapturesForMap} from './Fetch';
 import {Image} from 'cloudinary-react';
 import Search from "./Search";
 import { useHistory } from 'react-router';
+import {SearchQuery} from './Filter/SearchQuery';
 
 
 function thisMap(from) {
@@ -28,17 +29,21 @@ function thisMap(from) {
         setSearchSize,
         searchQuery, 
         setSearchQuery,
-        // mapDataLoading, 
-        // setMapDataLoading,
+        mapDataLoading, 
+        setMapDataLoading,
         firstMapLoad, 
         setFirstMapLoad,
         comingFrom,
-        setComingFrom
+        setComingFrom,
+        captureArray, 
+        setCaptureArray,
+        // refreshPins, 
+        // setRefreshPins,
     } = useContext(CaptureContext);
-    const [mapDataLoading, setMapDataLoading] = useState(true);
+    // const [mapDataLoading, setMapDataLoading] = useState(true);
     const [selectedMarker, setSelectedMarker] = useState(null);
     const [AllCaptureArray, setAllCaptureArray] = useState(null);
-    const [captureArray, setCaptureArray] = useState(null);
+    // const [captureArray, setCaptureArray] = useState(null);
     const [refreshMap, setRefreshMap] = useState(true);
 
     let history = useHistory();
@@ -50,7 +55,9 @@ function thisMap(from) {
         setCaptureArray(currentCapture.data);
         position= { lat: currentCapture.data.capture.location.lat , lng: currentCapture.data.capture.location.lng }
     } else {
-        position = { lat: myLocation.coords.latitude, lng: myLocation.coords.longitude }
+        if (firstMapLoad) {
+            position = { lat: myLocation.coords.latitude, lng: myLocation.coords.longitude }
+        }
     }
 
 
@@ -61,6 +68,9 @@ function thisMap(from) {
         console.log("searchQuery received to FILTER:" , searchQuery);
         let verified = false;
         let unverified = false;
+        if (!AllCaptureArray) {
+            return;
+        }
         
         // searchQuery {certified: false, unCertified: false, animal: null, user: null}
         if (searchQuery.certified) {
@@ -117,6 +127,7 @@ function thisMap(from) {
         setCaptureArray(finalAnswer);
         // setPage('explore');
         // return answer;
+        setMapDataLoading(false);
     }
     
 
@@ -139,14 +150,36 @@ function thisMap(from) {
         setFirstMapLoad(false);
 
         if (!currentCapture) {
-            const data = await getCapturesForMap(position);
+            // const data = await getCapturesForMap(position);
+
             // console.log("data received in Maps:" , data);
-            const filtered = filterDataWithSearchQuery(data);
-            setCaptureArray(data);      // changes for filter
-            setAllCaptureArray(data);   // never changes
+            // const filtered = filterDataWithSearchQuery(data);
+
+            // setCaptureArray(data);      // changes with filter
+            // setAllCaptureArray(data);   // never changes
+            // filterDataWithSearchQuery();
+            const data = await getCapturesForMap(position)
+            .then( async (data) => {
+                console.log("data here:" , data);
+                // await setCaptureArray(data)      // changes with filter
+                await setAllCaptureArray(data)   // never changes
+            })
+            // .then( async (data) => {
+            //     await filterDataWithSearchQuery();
+            // })
+        } else {
+            // setCaptureArray(currentCapture); // might need this to fix bug clicking on link to explore map.
         }
-        setMapDataLoading(false);
-    }, [])
+    }, [captureArray])
+
+    // useEffect(() => {
+    //     filterDataWithSearchQuery();
+
+    // }, [mapDataLoading])
+    
+    if (AllCaptureArray && mapDataLoading) {
+        filterDataWithSearchQuery();
+    }
 
 
     // find time, find style dependable upon that time (dawn, day, dusk, night) OR if dynamic style is turned on.
@@ -190,68 +223,69 @@ function thisMap(from) {
     }
 
     console.log("DATA THAT WILL RENDER ON MAP:" , captureArray);
+    // console.log("pins need refresh?:" , refreshPins);
     return(
         <>
-            { !mapDataLoading ? ( 
-                <GoogleMap
-                    defaultZoom={10}
-                    defaultCenter={position}
-                    defaultOptions={{ 
-                        styles: mapStyle,
-                        // streetViewControl: false,
-                        disableDefaultUI: true
-                    }}
-                >
-                    { captureArray.map((each, indx) => {
-                        // console.log("each:" , each);
-                        return(
-                            <Marker 
-                                key={indx}
-                                position={{ lat: each.capture.location.lat, lng: each.capture.location.lng }}
-                                icon={{
-                                    url: `${getMarker(each.capture.verified)}`,
-                                    scaledSize: new window.google.maps.Size(48, 70),
-                                }}
-                                onClick={() => {
-                                    setSelectedMarker(each)
-                                }}
-                            /> 
-                        )
-                    })}
-                    { selectedMarker && (
-                        <InfoWindow
-                            position={{ lat: selectedMarker.capture.location.lat, lng: selectedMarker.capture.location.lng }}
-                            onCloseClick={()=>{
-                                setSelectedMarker(null);
-                            }}
-                        >
-                            <InfoStyle>
-                                <h3>{selectedMarker.capture.animalName}</h3>
-                                <Text>Captured by {selectedMarker.author} {moment(`${selectedMarker.timeStamp}`).startOf('day').fromNow()}.</Text>
-                                <ImageWrapper
-                                    onClick={() => {
-                                        setCurrentCapture(selectedMarker);
-                                        setComingFrom('map');
-                                        validateRedirect(selectedMarker);
+            <GoogleMap
+                defaultZoom={10}
+                defaultCenter={position}
+                defaultOptions={{ 
+                    styles: mapStyle,
+                    // streetViewControl: false,
+                    disableDefaultUI: true
+                }}
+            >
+                { (!mapDataLoading && captureArray) && ( 
+                    <>
+                        { captureArray.map((each, indx) => {
+                            return(
+                                <Marker 
+                                    key={indx}
+                                    position={{ lat: each.capture.location.lat, lng: each.capture.location.lng }}
+                                    icon={{
+                                        url: `${getMarker(each.capture.verified)}`,
+                                        scaledSize: new window.google.maps.Size(48, 70),
                                     }}
-                                    // to="/Explore"
-                                >
-                                    <Image
-                                        alt="img"
-                                        cloudName="capturecapture"
-                                        publicId={selectedMarker.public_id}
-                                        width="100"
-                                        crop="scale"
-                                    />
-                                </ImageWrapper>
-                            </InfoStyle>
-                        </InfoWindow>
-                    )}
-                </GoogleMap>
-            ) : (
-                <div></div>
-                // <Loader />
-            )}
+                                    onClick={() => {
+                                        setSelectedMarker(each)
+                                    }}
+                                /> 
+                            )
+                        })}
+                    </>
+                )}
+
+                { selectedMarker && (
+                    <InfoWindow
+                        position={{ lat: selectedMarker.capture.location.lat, lng: selectedMarker.capture.location.lng }}
+                        onCloseClick={()=>{
+                            setSelectedMarker(null);
+                        }}
+                    >
+                        <InfoStyle>
+                            <h3>{selectedMarker.capture.animalName}</h3>
+                            <Text>Captured by {selectedMarker.author} {moment(`${selectedMarker.timeStamp}`).startOf('day').fromNow()}.</Text>
+                            <ImageWrapper
+                                onClick={() => {
+                                    setCurrentCapture(selectedMarker);
+                                    setComingFrom('map');
+                                    validateRedirect(selectedMarker);
+                                }}
+                                // to="/Explore"
+                            >
+                                <Image
+                                    alt="img"
+                                    cloudName="capturecapture"
+                                    publicId={selectedMarker.public_id}
+                                    width="100"
+                                    crop="scale"
+                                />
+                            </ImageWrapper>
+                        </InfoStyle>
+                    </InfoWindow>
+                )}
+            </GoogleMap>
+
         </>
     )
 }
@@ -270,9 +304,18 @@ export default function Map() {
         currentCapture, 
         setCurrentCapture,
         searchSize, 
-        setSearchSize
+        setSearchSize,
+        mapDataLoading,
+        mapRefresh,
+        setMapRefresh
     } = useContext(CaptureContext);
     
+    // console.log("map refresh: " , mapRefresh);
+    // if (mapRefresh) {
+    //     setMapRefresh(false);
+    // }
+
+    // console.log("test:" , TheMap);
 
     return (
         <MapWrapper>
