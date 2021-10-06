@@ -5,6 +5,7 @@ import SingleCapture from '../Common/SingleCapture';
 import Loading from '../Common/Loader';
 import {Link} from 'react-router-dom';
 import Button from '../Common/Button';
+import Title from './Common/Title';
 
 const Captures = ({feed}) => {
     const {
@@ -19,6 +20,9 @@ const Captures = ({feed}) => {
     
     return (
         <Wrapper>
+            <Title
+                title={"Captures"}
+            />
             {(feed) ? (feed.map((data, index) => {
                 return(
                     <div

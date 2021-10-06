@@ -46,15 +46,9 @@ const Home = () => {
         //     setHomeLoading(false);
         // })
         await setFeed(results)
-        // setHomeLoading(false);
+        setHomeLoading(false);
         // await setFeed( await LoadCapture(friendArray))
     }, [])
-
-    if (feed && homeLoading) {
-        setHomeLoading(false);
-        // setHomeHasLoaded(true);
-        // setPage("home");
-    }
 
     // console.log("FEED:" , feed, friendArray, typeof friendArray);
     

@@ -1,12 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
+import Title from '../Common/Title';
 
 const Achievements = () => {
     
 
     return (
         <Wrapper>
-            <div>Achievements</div>
+            <Title
+                title={"Achievements"}
+            />
             <div>Coming in future update.</div>
         </Wrapper>
     )

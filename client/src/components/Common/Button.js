@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const Button = ({name, data}) => {
-    console.log("in button", name, data);
     const {
         setCurrentCapture,
     } = useContext(CaptureContext);

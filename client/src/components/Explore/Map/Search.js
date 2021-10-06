@@ -55,7 +55,6 @@ const Search = () => {
         setSearchQuery({...searchQuery, animal: animalSearch, user: userSearch});
     }
 
-    console.log("checking search:" , searchSize)
 
     return(
         <Wrapper

@@ -7,10 +7,10 @@ import Rise from './Styles/Rise';
 import styled from "styled-components";
 import Loader from '../../Common/Loader'
 import moment from 'moment';
-// import HeatmapLayer from "react-google-maps/lib/components/visualization/HeatmapLayer";
 import {getCapturesForMap} from './Fetch';
 import {Image} from 'cloudinary-react';
 import Search from "./Search";
+import { useHistory } from 'react-router';
 
 
 function thisMap(from) {
@@ -35,12 +35,13 @@ function thisMap(from) {
         comingFrom,
         setComingFrom
     } = useContext(CaptureContext);
-    // const libraries = ["places"];
     const [mapDataLoading, setMapDataLoading] = useState(true);
     const [selectedMarker, setSelectedMarker] = useState(null);
     const [AllCaptureArray, setAllCaptureArray] = useState(null);
     const [captureArray, setCaptureArray] = useState(null);
     const [refreshMap, setRefreshMap] = useState(true);
+
+    let history = useHistory();
 
 
     // get center position for map.
@@ -177,6 +178,16 @@ function thisMap(from) {
         return answer;
     }
 
+    // validates the link the user is attempting to go to isn't his/her own capture.
+    const validateRedirect = (data) => {
+        console.log("data on click:", data) ;
+        console.log("names:" , data.author, localStorage.getItem("uniqueName"))
+        if (data.author === localStorage.getItem("uniqueName")) {
+            console.log("MATCH!");
+            return;
+        }
+        history.push('/Rate')
+    }
 
     console.log("DATA THAT WILL RENDER ON MAP:" , captureArray);
     return(
@@ -217,7 +228,14 @@ function thisMap(from) {
                             <InfoStyle>
                                 <h3>{selectedMarker.capture.animalName}</h3>
                                 <Text>Captured by {selectedMarker.author} {moment(`${selectedMarker.timeStamp}`).startOf('day').fromNow()}.</Text>
-                                <ImageWrapper>
+                                <ImageWrapper
+                                    onClick={() => {
+                                        setCurrentCapture(selectedMarker);
+                                        setComingFrom('map');
+                                        validateRedirect(selectedMarker);
+                                    }}
+                                    // to="/Explore"
+                                >
                                     <Image
                                         alt="img"
                                         cloudName="capturecapture"
@@ -293,6 +311,7 @@ const ImageWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 `
 
 const Text = styled.div`

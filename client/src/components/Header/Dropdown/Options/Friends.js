@@ -43,7 +43,10 @@ const Friends = () => {
                 <LeftToRight>
                     <h2>Add friend</h2>
                     <Icon
-                        to='/profile'
+                        onClick={()=>{
+                            setFriendClick(false)
+                        }}
+                        to='/'
                     >
                         <AiOutlineCloseSquare 
                             style={{ height: "100%" , width: "100%"}}
@@ -74,9 +77,8 @@ const Wrapper = styled.div`
 const FriendWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
-    /* position: absolute; */
     width: 340px;
     height: 200px;
     top: 200px;
@@ -84,17 +86,7 @@ const FriendWrapper = styled.div`
     border: 1px solid black;
     background: var(--color-light);
     border-radius: 10px;
-    /* z-index: 10; */
 `
-
-// const Close = styled.button`
-
-// `
-
-// const IconWrapper = styled.div`
-//     display: flex;
-//     /* border: 1px solid black; */
-// `
 
 const Icon = styled(Link)`
     color: black;
@@ -102,16 +94,15 @@ const Icon = styled(Link)`
     margin: 5px;
     width: 30px;
     height: 30px;
-    /* border: 1px solid black; */
 `
 
 const LeftToRight = styled.div`
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    /* border: 1px solid black; */
-    margin: 10px;
+    width: 100%;
+    padding: 10px 10px 10px 20px;
 `
 
 const Form = styled.form`

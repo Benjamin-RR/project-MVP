@@ -1,12 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
+import Title from './Common/Title';
 
 const Friends = (data) => {
     // console.log("data in friends:" , data.data[0].uniqueName);
 
     return (
         <Wrapper>
-            <div>Friends</div>
+            <Title
+                title={"Friends"}
+            />
             <div>This user's settings has disabled this section from being viewed.'.</div>
         </Wrapper>
     )
