@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, {useContext, useEffect} from 'react'
 import { CaptureContext } from '../../../CaptureContext'
 import styled from 'styled-components';
 // icons
@@ -28,7 +28,11 @@ const Settings = () => {
         statsOnRatingOthers,
         setStatsOnRatingOthers,
     } = useContext(CaptureContext);
-    setPage("settings");
+
+    useEffect(() => {
+        setPage("settings");
+
+    },[])
 
     // console.log("BADGE:", badgeSetting, "MAP:" , dynamicMapStyle, "PROFILE:", dynamicBanner, "OTHERS:", statsOnRatingOthers);
 

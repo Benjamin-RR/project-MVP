@@ -27,25 +27,31 @@ const Profile = () => {
         currentCapture,
         setCurrentCapture
     } = useContext(CaptureContext);
-    setPage("profile");
+
+    useEffect(() => {
+        setPage("profile");
+
+    },[])
 
     let history = useHistory();
     { !userID && 
         history.push("/Login")
     }
     // const data = currentCapture;
-    const data = (JSON.parse(localStorage.getItem("CaptureInfo")).data );
+    // const data = (JSON.parse(localStorage.getItem("CaptureInfo")).data );
+    const data = currentCapture;
     const [feed, setFeed] = useState(null);
     const [captureFeed, setCaptureFeed] = useState(null);
     const [userInfoFeed, setUserInfoFeed] = useState(null);
 
+
     useEffect( async ()=> {
         // for rendering this profile's captures.
-        const thisProfileCaptures = await LoadCapture([data.author])
+        const thisProfileCaptures = await LoadCapture([data.data.author])
         // console.log("RESULT CAPTURES:" , thisProfileCaptures);
         setCaptureFeed(thisProfileCaptures)
         // for getting all stats/achievements of this profile
-        const thisProfileInfo = await LoadUsers([data.author])
+        const thisProfileInfo = await LoadUsers([data.data.author])
 
         // console.log("NEW:" , thisProfileInfo);
         // thisProfileCaptures.forEach(()=> {

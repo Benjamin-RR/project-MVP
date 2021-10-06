@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {CaptureContext} from '../../CaptureContext';
 import styled from 'styled-components';
 
@@ -7,7 +7,10 @@ const Blog = () => {
         page,
         setPage
     } = useContext(CaptureContext);
-    setPage("blog");
+
+    useEffect(() => {
+        setPage("blog");
+    },[])
     return (
         <Wrapper>
             <div>Blog</div>

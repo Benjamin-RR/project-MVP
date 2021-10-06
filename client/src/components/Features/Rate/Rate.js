@@ -20,9 +20,12 @@ const Rate = () => {
     } = useContext(CaptureContext);
     let history = useHistory();
 
+    useEffect(() => {
+        setPage("rate");
+
+    },[])
 
     // use history to push to homepage if user forced their way here (from a page that wasn't homepage), to avoid render crash or cheating and voting on their own capture.
-    setPage("rate");
 
     // console.log("current capture is:" , currentCapture);
     // console.log("Window pos:" , window.pageYOffset)
@@ -45,7 +48,7 @@ const Rate = () => {
     const handleVoteClick = (e) => {
         // e.preventDefault();
         // setVote(e.target.value)
-        console.log("vote:" , vote);
+        // console.log("vote:" , vote);
         // areWeGood();
     }
 
@@ -56,7 +59,7 @@ const Rate = () => {
         //     console.log("NOT READY")
         //     return;
         // } else {
-            console.log("SUBMITTING!")
+            // console.log("SUBMITTING!")
             // submit vote and update mongoDB accordingly.
                 fetch(`capture/vote`, {
                     method: 'PUT',
@@ -100,7 +103,7 @@ const Rate = () => {
         submitVote();
         setStarVote(0);
         setVote(null);
-        history.goBack();
+        history.push('/');
     }
 
     return(

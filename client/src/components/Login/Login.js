@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {CaptureContext} from '../CaptureContext';
 // import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -23,7 +23,11 @@ const Login = () => {
         // uniqueName, 
         // setUniqueName
     } = useContext(CaptureContext);
-    setPage("login");
+    
+    useEffect(() => {
+        setPage("login");
+
+    },[])
 
     let history = useHistory();
     { userID && 

@@ -21,14 +21,13 @@ const Upload = () => {
         // setUserColor
     } = useContext(CaptureContext);
 
-    // get gallery from foler.
+    useEffect(() => {
+        setPage("upload");
+
+    },[])
+
+    // get gallery from folder.
     // console.log("test from upload:", importAll() );
-    setPage("upload");
-
-
-    // if (page !== "upload") {
-    //     getGallery();
-    // }
     
     let history = useHistory();
     { !userID && 

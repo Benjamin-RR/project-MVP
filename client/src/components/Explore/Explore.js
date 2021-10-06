@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import { CaptureContext } from '../CaptureContext';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom'; 
@@ -15,10 +15,14 @@ const Explore = () => {
         setFirstMapLoad,
         // setMapDataLoading
     } = useContext(CaptureContext);
-    setPage("explore");
+
+    useEffect(() => {
+        setPage("explore");
+        setFirstMapLoad(true);
+
+    },[])
     // setSearchSize({width: "45px", height: "45px"})
     // setSearchQuery({certified: false, unCertified: false, animal: "", user: ""})
-    setFirstMapLoad(true);
     // setMapDataLoading(true);
 
     let history = useHistory();

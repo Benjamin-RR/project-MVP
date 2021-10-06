@@ -1,9 +1,8 @@
-import React, {useContext} from 'react'
+import React, {useContext, useEffect} from 'react'
 import { CaptureContext } from '../../../CaptureContext'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { useHistory } from 'react-router-dom'; 
-
 
 
 const Account = () => {
@@ -21,7 +20,10 @@ const Account = () => {
         friendClick, 
         setFriendClick
     } = useContext(CaptureContext);
-    setPage("account");
+
+    useEffect(() => {
+        setPage("account");
+    },[])
     
     let history = useHistory();
     { !userID && 

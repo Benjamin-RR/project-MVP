@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, {useContext, useEffect} from 'react'
 import { CaptureContext } from '../../../CaptureContext'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
@@ -22,7 +22,11 @@ const Friends = () => {
         friendClick, 
         setFriendClick
     } = useContext(CaptureContext);
-    setPage("friends");
+    
+    useEffect(() => {
+        setPage("friends");
+
+    },[])
     
     let history = useHistory();
     { !userID && 
@@ -38,7 +42,9 @@ const Friends = () => {
             <FriendWrapper>
                 <LeftToRight>
                     <h2>Add friend</h2>
-                    <Icon>
+                    <Icon
+                        to='/profile'
+                    >
                         <AiOutlineCloseSquare 
                             style={{ height: "100%" , width: "100%"}}
                         />

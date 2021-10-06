@@ -38,69 +38,66 @@ const App = () => {
 
             <Main>
                 <Switch>
-                    <div>
-
-                        <Route exact path="/">
-                            <Home />
-                        </Route>
-                        <Route exact path="/Login">
-                            <Login />
-                        </Route>
-                        <Route exact path="/Rate">
-                            <Rate />
-                        </Route>
-                        {/* <Route exact path="/Register">
-                            <Register />
-                        </Route> */}
-                        <Route exact path="/DM">
-                            <DM />
-                        </Route>
-                        <Route exact path="/Profile">
-                            <Profile />
-                        </Route>
-                        <Route exact path="/Account">
-                            <Account />
-                        </Route>
-                        <Route exact path="/Friends">
-                            <Friends />
-                        </Route>
-                        <Route exact path="/Settings">
-                            <Settings />
-                        </Route>
-                        <Route exact path="/Explore">
-                            <Explore />
-                        </Route>
-                        <Route exact path="/Gallery">
-                            <Gallery />
-                        </Route>
-                        <Route exact path="/Camera">
-                            <Camera />
-                        </Route>
-                        <Route exact path="/Upload">
-                            <Upload />
-                        </Route>
-                        <Route exact path="/Leaderboard">
-                            <Leaderboard />
-                        </Route>
-                        <Route exact path="/About">
-                            <About />
-                        </Route>
-                        <Route exact path="/Blog">
-                            <Blog />
-                        </Route>
-                        <Route exact path="/Help">
-                            <Help />
-                        </Route>
-                        <Route exact path="/Terms">
-                            <Terms />
-                        </Route>
-                        <Route exact path="/Contact">
-                            <Contact />
-                        </Route>
-                        <Route exact path="/404">
-                            <Page404 />
-                        </Route>
-                    </div>
+                    <Route exact path="/">
+                        <Home />
+                    </Route>
+                    <Route exact path="/Login">
+                        <Login />
+                    </Route>
+                    <Route exact path="/Rate">
+                        <Rate />
+                    </Route>
+                    {/* <Route exact path="/Register">
+                        <Register />
+                    </Route> */}
+                    <Route exact path="/DM">
+                        <DM />
+                    </Route>
+                    <Route exact path="/Profile">
+                        <Profile />
+                    </Route>
+                    <Route exact path="/Account">
+                        <Account />
+                    </Route>
+                    <Route exact path="/Friends">
+                        <Friends />
+                    </Route>
+                    <Route exact path="/Settings">
+                        <Settings />
+                    </Route>
+                    <Route exact path="/Explore">
+                        <Explore />
+                    </Route>
+                    <Route exact path="/Gallery">
+                        <Gallery />
+                    </Route>
+                    <Route exact path="/Camera">
+                        <Camera />
+                    </Route>
+                    <Route exact path="/Upload">
+                        <Upload />
+                    </Route>
+                    <Route exact path="/Leaderboard">
+                        <Leaderboard />
+                    </Route>
+                    <Route exact path="/About">
+                        <About />
+                    </Route>
+                    <Route exact path="/Blog">
+                        <Blog />
+                    </Route>
+                    <Route exact path="/Help">
+                        <Help />
+                    </Route>
+                    <Route exact path="/Terms">
+                        <Terms />
+                    </Route>
+                    <Route exact path="/Contact">
+                        <Contact />
+                    </Route>
+                    <Route exact path="/404">
+                        <Page404 />
+                    </Route>
                 </Switch>
             </Main>
 

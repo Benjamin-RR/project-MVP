@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {CaptureContext} from '../CaptureContext';
 import styled from 'styled-components';
 
@@ -7,7 +7,11 @@ const DM = () => {
         page,
         setPage
     } = useContext(CaptureContext);
-    setPage("about");
+
+    useEffect(() => {
+
+        setPage("about");
+    },[])
     return (
         <Wrapper>
             <div>About</div>

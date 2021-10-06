@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {CaptureContext} from '../../CaptureContext';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom'; 
@@ -9,7 +9,11 @@ const Camera = () => {
         setPage,
         userID
     } = useContext(CaptureContext);
-    setPage("camera");
+
+    useEffect(() => {
+        setPage("camera");
+
+    },[])
 
     let history = useHistory();
     { !userID && 

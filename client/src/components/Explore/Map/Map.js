@@ -44,15 +44,12 @@ function thisMap(from) {
 
     // get center position for map.
     let position;   // used to center map.
-    if (currentCapture && firstMapLoad) {
+    if (currentCapture) {
         setCaptureArray(currentCapture.data);
         position= { lat: currentCapture.data.capture.location.lat , lng: currentCapture.data.capture.location.lng }
     } else {
         position = { lat: myLocation.coords.latitude, lng: myLocation.coords.longitude }
     }
-
-    setFirstMapLoad(false);
-
 
 
     // filter data with search query
@@ -137,6 +134,8 @@ function thisMap(from) {
 
     // get array of captures for later rendering. (set map data loading now to false.)
     useEffect( async ()=> {
+        setFirstMapLoad(false);
+
         if (!currentCapture) {
             const data = await getCapturesForMap(position);
             // console.log("data received in Maps:" , data);

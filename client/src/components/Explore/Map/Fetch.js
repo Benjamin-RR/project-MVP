@@ -1,4 +1,4 @@
-
+// this component fetches all captures into one array.
 export const getCapturesForMap = async (position) => {
     
     let users;

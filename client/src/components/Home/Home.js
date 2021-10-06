@@ -31,23 +31,20 @@ const Home = () => {
     const [friendArray, setFriendArray] = useState(JSON.parse(localStorage.getItem("friends") ));
     const [feed, setFeed] = useState(null);
     const [homeLoading, setHomeLoading] = useState(true);
-
-    if (page !== "home") {
-        setPage("home");
-        // window.location.reload();
-    }
     
     // Load images and animal data into their arrays, set page to loaded so we can render everything below. (gets called once).
     useEffect( async ()=> {
+        setPage("home");
         // console.log("IN HOME:" , friendArray);
-        const results = await LoadCapture(friendArray)
+        // const results = await LoadCapture(friendArray)
         // LoadCapture(friendArray)
         // .then((data) => {
         //     setFeed(data);
         //     setHomeLoading(false);
         // })
-        setFeed(results)
+        // await setFeed(results)
         // setHomeLoading(false);
+        await setFeed( await LoadCapture(friendArray))
     }, [])
 
     if (feed && homeLoading) {

@@ -46,7 +46,8 @@ const SingleCapture = (data, disableAvatar, disableMap) => {
                         ):(
                             <Avatar
                                 onClick={() => {
-                                    localStorage.setItem("CaptureInfo", JSON.stringify(data) )
+                                    // localStorage.setItem("CaptureInfo", JSON.stringify(data) )
+                                    setCurrentCapture(data);
                                 }}
                                 to="/Profile"
                             >
@@ -74,8 +75,10 @@ const SingleCapture = (data, disableAvatar, disableMap) => {
                 ):(
                     <ImageWrapper
                         onClick={() => {
-                            localStorage.setItem("CaptureInfo", JSON.stringify(data) )
+                            // localStorage.setItem("CaptureInfo", JSON.stringify(data) )
                             setCurrentCapture(data);
+                            // console.log("CaptureInfo:" , JSON.stringify(data))
+
                         }}
                         to="/Explore"
                     >

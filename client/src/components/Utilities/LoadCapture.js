@@ -7,7 +7,7 @@
 
 // each caputre (an object) are stored into an array. e.g. [ { //capture info }, {}, {} ]
 export const LoadCapture = async (arrayToLoad) => {
-    // console.log("array to load" , arrayToLoad, typeof arrayToLoad);
+    console.log("array to load" , arrayToLoad, typeof arrayToLoad);
     const friendArray = arrayToLoad;
     let feedArray = [];
     // const [feed, setFeed] = useState(null);
@@ -55,6 +55,18 @@ export const LoadCapture = async (arrayToLoad) => {
     } catch (error) {
         console.error("Error:" , error);
     }
+    const FinalArrayAnswer = feedArray.filter(onlyUniques)
+            function onlyUniques(capture){
+                console.log("checking in filter:" , capture);
+                return (
+                    <div></div>
+                )
+            }
+    // const finalArrayAnswer = feedArray.filter()
+    // feedArray.forEach((feed, index) => {
+    //     console.log("each feed:" , feed);
+    // })
+
     // console.log("feed array:" , feedArray);
     // console.log("feed array filtered:"  )
     return feedArray;
