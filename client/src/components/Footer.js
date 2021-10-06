@@ -7,7 +7,7 @@ import { useHistory } from 'react-router';
 import {GrYoutube} from 'react-icons/gr';
 import {GrInstagram} from 'react-icons/gr';
 import {GrFacebook} from 'react-icons/gr';
-import {GrLinkedin} from 'react-icons/gr'
+import {GrLinkedin} from 'react-icons/gr';
 import {GrGithub} from 'react-icons/gr';
 
 // for mobile
@@ -161,6 +161,7 @@ const Wrapper = styled.div`
     height: 150px;
     width: 100%;
     background: var(--color-Header-Footer);
+    background-image: var(--image-Header-Footer);
     border: 1px solid black;
 `
 
@@ -206,6 +207,8 @@ const CameraButtons = styled.div`
     justify-content: space-around;
     height: 50px;
     background: grey;
+    background: var(--color-Header-Footer);
+    background-image: var(--image-Header-Footer);
 `
 
 export default Footer;

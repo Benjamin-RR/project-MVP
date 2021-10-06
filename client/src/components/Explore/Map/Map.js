@@ -31,9 +31,11 @@ function thisMap(from) {
         // mapDataLoading, 
         // setMapDataLoading,
         firstMapLoad, 
-        setFirstMapLoad
+        setFirstMapLoad,
+        comingFrom,
+        setComingFrom
     } = useContext(CaptureContext);
-    const libraries = ["places"];
+    // const libraries = ["places"];
     const [mapDataLoading, setMapDataLoading] = useState(true);
     const [selectedMarker, setSelectedMarker] = useState(null);
     const [AllCaptureArray, setAllCaptureArray] = useState(null);
@@ -41,10 +43,9 @@ function thisMap(from) {
     const [refreshMap, setRefreshMap] = useState(true);
 
 
-
     // get center position for map.
     let position;   // used to center map.
-    if (currentCapture) {
+    if (comingFrom === 'singleCapture') {
         setCaptureArray(currentCapture.data);
         position= { lat: currentCapture.data.capture.location.lat , lng: currentCapture.data.capture.location.lng }
     } else {
@@ -151,7 +152,7 @@ function thisMap(from) {
     const Time = moment().calendar()
     let mapStyle;
     if (dynamicMapStyle) {
-        if ( Time.includes("P") && ((Time.split(":")[0]).split(" ")[2] < 6) || Time.includes("P") && ((Time.split(":")[0]).split(" ")[2] == 12) || Time.includes("A") && ((Time.split(":")[0]).split(" ")[2] > 6) || Time.includes("A") && ((Time.split(":")[0]).split(" ")[2] == 12)) {
+        if ( Time.includes("P") && ((Time.split(":")[0]).split(" ")[2] < 6) || Time.includes("P") && ((Time.split(":")[0]).split(" ")[2] == 12) || Time.includes("A") && ((Time.split(":")[0]).split(" ")[2] > 6) && ((Time.split(":")[0]).split(" ")[2] != 12)) {
             mapStyle = Day;
         } else {
             mapStyle = Midnight;
@@ -162,6 +163,7 @@ function thisMap(from) {
     } else {
         mapStyle = Day;
     }
+    // Time.includes("A") && ((Time.split(":")[0]).split(" ")[2] == 12))
 
 
     // function gets marker image by value passed to it which is the verifed value from any Capture obj.

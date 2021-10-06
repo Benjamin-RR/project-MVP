@@ -35,7 +35,7 @@ const Wrapper = styled.div`
     align-items: center;
     height: var(--defaultHeight);
     width: 100%;
-    border: 1px solid brown;
+    border: 1px solid black;
     padding: 10px;
 `
 

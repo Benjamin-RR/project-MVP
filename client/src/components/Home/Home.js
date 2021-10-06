@@ -7,6 +7,8 @@ import SingleCapture from '../Common/SingleCapture';
 import {LoadCapture} from '../Utilities/LoadCapture';
 import {Link} from 'react-router-dom';
 import YourFriends from './FriendList';
+import Button from '../Common/Button';
+import Rate from '../Features/Rate';
 
 
 const Home = () => {
@@ -36,15 +38,16 @@ const Home = () => {
     useEffect( async ()=> {
         setPage("home");
         // console.log("IN HOME:" , friendArray);
-        // const results = await LoadCapture(friendArray)
+        const results = await LoadCapture(friendArray)
+        console.log("results received:" , results);
         // LoadCapture(friendArray)
         // .then((data) => {
         //     setFeed(data);
         //     setHomeLoading(false);
         // })
-        // await setFeed(results)
+        await setFeed(results)
         // setHomeLoading(false);
-        await setFeed( await LoadCapture(friendArray))
+        // await setFeed( await LoadCapture(friendArray))
     }, [])
 
     if (feed && homeLoading) {
@@ -58,7 +61,9 @@ const Home = () => {
     
     return (
         <Wrapper>
-            <div>Captures</div>
+            <div 
+                style={{ margin: "10px"}}
+            ></div>
             {(feed && !homeLoading) ? (feed.map((data, index) => {
                 return(
                     <CaptureContent
@@ -70,15 +75,17 @@ const Home = () => {
                             />
                         </Card>
                         { data.author !== (localStorage.getItem("uniqueName")) ? (
-                            <Rate
-                                // onClick={() => {
-                                //     localStorage.setItem("CaptureInfo", JSON.stringify(data) )
-                                // }}
-                                onClick={() => {
-                                    setCurrentCapture(data)
-                                }}
-                                to="/Rate"
-                            >Rate</Rate>
+                            // <Button 
+                            //     name="Rate"
+                            //     data={data}
+                            // />
+                            // <Rate
+                            //     onClick={() => {
+                            //         setCurrentCapture(data)
+                            //     }}
+                            //     to="/Rate"
+                            // >Rate</Rate>
+                            <div></div>
                         ) : (
                             <div style={{ marginBottom: "50px"}} ></div>
                         )}
@@ -123,31 +130,34 @@ const Card = styled.div`
     align-items: center;
     /* height: 400px; */
     width: 320px;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     /* padding: 5px; */
     margin: 5px;
     /* background: green; */
 `
 
-const Rate = styled(Link)`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 5px;
-    margin-bottom: 50px;
-    margin-left: auto;
-    margin-right: 20px;
-    width: 100px;
-    border-radius: 7px;
-    border: 1px solid black;
-    cursor: pointer;
-    text-decoration: none;
-    &:hover{
-        transform: scale(125%) ease-in-out 1000ms;
-    }
-    &:active{
-        transform: scale(95%);
-    }
-`
+// const Rate = styled(Link)`
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     padding: 5px;
+//     margin-bottom: 50px;
+//     margin-left: auto;
+//     margin-right: 20px;
+//     width: 100px;
+//     border-radius: 7px;
+//     border: 1px solid white;
+//     color: white;
+//     cursor: pointer;
+//     text-decoration: none;
+//     &:hover{
+//         background: white;
+//         color: black;
+//         transform: scale(125%) ease-in-out 1000ms;
+//     }
+//     &:active{
+//         transform: scale(95%);
+//     }
+// `
 
 export default Home;

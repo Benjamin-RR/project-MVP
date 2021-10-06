@@ -47,9 +47,6 @@ const App = () => {
                     <Route exact path="/Rate">
                         <Rate />
                     </Route>
-                    {/* <Route exact path="/Register">
-                        <Register />
-                    </Route> */}
                     <Route exact path="/DM">
                         <DM />
                     </Route>
@@ -110,6 +107,8 @@ const Main = styled.div`
     /* display: flex;
     height: 100vh;
     width: 100vw; */
+    background-color: var(--background-color-default);
+    background-image: var(--background-image-default);
 `
 
 export default App;

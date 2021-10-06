@@ -1,35 +1,28 @@
 // This function will return a color for each data of an individual card that it receives. (using true, verified, and calculation values.)
 export const CardStyles = (data) => {
-    // console.log("Data inside card styles:" , data)
-    let color = `green`;
-
-    // console.log("extra check:", data.capture.true, typeof data.capture.true);
-
+    let color = `rgba(0,128,0,1)`;
     const percent = Math.floor(((Number(data.capture.true)-(Number(data.capture.false)))*100)/(Number(data.capture.true)))
 
-    // console.log("Percent:" , percent);
-
     if (data.capture.verified ) {
-        color = "royalblue"
+        color = "rgba(65,105,225,1)"
         if (data.capture.true > 99) {
             if (percent >= 40) {
-                color="Sienna"
+                color="rgba(160,82,45,1)"
             }
             if (percent >= 60) {
-                color="Silver"
+                color="rgba(192,192,192,1)"
             }
             if (percent >= 80) {
-                color="GoldenRod"
+                color="rgba(218,165,32,1)"
             }
         }
         if (data.capture.true > 999) {
-            color="LightSkyBlue"
+            color="rgba(135,206,250,1)"
         }
     } else {
         if (data.capture.false > 6) {
-            color=`Brown`
+            color='rgba(165,42,42,1)'
         }
     }
-    // console.log("each color:" , color)
     return color;
 };

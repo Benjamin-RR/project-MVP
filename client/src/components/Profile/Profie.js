@@ -27,39 +27,26 @@ const Profile = () => {
         currentCapture,
         setCurrentCapture
     } = useContext(CaptureContext);
-
-    useEffect(() => {
-        setPage("profile");
-
-    },[])
+    const [captureFeed, setCaptureFeed] = useState(null);
+    const [userInfoFeed, setUserInfoFeed] = useState(null);
+    const data = currentCapture;
 
     let history = useHistory();
     { !userID && 
         history.push("/Login")
     }
-    // const data = currentCapture;
-    // const data = (JSON.parse(localStorage.getItem("CaptureInfo")).data );
-    const data = currentCapture;
-    const [feed, setFeed] = useState(null);
-    const [captureFeed, setCaptureFeed] = useState(null);
-    const [userInfoFeed, setUserInfoFeed] = useState(null);
-
 
     useEffect( async ()=> {
+        setPage("profile");
+
         // for rendering this profile's captures.
         const thisProfileCaptures = await LoadCapture([data.data.author])
-        // console.log("RESULT CAPTURES:" , thisProfileCaptures);
         setCaptureFeed(thisProfileCaptures)
         // for getting all stats/achievements of this profile
         const thisProfileInfo = await LoadUsers([data.data.author])
 
-        // console.log("NEW:" , thisProfileInfo);
-        // thisProfileCaptures.forEach(()=> {
-        //     console.log("test")
-        // })
-
         console.log("RESULT USER INFO:" , thisProfileInfo);
-        setUserInfoFeed(thisProfileInfo)
+        await setUserInfoFeed(thisProfileInfo)
     }, [])
 
     // console.log("FOR STATISTICS:" , userInfoFeed )
@@ -137,7 +124,7 @@ const Profile = () => {
 const Wrapper = styled.div`
     /* padding: 10px; */
     display: flex;
-    justify-content: space-around;
+    /* justify-content: space-around; */
     align-items: center;
     /* height: var(--defaultHeight); */
     width: 100%;

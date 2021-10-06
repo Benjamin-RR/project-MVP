@@ -317,7 +317,7 @@ const Wrapper = styled.div`
     /* height: var(--defaultHeight); */
     width: 100%;
     border: 1px solid black;
-    offset-position: -200px;
+    /* offset-position: -200px; */    
 `
 
 const Text = styled.div`
@@ -326,10 +326,12 @@ const Text = styled.div`
     align-items: center;
     font-size: 1.4em;
     font-weight: 900;
-    width: 300px;
+    width: 354px;
     height: 50px;
     font-weight: center;
     border: 1px solid black;
+    background: goldenrod;
+    color: white;
 `
 
 const ContentWrapper = styled.div`
@@ -341,6 +343,9 @@ const ContentWrapper = styled.div`
     /* height: 400px; */
     /* width: 100%; */
     border: 1px solid black;
+    background: grey;
+    background-color: var(--background-color-alternative);
+    background-image: var(--background-image-alternative);
 `
 
 const Top = styled.div`
@@ -352,7 +357,7 @@ const Button = styled.button`
     width: 100%;
     cursor: pointer;
     &:hover{
-        color: blue;
+        color: goldenrod;
         /* transform: scale(105%); */
         transform: rotate(1.009turn) scale(120%);
     }

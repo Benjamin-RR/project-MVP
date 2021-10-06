@@ -32,6 +32,8 @@ const Header = () => {
         // setUniqueName,
         currentCapture,
         setCurrentCapture,
+        comingFrom, 
+        setComingFrom
     } = useContext(CaptureContext);
     const [userColor, setUserColor] = useState(localStorage.getItem("userColor"));
     const [uniqueName, setUniqueName] = useState(localStorage.getItem("uniqueName"));
@@ -87,7 +89,10 @@ const Header = () => {
             <TitleWrapper
                 to="/"
             >
-                <h1>Go Capture</h1>
+                <img 
+                    src='/Title.png'
+                    style={{ height: "50px" , width: "250px"}}
+                />
             </TitleWrapper>
 
             { userID ? (
@@ -121,6 +126,7 @@ const Header = () => {
                         <Icon 
                             onClick={() => {
                                 setCurrentCapture(null);
+                                setComingFrom('header');
                             }}
                             to="/Explore"
                         >
@@ -186,6 +192,7 @@ const Wrapper = styled.div`
     height: 150px;
     width: 100%;
     background: var(--color-Header-Footer);
+    background-image: var(--image-Header-Footer);
     border: 1px solid black;
 `
 

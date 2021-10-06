@@ -31,10 +31,7 @@ const Settings = () => {
 
     useEffect(() => {
         setPage("settings");
-
     },[])
-
-    // console.log("BADGE:", badgeSetting, "MAP:" , dynamicMapStyle, "PROFILE:", dynamicBanner, "OTHERS:", statsOnRatingOthers);
 
     return(
         <Wrapper>

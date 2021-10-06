@@ -4,9 +4,7 @@ import styled from 'styled-components';
 import {Link} from 'react-router-dom';
 import {Image} from 'cloudinary-react';
 import DefaultAvatar from './DefaultAvatar';
-// import Badge from '/verified.png'
 import { CardStyles } from './CardStyles/CardStyles';
-
 
 const SingleCapture = (data, disableAvatar, disableMap) => {
     const {
@@ -19,6 +17,8 @@ const SingleCapture = (data, disableAvatar, disableMap) => {
         setCurrentCapture,
         badgeSetting, 
         setBadgeSetting,
+        comingFrom,
+        setComingFrom
     } = useContext(CaptureContext);
 
     // console.log("single capture data:" , data, disableAvatar, disableMap)
@@ -28,87 +28,85 @@ const SingleCapture = (data, disableAvatar, disableMap) => {
     // CardStyles(data.data);
 
     return(
-        <Wrapper2
-            style={{ background: `${CardStyles(data.data)}` , filter: "brightness(2.0)"}}
-        >
-            <Wrapper
-                style={{ background: `${CardStyles(data.data)}` , filter: "brightness(0.5)"}}
+            <Wrapper2
+                style={{ background: `${CardStyles(data.data)}` , filter: "brightness(2.0)"}}
             >
-                <Top>
-                    <AvatarAndAuthor>
-                        {disableAvatar === true ? (
-                            <DisabledAvatar>
-                                <DefaultAvatar 
-                                    name={data.data.author}
-                                    color={data.data.userColor}
-                                />
-                            </DisabledAvatar>
-                        ):(
-                            <Avatar
-                                onClick={() => {
-                                    // localStorage.setItem("CaptureInfo", JSON.stringify(data) )
-                                    setCurrentCapture(data);
-                                }}
-                                to="/Profile"
-                            >
-                                <DefaultAvatar 
-                                    name={data.data.author}
-                                    color={data.data.userColor}
-                                />
-                            </Avatar>
-                        )}
-                        <Author>{data.data.author}</Author>
-                    </AvatarAndAuthor>
-                    
-                    <Animal>{data.data.capture.animalName}</Animal>
-                </Top>
-                {disableMap === true ? (
-                    <DisabledImageWrapper>
-                        <Image
-                            alt="img"
-                            cloudName="capturecapture"
-                            publicId={data.data.public_id}
-                            width="300"
-                            crop="scale"
+                <Wrapper
+                    style={{ background: `${CardStyles(data.data)}` , filter: "brightness(0.5)"}}
+                >
+                    <Top>
+                        <AvatarAndAuthor>
+                            {disableAvatar === true ? (
+                                <DisabledAvatar>
+                                    <DefaultAvatar
+                                        name={data.data.author}
+                                        color={data.data.userColor}
+                                    />
+                                </DisabledAvatar>
+                            ):(
+                                <Avatar
+                                    onClick={() => {
+                                        setCurrentCapture(data);
+                                    }}
+                                    to="/Profile"
+                                >
+                                    <DefaultAvatar 
+                                        name={data.data.author}
+                                        color={data.data.userColor}
+                                    />
+                                </Avatar>
+                            )}
+                            <Author>{data.data.author}</Author>
+                        </AvatarAndAuthor>
+                        
+                        <Animal>{data.data.capture.animalName}</Animal>
+                    </Top>
+                    {disableMap === true ? (
+                        <DisabledImageWrapper>
+                            <Image
+                                alt="img"
+                                cloudName="capturecapture"
+                                publicId={data.data.public_id}
+                                width="300"
+                                crop="scale"
+                            />
+                        </DisabledImageWrapper>
+                    ):(
+                        <ImageWrapper
+                            onClick={() => {
+                                setCurrentCapture(data);
+                                setComingFrom('singleCapture');
+                            }}
+                            to="/Explore"
+                        >
+                            <Image
+                                alt="img"
+                                cloudName="capturecapture"
+                                publicId={data.data.public_id}
+                                width="300"
+                                crop="scale"
+                                // style={{ display: "flex" , justifyContent: "center", alignItems: "center"}}
+                            />
+                        </ImageWrapper>
+                    )}
+                    {(data.data.capture.verified && badgeSetting ) && (
+                        <Badge 
+                            src={badge}
                         />
-                    </DisabledImageWrapper>
-                ):(
-                    <ImageWrapper
-                        onClick={() => {
-                            // localStorage.setItem("CaptureInfo", JSON.stringify(data) )
-                            setCurrentCapture(data);
-                            // console.log("CaptureInfo:" , JSON.stringify(data))
-
-                        }}
-                        to="/Explore"
-                    >
-                        <Image
-                            alt="img"
-                            cloudName="capturecapture"
-                            publicId={data.data.public_id}
-                            width="300"
-                            crop="scale"
-                            // style={{ display: "flex" , justifyContent: "center", alignItems: "center"}}
-                        />
-                    </ImageWrapper>
-                )}
-                {(data.data.capture.verified && badgeSetting ) && (
-                    <Badge 
-                        src={badge}
-                    />
-                )}
-                <Bottom>
-                    <Details>
-                        <TimeStamp>{data.data.timeStamp}</TimeStamp>
-                        {data.data.capture.documentation && (
-                            <Text
-                                style={{ background: `${CardStyles(data.data)}` , filter: "brightness(2.0)"}}
-                            >{data.data.capture.documentation}</Text>
-                        )}
-                    </Details>
-                </Bottom>
-            </Wrapper>
-        </Wrapper2>
+                    )}
+                    <Bottom>
+                        <Details>
+                            <TimeStamp>{data.data.timeStamp}</TimeStamp>
+                            {data.data.capture.documentation && (
+                                <Text
+                                    style={{ background: `${CardStyles(data.data)}`  }}
+                                    // background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 10%, rgba(0,212,255,1) 100%);}}
+                                >{data.data.capture.documentation}</Text>
+                            )}
+                        </Details>
+                    </Bottom>
+                </Wrapper>
+            </Wrapper2>
     )
 }
 
@@ -120,16 +118,22 @@ const Wrapper = styled.div`
     /* align-items: center; */
     /* height: var(--defaultHeight); */
     width: 100%;
-    background: green;
+    /* background: green; */
+    background-color: var(--background-color-card);
+    background-image: var(--background-image-card);
     border: 2px solid black;
     position: relative;
 `
 
 const Wrapper2 = styled.div`
-    background: lightgreen;
+    margin-top: 30px;
+    /* background: lightgreen; */
+    background-color: var(--background-color-card);
+    background-image: var(--background-image-card);
     height: 100%;
     width: 100%;
     padding: 7px;
+    box-shadow: 20px -11px 23px 5px rgba(0,0,0,0.7);
 `
 
 const Top = styled.div`
@@ -241,6 +245,7 @@ const Text = styled.div`
     width: 100%;
     height: 100px;
     background: lightgreen; 
+    filter: brightness(2.0);
 `
 
 export default SingleCapture

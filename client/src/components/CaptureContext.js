@@ -17,6 +17,7 @@ export const CaptureProvider = ({ children }) => {
     // const [mapDataLoading, setMapDataLoading] = useState(true);
     const [firstMapLoad, setFirstMapLoad] = useState(true);
     // const [mapPosition, setMapPosition] = useState()
+    const [comingFrom, setComingFrom] = useState(null)
 
     // settings
     const [settingsClick, setSettingsClick] = useState(false);
@@ -93,7 +94,9 @@ export const CaptureProvider = ({ children }) => {
             // mapDataLoading, 
             // setMapDataLoading,
             firstMapLoad,
-            setFirstMapLoad
+            setFirstMapLoad,
+            comingFrom,
+            setComingFrom
         }}>
             {children}
         </CaptureContext.Provider>

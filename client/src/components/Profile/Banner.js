@@ -23,7 +23,7 @@ const Banner = ({data}) => {
     } = useContext(CaptureContext);
     // const [selected, setSelected] = useState("Statistics")
 
-    // console.log("from banner:" , data);
+    console.log("from banner:" , data);
 
     return (
         <>

@@ -1,3 +1,5 @@
+import React, {useState} from 'react'
+
 // LOAD CAPTURES
 
 // Uses an array of uniqueNames to fetch each uniqueName's Captures. Range: (1 - infinite)
@@ -7,12 +9,13 @@
 
 // each caputre (an object) are stored into an array. e.g. [ { //capture info }, {}, {} ]
 export const LoadCapture = async (arrayToLoad) => {
-    console.log("array to load" , arrayToLoad, typeof arrayToLoad);
+    // const [thisAnswer, setThisAnswer] = useState(null);
+    // console.log("array to load" , arrayToLoad, typeof arrayToLoad);
     const friendArray = arrayToLoad;
     let feedArray = [];
-    // const [feed, setFeed] = useState(null);
     let animalDataArray = [];
-
+    // const [feed, setFeed] = useState(null);
+    
     // console.log("received:" , arrayToLoad);
     try{
         // get each user data (includes animal captures) and put into a new array.
@@ -55,13 +58,18 @@ export const LoadCapture = async (arrayToLoad) => {
     } catch (error) {
         console.error("Error:" , error);
     }
-    const FinalArrayAnswer = feedArray.filter(onlyUniques)
-            function onlyUniques(capture){
-                console.log("checking in filter:" , capture);
-                return (
-                    <div></div>
-                )
-            }
+
+    // const FinalArrayAnswer = feedArray.filter((capture, index) => feedArray.indexOf(capture) !== index);
+
+    const FinalArrayAnswer = [ ...new Set(feedArray)];
+    
+    // const FinalArrayAnswer = feedArray.filter(onlyUniques)
+    // function onlyUniques(capture, index){
+    //     return (
+            
+    //     }
+        
+        // console.log("TEST:" , FinalArrayAnswer);
     // const finalArrayAnswer = feedArray.filter()
     // feedArray.forEach((feed, index) => {
     //     console.log("each feed:" , feed);

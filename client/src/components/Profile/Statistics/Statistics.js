@@ -154,13 +154,16 @@ const Wrapper = styled.div`
     align-items: center;
     /* height: 100%; */
     width: 100%;
-    border: 1px solid black;
+    /* border: 1px solid black; */
+    background: rgb(9,9,121);
+    background: linear-gradient(90deg, rgba(9,9,121,0.2046568627450981) 0%, rgba(73,113,162,0.2046568627450981) 20%, rgba(73,113,162,0.14583333333333337) 50%, rgba(73,113,162,0.1962535014005602) 80%, rgba(57,64,142,0.1962535014005602) 100%);
 `
 
 const Title = styled.div`
     font-size: 2em;
     font-weight: 900;
     padding-bottom: 10px;
+    color: white;
 `
 
 const Section = styled.div`
@@ -168,12 +171,15 @@ const Section = styled.div`
     margin: 20px;
     padding: 5px;
     width: 100%;
+    background-color: var(--background-color-alternative);
+    background-image: var(--background-image-alternative);
 `
 
 const SubTitle = styled.div`
     font-size: 1.2em;
     font-weight: 900;
     margin-bottom: 5px;
+    color: white;
 `
 
 const Content = styled.div`

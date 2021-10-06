@@ -241,6 +241,8 @@ const FormAndButtonWrap = styled.div`
 const FormWrapper = styled.div`
     padding: 10px;
     border: 1px solid black;
+    background-color: var(--background-color-alternative);
+    background-image: var(--background-image-alternative);
 `
 
 const Top = styled.div`
@@ -252,7 +254,7 @@ const Top = styled.div`
 
 const Text = styled.div`
     font-size:2em;
-    color: green;
+    color: white;
     font-weight: 900;
 `
 
@@ -287,14 +289,14 @@ const ButtonWrap = styled.div`
 const Button = styled.button`
     margin: 5px;
     height: 40px;
-    background: darkgreen;
+    background: rgb(36, 65, 109);
     color: white;
     border: 1px solid black;
     border-radius: 5px;
     font-size: 1.5em;
     cursor: pointer;
     &:hover{
-        background: green;
+        background: rgb(16, 40, 80);
     }
     &:active{
         transform: scale(95%);
