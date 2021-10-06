@@ -45,6 +45,7 @@ function thisMap(from) {
     const [AllCaptureArray, setAllCaptureArray] = useState(null);
     // const [captureArray, setCaptureArray] = useState(null);
     const [refreshMap, setRefreshMap] = useState(true);
+    const allMarkers = [];
 
     let history = useHistory();
 
@@ -63,6 +64,9 @@ function thisMap(from) {
 
     // filter data with search query
     const filterDataWithSearchQuery = () => {
+        
+
+
         let finalAnswer = [];
         console.log("captureArray received to FILTER:" , AllCaptureArray);
         console.log("searchQuery received to FILTER:" , searchQuery);
@@ -71,6 +75,10 @@ function thisMap(from) {
         if (!AllCaptureArray) {
             return;
         }
+
+        // AllCaptureArray.forEach(capture => {
+        //     capture.setMap(null);
+        // })
         
         // searchQuery {certified: false, unCertified: false, animal: null, user: null}
         if (searchQuery.certified) {
@@ -127,6 +135,7 @@ function thisMap(from) {
         setCaptureArray(finalAnswer);
         // setPage('explore');
         // return answer;
+        // Marker = null;
         setMapDataLoading(false);
     }
     
@@ -137,10 +146,10 @@ function thisMap(from) {
         console.log("SEARCH QUERY:" , searchQuery);
             // console.log("are we beginning the filters?");
             // console.log("checking here");
-            if (captureArray) {
+            // if (captureArray) {
                 filterDataWithSearchQuery();
-                setMapDataLoading(false);
-            }
+                // setMapDataLoading(false);
+            // }
     },[searchQuery]);
     // {certified: false, unCertified: false, animal: null, user: null}
 
@@ -160,7 +169,7 @@ function thisMap(from) {
             // filterDataWithSearchQuery();
             const data = await getCapturesForMap(position)
             .then( async (data) => {
-                console.log("data here:" , data);
+                console.log("data fetch:" , data);
                 // await setCaptureArray(data)      // changes with filter
                 await setAllCaptureArray(data)   // never changes
             })
@@ -224,6 +233,7 @@ function thisMap(from) {
 
     console.log("DATA THAT WILL RENDER ON MAP:" , captureArray);
     // console.log("pins need refresh?:" , refreshPins);
+    console.log("MARKER IS:" , Marker);
     return(
         <>
             <GoogleMap
@@ -240,7 +250,7 @@ function thisMap(from) {
                         { captureArray.map((each, indx) => {
                             return(
                                 <Marker 
-                                    key={indx}
+                                    key={Math.random()*99999999}
                                     position={{ lat: each.capture.location.lat, lng: each.capture.location.lng }}
                                     icon={{
                                         url: `${getMarker(each.capture.verified)}`,
@@ -309,6 +319,10 @@ export default function Map() {
         mapRefresh,
         setMapRefresh
     } = useContext(CaptureContext);
+
+    // useEffect(() => {
+    //     setMap(null)
+    // },[mapDataLoading])
     
     // console.log("map refresh: " , mapRefresh);
     // if (mapRefresh) {

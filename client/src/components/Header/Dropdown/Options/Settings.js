@@ -1,5 +1,5 @@
-import React, {useContext, useEffect} from 'react'
-import { CaptureContext } from '../../../CaptureContext'
+import React, {useContext, useEffect} from 'react';
+import { CaptureContext } from '../../../CaptureContext';
 import styled from 'styled-components';
 // icons
 import {BsToggleOn} from 'react-icons/bs';
@@ -167,7 +167,7 @@ const SettingsContent = styled.div`
     align-items: center;
     height: 400px;
     width: 100%;
-    border: 1px solid black;
+    /* border: 1px solid white; */
 `
 
 const Title = styled.div`
@@ -175,6 +175,8 @@ const Title = styled.div`
     justify-content: center;
     font-weight: 900;
     font-size: 1.5em;
+    padding-top: 10px;
+    color: white;
 `
 
 const SideBySide = styled.div`
@@ -200,7 +202,8 @@ const SubTitle = styled.div`
     margin-top: 20px;
     padding: 5px;
     width: 70%;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid white;
+    color: white;
 `
 
 const Text = styled.div`
@@ -210,6 +213,7 @@ const Text = styled.div`
     padding: 5px;
     height: 60px;
     font-weight: 600;
+    color: white;
     /* border-top: 1px solid black; */
     /* border-bottom: 1px solid black; */
     /* border: 1px solid black; */
@@ -219,6 +223,7 @@ const SubText = styled.div`
     margin-top: 5px;
     font-weight: 300;
     font-size: .8em;
+    color: white;
     /* border: 1px solid black; */
 `
 

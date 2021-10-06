@@ -93,6 +93,7 @@ const Wrapper = styled.div`
     justify-content: space-around;
     align-items: center;
     /* height: var(--defaultHeight); */
+    min-height: var(--defaultHeight);
     width: 100%;
     border: 1px solid black;
 `

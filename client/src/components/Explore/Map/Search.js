@@ -155,6 +155,9 @@ const Search = () => {
                                 startTimer();
                             }}
                         />
+                        {/* <div
+                            type="submit"
+                        >submit</div> */}
 
                 </SearchContent>
             )}

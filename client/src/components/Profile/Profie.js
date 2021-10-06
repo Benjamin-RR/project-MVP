@@ -45,12 +45,9 @@ const Profile = () => {
         // for getting all stats/achievements of this profile
         const thisProfileInfo = await LoadUsers([data.data.author])
 
-        console.log("RESULT USER INFO:" , thisProfileInfo);
+        // console.log("RESULT USER INFO:" , thisProfileInfo);
         await setUserInfoFeed(thisProfileInfo)
     }, [])
-
-    // console.log("FOR STATISTICS:" , userInfoFeed )
-    console.log("check states:", captureFeed, userInfoFeed);
 
     return (
         <>
@@ -122,11 +119,8 @@ const Profile = () => {
 }
 
 const Wrapper = styled.div`
-    /* padding: 10px; */
     display: flex;
-    /* justify-content: space-around; */
     align-items: center;
-    /* height: var(--defaultHeight); */
     width: 100%;
     border: 1px solid black;
 `
@@ -141,6 +135,5 @@ const LeftToRight = styled.div`
     display: flex;
     flex-direction: row;
 `
-
 
 export default Profile;
