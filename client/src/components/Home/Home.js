@@ -10,21 +10,10 @@ import YourFriends from './FriendList';
 import Button from '../Common/Button';
 import Rate from '../Features/Rate';
 
-
 const Home = () => {
     const {
-        page,
         setPage,
         userID,
-        // friendArray, 
-        // setFriendArray,
-        currentCapture,
-        setCurrentCapture,
-        appLoaded, 
-        setAppLoaded,
-        homeHasLoaded, 
-        setHomeHasLoaded,
-        setDropdown
     } = useContext(CaptureContext);
     let history = useHistory();
     { !userID && 

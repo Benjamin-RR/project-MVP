@@ -1,3 +1,4 @@
+// Day time style for google map
 export default [
     {
         "featureType": "all",

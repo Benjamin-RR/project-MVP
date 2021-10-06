@@ -9,17 +9,8 @@ import {AiOutlineCloseSquare} from 'react-icons/ai'
 
 const Friends = () => {
     const {
-        page,
         setPage,
-        dropdown,
-        setDropdown,
         userID,
-        setUserID,
-        mediaQ,
-        setMediaQ,
-        uniqueName,
-        setUniqueName,
-        friendClick, 
         setFriendClick
     } = useContext(CaptureContext);
     
@@ -33,9 +24,6 @@ const Friends = () => {
         history.push("/Login")
     }
 
-    const closeFriends = () => {
-        setFriendClick(false)
-    }
 
     return(
         <Wrapper>
@@ -110,10 +98,6 @@ const Form = styled.form`
 `
 
 const Input = styled.input`
-
-`
-
-const AddFriend = styled.div`
 
 `
 

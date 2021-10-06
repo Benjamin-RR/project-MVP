@@ -54,7 +54,6 @@ const Upload = () => {
         uploadImage(previewSource);
     }
 
-
     // this will upload the choosen file to cloudinary.
     const uploadImage = async (base64EncodedImage) => {
         await fetch('/image/uploadCapture', {

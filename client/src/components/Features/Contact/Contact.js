@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 const Contact = () => {
     const {
-        page,
         setPage
     } = useContext(CaptureContext);
     
@@ -14,7 +13,9 @@ const Contact = () => {
     },[])
     return (
         <Wrapper>
-            <div>Contact</div>
+            <div
+                style={{ color: "white"}}
+            >If you are interested in contacting the developer of this MVP. You may find him on Linkedin <a href="https://www.linkedin.com/in/benjaminrobertrussell/" target="_blank" >here</a>.</div>
         </Wrapper>
     )
 }

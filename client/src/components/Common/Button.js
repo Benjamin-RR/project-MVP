@@ -3,6 +3,7 @@ import { CaptureContext } from '../CaptureContext';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
+// This is for Rate buttons throughout the app.
 const Button = ({name, data}) => {
     const {
         setCurrentCapture,

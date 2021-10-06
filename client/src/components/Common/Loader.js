@@ -1,4 +1,4 @@
-// notice, this take dependency : @material-ui/core
+// Loader for components that have fetches ect.
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Loader from '@material-ui/core/CircularProgress';

@@ -9,25 +9,12 @@ import {RiCheckboxCircleFill} from 'react-icons/ri';
 
 const Search = () => {
     const {
-        page,
-        setPage,
-        userID,
-        myLocation,
-        setMyLocation,
-        dynamicMapStyle,
-        setDynamicMapStyle,
-        currentCapture, 
-        setCurrentCapture,
         searchSize, 
         setSearchSize,
         searchQuery,
         setSearchQuery,
-        mapDataLoading, 
         setMapDataLoading,
-        captureArray, 
         setCaptureArray,
-        // refreshPins, 
-        // setRefreshPins,
     } = useContext(CaptureContext);
     const [searchActive, setSearchActive] = useState(false);                // for clicking on search icon.
     const [animalSearch, setAnimalSearch] = useState(searchQuery.animal);   // query of animal name being searched.
@@ -64,7 +51,6 @@ const Search = () => {
     const setMapToReload = () => {
         setMapDataLoading(true);
         setCaptureArray(null); 
-        // setRefreshPins(true);
     }
 
 
@@ -155,13 +141,9 @@ const Search = () => {
                                 startTimer();
                             }}
                         />
-                        {/* <div
-                            type="submit"
-                        >submit</div> */}
 
                 </SearchContent>
             )}
-
         </Wrapper>
     )
 }
@@ -169,7 +151,6 @@ const Search = () => {
 const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
-    /* align-items: center; */
     height: 100%;
     width: 100%;
     z-index: 20;
@@ -187,12 +168,10 @@ const SideToSide = styled.div`
 const SearchTitle = styled.div`
     display: flex;
     align-items: center;
-    /* width: 100%; */
     font-weight: 900;
     font-size: 1.2em;
     padding: 5px;
     border-bottom: 1px solid grey;
-    /* border: 1px solid black; */
 `
 
 const Icon = styled.div`
@@ -201,35 +180,24 @@ const Icon = styled.div`
     height: 35px;
     width: 35px;
     
-    /* border: 1px solid black; */
 `
 
 const SearchContent = styled.div`
-    /* border: 1px solid black; */
     height: 100%;
     width: 100%;
     z-index: 21;
 `
-
-// const Column = styled.div`
-//     display: flex;
-//     flex-direction: column;
-//     padding: 5px 0px 5px 0px;
-//     border: 1px solid black;
-// `
 
 const Text = styled.div`
     display: flex;
     align-items: center;
     height: 30px;
     margin-left: 5px;
-    /* border: 1px solid black; */
 `
 
 const Input = styled.input`
     border: 1px solid black;
     width: 160px;
-    /* width: 100%; */
     height: 30px;
     font-size: 1em;
     margin: 2px 0px 2px 0px;

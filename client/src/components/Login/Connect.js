@@ -1,6 +1,3 @@
-// import React, {useContext} from 'react';
-// import { CaptureContext } from '../CaptureContext';
-
 // will connect and sign up or sign in depending on user's selection.
 const Connect = async({
     email,
@@ -8,10 +5,6 @@ const Connect = async({
     text,
     uniqueName,
     displayName,
-    userColor,
-    setUserColor,
-    friendArray, 
-    setFriendArray,
 }) => {
     let connectStatus = "good";
 
@@ -30,6 +23,7 @@ const Connect = async({
         }
         const newUserColor = Color();
 
+        // create new user on MongoDB.
         await fetch(`/user/new`, {
             method: "POST",
             headers: {
@@ -87,7 +81,7 @@ const Connect = async({
                 }
                 })
                 .catch((error) => {
-                    connectStatus = "Error while loggin in, please refresh your page and try again.";
+                    connectStatus = "Error while logging in, please refresh your page and try again.";
                 });
     }
     return connectStatus;

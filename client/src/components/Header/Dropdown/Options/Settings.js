@@ -7,18 +7,7 @@ import {BsToggleOff} from 'react-icons/bs';
 
 const Settings = () => {
     const {
-        page,
         setPage,
-        dropdown,
-        setDropdown,
-        userID,
-        setUserID,
-        mediaQ,
-        setMediaQ,
-        uniqueName,
-        setUniqueName,
-        friendClick, 
-        setFriendClick,
         badgeSetting, 
         setBadgeSetting,
         dynamicMapStyle,
@@ -163,11 +152,9 @@ const Wrapper = styled.div`
 const SettingsContent = styled.div`
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
     align-items: center;
     height: 400px;
     width: 100%;
-    /* border: 1px solid white; */
 `
 
 const Title = styled.div`
@@ -183,7 +170,6 @@ const SideBySide = styled.div`
     display: flex;
     flex-direction: row;
     margin: 0px 15px 0px 15px;
-    /* border: 1px solid black; */
 `
 
 const Column = styled.div`
@@ -191,7 +177,6 @@ const Column = styled.div`
     flex-direction: column;
     justify-content: space-around;
     padding: 10px;
-    /* border: 1px solid black; */
 `
 
 const SubTitle = styled.div`
@@ -214,9 +199,6 @@ const Text = styled.div`
     height: 60px;
     font-weight: 600;
     color: white;
-    /* border-top: 1px solid black; */
-    /* border-bottom: 1px solid black; */
-    /* border: 1px solid black; */
 `
 
 const SubText = styled.div`
@@ -224,7 +206,6 @@ const SubText = styled.div`
     font-weight: 300;
     font-size: .8em;
     color: white;
-    /* border: 1px solid black; */
 `
 
 const Switch = styled.div`
@@ -232,7 +213,6 @@ const Switch = styled.div`
     align-items: center;
     padding: 5px;
     height: 70px;
-    /* border: 1px solid black; */
     color: green;
 `
 

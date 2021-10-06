@@ -5,25 +5,7 @@ import { CaptureContext } from '../../../CaptureContext';
 // filter data with search query
 const SearchQuery = () => {
     const {
-        page,
-        setPage,
-        userID,
-        myLocation,
-        setMyLocation,
-        dynamicMapStyle,
-        setDynamicMapStyle,
-        currentCapture, 
-        setCurrentCapture,
-        searchSize, 
-        setSearchSize,
         searchQuery, 
-        setSearchQuery,
-        // mapDataLoading, 
-        // setMapDataLoading,
-        firstMapLoad, 
-        setFirstMapLoad,
-        comingFrom,
-        setComingFrom,
     } = useContext(CaptureContext);
 
     let finalAnswer = [];

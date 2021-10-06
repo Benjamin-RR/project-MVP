@@ -14,19 +14,14 @@ import {FaRegEyeSlash} from 'react-icons/fa';
 
 const Login = () => {
     const {
-        page,
         setPage,
         userID,
         setUserID,
         mediaQ,
-        setMediaQ,
-        // uniqueName, 
-        // setUniqueName
     } = useContext(CaptureContext);
     
     useEffect(() => {
         setPage("login");
-
     },[])
 
     let history = useHistory();
@@ -34,15 +29,14 @@ const Login = () => {
         history.push("/Home")
     }
 
+    // useStates for submission.
     const [uniqueName, setUniqueName] = useState("");
-
     const [text, setText] = useState("Sign in");
     const [text2, setText2] = useState("Register");
     const [submitText, setSubmitText] = useState(text);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [displayName, setDisplayName] = useState('');
-
     const [type, setType] = useState("password");
     const [badSubmit, setBadSubmit] = useState(null);
 
@@ -74,7 +68,8 @@ const Login = () => {
     // Handles submission of sign in / sign up.
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const mySubmit = {email, password, text, uniqueName, displayName}
+        const mySubmit = {email, password, text, uniqueName, displayName}   // used for both validation and connect.
+        // validate submitted 
         const validatedStatus = Validate(mySubmit)
         if (validatedStatus !== "good") {
             setBadSubmit(validatedStatus);
@@ -82,11 +77,11 @@ const Login = () => {
         } else {
             setBadSubmit(null);
         }
+        // attempt connection
         const connectStatus = await Connect(mySubmit)
         if (connectStatus === "good") {
             const id = window.localStorage.getItem("userID");
             setUserID(id)
-            
             history.push("/")
             window.location.reload();
         } else {
@@ -99,11 +94,6 @@ const Login = () => {
             <FormWrapper>
                 <Top>
                     <Text>{text}</Text>
-                    {/* <Text2
-                        onClick={() => {
-                            handleClick();
-                        }}
-                    >{text2}</Text2> */}
                 </Top>
                 <FormAndButtonWrap>
 
@@ -235,7 +225,6 @@ const Wrapper = styled.div`
 
 const FormAndButtonWrap = styled.div`
     display: flex;
-    /* border: 1px solid black; */
 `
 
 const FormWrapper = styled.div`
@@ -283,7 +272,6 @@ const ButtonWrap = styled.div`
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    /* border: 1px solid black; */
 `
 
 const Button = styled.button`
@@ -311,29 +299,9 @@ const Icon = styled(Button)`
     display: flex;
     justify-content: center;
     align-items: center;
-    /* margin: 5px; */
-    /* margin: 5px;
-    height: 40px;
-    width: 40px;
-    background: darkgreen;
-    color: white;
-    border: 1px solid black;
-    border-radius: 5px;
-    font-size: 1.5em;
-    cursor: pointer;
-
-    background: darkgreen;
-    &:hover{
-        background: green;
-    }
-    &:active{
-        transform: scale(95%);
-        transition: transform ease-in-out 200ms;
-    } */
 `
 
 const BadRequest = styled.div`
-    /* color: darkorange; */
     display: flex;
     justify-content: center;
     align-items: center;

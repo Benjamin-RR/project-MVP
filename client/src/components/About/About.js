@@ -4,12 +4,10 @@ import styled from 'styled-components';
 
 const DM = () => {
     const {
-        page,
         setPage
     } = useContext(CaptureContext);
 
     useEffect(() => {
-
         setPage("about");
     },[])
     return (

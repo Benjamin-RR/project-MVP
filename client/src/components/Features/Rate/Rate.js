@@ -22,17 +22,13 @@ const Rate = () => {
     const [stars, setStars] = useState(0);
     const [starVote, setStarVote] = useState(0);
     const [vote, setVote] = useState(null);
-    const [castingVote, setCastingVote] = useState(false);
     
-
     // HANDLE SUBMIT / STAR CLICK
     const handleStarClick = (e) => {
         e.preventDefault();
         setStarVote(stars)
         console.log("stars on click:", stars);
-        // areWeGood();
     }
-
 
     // submit vote and update mongoDB accordingly.
     const submitVote = () => {
@@ -68,7 +64,6 @@ const Rate = () => {
     }
 
     if (starVote && vote ) {
-        setCastingVote(true);
         submitVote();
         setStarVote(0);
         setVote(null);

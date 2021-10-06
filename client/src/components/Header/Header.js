@@ -18,21 +18,11 @@ import DefaultAvatar from '../Common/DefaultAvatar';
 const Header = () => {
     const {
         page,
-        setPage,
         dropdown,
         setDropdown,
         userID,
         mediaQ,
-        setMediaQ,
-        friendClick, 
-        setFriendClick,
-        // userColor,
-        // setUserColor,
-        // uniqueName, 
-        // setUniqueName,
-        currentCapture,
         setCurrentCapture,
-        comingFrom, 
         setComingFrom
     } = useContext(CaptureContext);
     const [userColor, setUserColor] = useState(localStorage.getItem("userColor"));
@@ -56,29 +46,6 @@ const Header = () => {
     const handleMouseLeave = () => {
         setDropdown(false)
     }
-
-    // console.log("user color: ", userColor);
-    // console.log("CHECK", uniqueName.split(uniqueName.charAt(2))[0].toUpperCase()  );
-
-    // // test for character string
-    // var txt = 'Hello World!';
-    // var x = 30,
-    //     y = 50;
-
-    // context.font = "40px Helvetica";
-
-    // context.strokeStyle = 'white';
-
-    // // setup these to match your needs
-    // context.miterLimit = 2;
-    // context.lineJoin = 'circle';
-
-    // // draw an outline, then filled
-    // context.lineWidth = 7;
-    // context.strokeText(txt, x, y);
-    // context.lineWidth = 1;
-    // context.fillText(txt, x, y);
-
 
     return (
         <Wrapper
@@ -205,7 +172,6 @@ const TitleWrapper = styled(Link)`
 const IconWrapper = styled.div`
     display: flex;
     align-items: center;
-    /* border: 1px solid black; */
 `
 
 const Icon = styled(Link)`
@@ -214,14 +180,12 @@ const Icon = styled(Link)`
     margin: 5px;
     width: 30px;
     height: 30px;
-    /* border: 1px solid black; */
 `
 
 const UserAvatar = styled.div`
     margin: 5px;
     height: 40px;
     width: 40px;
-    /* border: 1px solid black; */
     cursor: pointer;
     position: relative;
 `

@@ -3,8 +3,6 @@ import styled from 'styled-components';
 
 // generates user's default avatar using their name, and randomly assigned color (from sign up).
 const DefaultAvatar = ({name, color}) => {
-    // console.log("unique name:" , name);
-    // console.log("color:", color);
 
     // converts hex colors to rgba.
     function hexToRgbA(hex){
@@ -20,17 +18,12 @@ const DefaultAvatar = ({name, color}) => {
     }
     const thisColor = `radial-gradient(circle, rgba(250,250,250,1) 0%, ${hexToRgbA(color)} 50%`;
 
-    // console.log("CHECK AVATAR:" , name);
-
     return(
         <Wrapper>
             { name && (
                 <AvatarWrapper
                     style={{ background: `${color}`, }}
                 >
-                    {/* <AvatarLetterWhite>
-                        {name.split(name.charAt(2))[0].toUpperCase().split('')[0]+"  "+name.split(name.charAt(2))[0].toUpperCase().split('')[1]}
-                    </AvatarLetterWhite> */}
                     <AvatarLetterBlack
                         style={{ background: `${thisColor}` }}
                     >
@@ -52,30 +45,13 @@ const Wrapper = styled.div`
 `
 
 const AvatarWrapper = styled.div`
-    /* border: 1px solid black; */
     width: 100%;
     height: 100%;
     cursor: pointer;
     position: relative;
     text-decoration: none;
     border-radius: 50%;
-    /* border: 1px solid black; */
     `
-
-const AvatarLetterWhite = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-    /* border-radius: 50%; */
-    text-decoration: none;
-    position: absolute;
-    color: white;
-    font-weight: 900;
-    font-size: 1.1em;
-`
 
 const AvatarLetterBlack = styled.div`
     display: flex;
@@ -91,7 +67,6 @@ const AvatarLetterBlack = styled.div`
     z-index: 115;
     color: black;
     background: transparent;
-    /* border: 1px solid black; */
 `
 
 export default DefaultAvatar;

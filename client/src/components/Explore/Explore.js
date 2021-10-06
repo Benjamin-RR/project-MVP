@@ -6,14 +6,9 @@ import Map from './Map/Map'
 
 const Explore = () => {
     const {
-        page,
         setPage,
         userID,
-        firstMapLoad,
-        setSearchSize,
-        setSearchQuery,
         setFirstMapLoad,
-        // setMapDataLoading
     } = useContext(CaptureContext);
 
     useEffect(() => {
@@ -21,17 +16,12 @@ const Explore = () => {
         setFirstMapLoad(true);
 
     },[])
-    // setSearchSize({width: "45px", height: "45px"})
-    // setSearchQuery({certified: false, unCertified: false, animal: "", user: ""})
-    // setMapDataLoading(true);
 
     let history = useHistory();
     { !userID && 
         history.push("/Login")
     }
-
     
-
     return (
         <Wrapper>
             <MapWrapper>
