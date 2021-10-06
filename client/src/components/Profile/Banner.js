@@ -13,17 +13,11 @@ import DefaultAvatar from '../Common/DefaultAvatar';
 
 const Banner = ({data}) => {
     const {
-        page,
-        setPage,
-        userID,
         mediaQ,
-        setMediaQ,
         profileOption,
         setProfileOption
     } = useContext(CaptureContext);
-    // const [selected, setSelected] = useState("Statistics")
 
-    console.log("from banner:" , data);
 
     return (
         <>
@@ -39,7 +33,6 @@ const Banner = ({data}) => {
                             <DefaultAvatar 
                                 name={data.author}
                                 color={data.userColor}
-                                // style={{ height: "40px" , width: "40px"}}
                             />
                         </Avatar>
                         <UniqueName>
@@ -52,9 +45,6 @@ const Banner = ({data}) => {
                                 { profileOption === "Captures" ? (
                                     <TiCamera 
                                         style={{ height: "100%", width: "100%"}}
-                                        // onClick={()=>{
-                                        //     setSelected("Capture")
-                                        // }}
                                     />
                                 ) : (
                                     <TiCameraOutline 
@@ -104,13 +94,9 @@ const Banner = ({data}) => {
 }
 
 const Wrapper = styled.div`
-    /* padding: 10px; */
     display: flex;
-    /* justify-content: space-around;
-    align-items: center; */
     height: 150px;
     width: 100%;
-    /* border: 1px solid black; */
     position: relative;
 `
 
@@ -128,14 +114,11 @@ const LeftToRight = styled.div`
 `
 
 const Avatar = styled.div`
-    /* display: flex;
-    align-items: center; */
     height: 40px;
     width: 40px;
 `
 
 const UniqueName = styled.div`
-    /* border: 1px solid black; */
     margin-left: 10px;
     height: 50px;
     width: 100px;
@@ -146,8 +129,6 @@ const UniqueName = styled.div`
 const IconWrapper = styled.div`
     display: flex;
     align-items: center;
-    /* height: 100%; */
-    /* border: 1px solid black; */
     margin-left: auto;
     z-index: 2;
 `
@@ -159,7 +140,6 @@ const Icon = styled.div`
     width: 30px;
     height: 30px;
     cursor: pointer;
-    /* border: 1px solid black; */
 `
 
 export default Banner;

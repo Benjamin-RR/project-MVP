@@ -11,21 +11,16 @@ import Friends from './Friends';
 // utility
 import {LoadCapture} from '../Utilities/LoadCapture';
 import { LoadUsers } from '../Utilities/LoadUsers';
-
 import Loader from '../Common/Loader';
 
 
 const Profile = () => {
     const {
-        page,
         setPage,
         userID,
         mediaQ,
-        setMediaQ,
         profileOption,
-        setProfileOption,
         currentCapture,
-        setCurrentCapture,
     } = useContext(CaptureContext);
     const [captureFeed, setCaptureFeed] = useState(null);
     const [userInfoFeed, setUserInfoFeed] = useState(null);
@@ -44,8 +39,6 @@ const Profile = () => {
         setCaptureFeed(thisProfileCaptures)
         // for getting all stats/achievements of this profile
         const thisProfileInfo = await LoadUsers([data.data.author])
-
-        // console.log("RESULT USER INFO:" , thisProfileInfo);
         await setUserInfoFeed(thisProfileInfo)
     }, [])
 

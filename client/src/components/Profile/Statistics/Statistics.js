@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import styled from "styled-components";
 import Stat from "./Stat";
 import Loader from '../../Common/Loader';
@@ -6,15 +6,15 @@ import Title from '../Common/Title';
 
 const Statistics = ({data}) => {
 
-    console.log("statistics data:" , data)
-
     return(
         <Wrapper>
             { data ? (
                 <>
                     { data.map((data, index) => {
                         return(
-                            <>
+                            <div
+                                key={index}
+                            >
                                 <Title 
                                     title={"Statistics"}
                                 />
@@ -136,10 +136,9 @@ const Statistics = ({data}) => {
                                         />
                                     </Content>
                                 </Section>
-                            </>
+                            </div>
                         )
                     })}
-
                 </>
             ):(
                 <Loader />
@@ -153,21 +152,13 @@ const Wrapper = styled.div`
     padding: 10px;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    /* justify-content: space-around; */
+    min-height: var(--defaultheight);
     align-items: center;
-    /* height: 100%; */
     width: 100%;
-    /* border: 1px solid black; */
     background: rgb(9,9,121);
     background: linear-gradient(90deg, rgba(9,9,121,0.2046568627450981) 0%, rgba(73,113,162,0.2046568627450981) 20%, rgba(73,113,162,0.14583333333333337) 50%, rgba(73,113,162,0.1962535014005602) 80%, rgba(57,64,142,0.1962535014005602) 100%);
 `
-
-// const Title = styled.div`
-//     font-size: 2em;
-//     font-weight: 900;
-//     padding-bottom: 10px;
-//     color: white;
-// `
 
 const Section = styled.div`
     border: 1px solid black;
@@ -188,6 +179,5 @@ const SubTitle = styled.div`
 const Content = styled.div`
 
 `
-
 
 export default Statistics;

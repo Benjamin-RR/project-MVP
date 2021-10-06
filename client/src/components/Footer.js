@@ -18,25 +18,10 @@ import {BsCloudUpload} from 'react-icons/bs';
 
 const Footer = () => {
     const {
-        page,
-        setPage,
-        dropdown,
-        setDropdown,
-        userID,
         mediaQ,
-        setMediaQ
     } = useContext(CaptureContext);
 
     let history = useHistory();
-
-    // if (@media(max-width: 600px))
-    // const mediaQuery = window.matchMedia('(min-width: 600px')
-    // console.log("testing:" , mediaQuery);
-    // if (mediaQuery.matches === true) {
-        // console.log("true")
-    // } else {
-        // console.log("false")
-    // }
     
     // handles rendering footer correctly if you dynamically change your screen.
     mediaQ.onchange = (e) => {
@@ -46,7 +31,6 @@ const Footer = () => {
 
     // handles opening all footer link paths.
     const handleLink = (path) => {
-        // console.log("check:", path.path);
         if (path.type === "leave") {
             window.open(path.path, '_blank');
         }
@@ -56,7 +40,6 @@ const Footer = () => {
         }
     }
 
-    // || page !== "explore"
     return (
         <>
             { (mediaQ.matches === true) ? (
@@ -170,7 +153,6 @@ const Left = styled.div`
     justify-content: center;
     flex-direction: column;
     height: 100%;
-    /* border: 1px solid black; */
 `
 
 const Text = styled(Link)`
@@ -178,26 +160,22 @@ const Text = styled(Link)`
     cursor: pointer;
     margin: 5px;
     &:hover{
-        color: darkgreen;
+        color: var(--color-light);
+        font-weight: 900;
     }
 `
 
 const IconWrapper = styled.div`
     display: flex;
-    /* border: 1px solid black; */
 `
 
 const Icon = styled.div`
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
     color: black;
     text-decoration: none;
     margin: 5px;
     width: 30px;
     height: 30px;
     cursor: pointer;
-    /* border: 1px solid black; */
 `
 
 const CameraButtons = styled.div`

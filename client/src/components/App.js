@@ -1,5 +1,4 @@
-import React, {useContext} from 'react';
-import { CaptureContext } from './CaptureContext';
+import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import styled from 'styled-components';
 import GlobalStyles from './GlobalStyles';
@@ -8,7 +7,6 @@ import Home from './Home';
 import DM from './DM';
 import Login from './Login';
 import Rate from './Features/Rate';
-// import Register from './Login/Register';
 import Profile from './Profile';
 import Explore from './Explore';
 import Gallery from './Explore/Camera/Gallery';
@@ -27,9 +25,6 @@ import Friends from './Header/Dropdown/Options/Friends'
 import Settings from './Header/Dropdown/Options/Settings'
 
 const App = () => {
-    // const {
-    //     userID,
-    // } = useContext(CaptureContext);
     
     return(
         <BrowserRouter>
@@ -104,9 +99,6 @@ const App = () => {
 }
 
 const Main = styled.div`
-    /* display: flex;
-    height: 100vh;
-    width: 100vw; */
     background-color: var(--background-color-default);
     background-image: var(--background-image-default);
     background-attachment: fixed;
