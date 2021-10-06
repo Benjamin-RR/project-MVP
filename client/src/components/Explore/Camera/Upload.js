@@ -12,13 +12,9 @@ import Loading from '../../Common/Loader';
 
 const Upload = () => {
     const {
-        page,
         setPage,
         userID,
-        // uniqueName,
         myLocation,
-        // userColor,
-        // setUserColor
     } = useContext(CaptureContext);
 
     useEffect(() => {
@@ -58,9 +54,6 @@ const Upload = () => {
         uploadImage(previewSource);
     }
 
-    console.log("preview status:" , previewSource)
-
-    // console.log("unique name:" , uniqueName)
 
     // this will upload the choosen file to cloudinary.
     const uploadImage = async (base64EncodedImage) => {
@@ -96,7 +89,6 @@ const Upload = () => {
         <Form
             onSubmit={handleSubmit}
         >
-            {/* <img src={ require(`./images/animal.png`).default} alt="" /> */}
             <Top>
             <Icon
                 onClick={() => {
@@ -119,12 +111,10 @@ const Upload = () => {
                 />
             </Icon>
             </Top>
-            {/* {previewSource && ( */}
             <>
                 <Img 
                     src={previewSource} 
                     alt="chosen" 
-                    // style={{ height: "200px" , width: "200px"}}
                 />
             </>
             {/* )} */}
@@ -136,9 +126,7 @@ const Upload = () => {
             <Input 
                 type="file" 
                 name="image"
-                // value = {theImage}
                 onChange={(e) =>{
-                    // setSelectedImage(e.target.files[0]);
                     const reader = new FileReader();
                     reader.readAsDataURL(e.target.files[0]);
                     reader.onloadend = () => {
@@ -157,21 +145,17 @@ const Upload = () => {
                     }}
                 ></Input>
                 <Input
-                    placeholder="Short description (Optional)*"
+                    placeholder="Comment Optional*"
                     value={description}
                     maxLength="210"
                     onChange={(e) => {
                         setDescription(e.target.value);
-                        // if (value.length === 210) {
-                        //     alert("max character length reached.")
-                        // }
                     }}
                 ></Input>
             </InputWrapper>
             { attemptSubmit ? (
                 <Button 
                 type="submit"
-                    // onSubmit={(e)=> handleSubmit()}
                 style={{ background: "white"}}
                 >
                     <Loading/>
@@ -179,7 +163,6 @@ const Upload = () => {
             ) : (
             <Button 
                 type="submit"
-                    // onSubmit={(e)=> handleSubmit()}
                 >
                     Upload Capture
             </Button>
@@ -210,7 +193,6 @@ const Top = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* border: 1px solid black;  */
     width: 300px;
 `
 
@@ -251,7 +233,6 @@ const Input = styled.input`
     border: 1px solid black;
     font-size: 15px;
     margin: 5px;
-    /* text-decoration: none; */
 `
 
 const Text = styled.div`
@@ -267,12 +248,18 @@ const Button = styled.button`
     display: flex;
     align-items: center;
     justify-content: center;
-    background: darkgreen;
+    background: var(--color-dark);
     color: white;
     border: 1px solid black;
     border-radius: 5px;
     padding: 5px;
     cursor: pointer;
+    &:hover{
+        background: var(--color-light);
+    }
+    &:active{
+        transform: scale(95%);
+    }
 `
 
 export default Upload;

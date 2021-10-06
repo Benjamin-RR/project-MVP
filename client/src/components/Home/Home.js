@@ -23,7 +23,8 @@ const Home = () => {
         appLoaded, 
         setAppLoaded,
         homeHasLoaded, 
-        setHomeHasLoaded
+        setHomeHasLoaded,
+        setDropdown
     } = useContext(CaptureContext);
     let history = useHistory();
     { !userID && 
@@ -37,20 +38,21 @@ const Home = () => {
     // Load images and animal data into their arrays, set page to loaded so we can render everything below. (gets called once).
     useEffect( async ()=> {
         setPage("home");
-        // console.log("IN HOME:" , friendArray);
-        const results = await LoadCapture(friendArray)
-        console.log("results received:" , results);
+        const results = await LoadCapture(friendArray);
         // LoadCapture(friendArray)
         // .then((data) => {
         //     setFeed(data);
         //     setHomeLoading(false);
         // })
-        await setFeed(results)
-        setHomeLoading(false);
+        await setFeed(results);
+        await setHomeLoading(false);
+        // setDropdown(false);
         // await setFeed( await LoadCapture(friendArray))
     }, [])
-
-    // console.log("FEED:" , feed, friendArray, typeof friendArray);
+    
+    // if ( !homeLoading ) {
+    //     setHomeHasLoaded(true);
+    // }
     
     
     return (

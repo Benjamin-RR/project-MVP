@@ -25,7 +25,7 @@ const Profile = () => {
         profileOption,
         setProfileOption,
         currentCapture,
-        setCurrentCapture
+        setCurrentCapture,
     } = useContext(CaptureContext);
     const [captureFeed, setCaptureFeed] = useState(null);
     const [userInfoFeed, setUserInfoFeed] = useState(null);

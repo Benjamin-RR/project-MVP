@@ -3,30 +3,21 @@ import { CaptureContext } from '../../CaptureContext';
 import styled from 'styled-components';
 import SingleCapture from '../../Common/SingleCapture';
 import { useHistory } from 'react-router-dom'; 
-
 // icons
 import {BsStar} from 'react-icons/bs';
 import {BsStarFill} from 'react-icons/bs';
 
 const Rate = () => {
     const {
-        page,
         setPage,
-        userID,
         currentCapture,
-        setCurrentCapture,
     } = useContext(CaptureContext);
     let history = useHistory();
 
     useEffect(() => {
         setPage("rate");
-
     },[])
 
-    // use history to push to homepage if user forced their way here (from a page that wasn't homepage), to avoid render crash or cheating and voting on their own capture.
-
-    // console.log("current capture is:" , currentCapture);
-    // console.log("Window pos:" , window.pageYOffset)
 
     const [stars, setStars] = useState(0);
     const [starVote, setStarVote] = useState(0);
@@ -42,57 +33,37 @@ const Rate = () => {
         // areWeGood();
     }
 
-    // HANDLE SUBMIT / VOTE CLICK
-    const handleVoteClick = (e) => {
-        // e.preventDefault();
-        // setVote(e.target.value)
-        // console.log("vote:" , vote);
-        // areWeGood();
-    }
 
-    // checks to see if we are good to move on and submit
+    // submit vote and update mongoDB accordingly.
     const submitVote = () => {
-        // if (!starVote || !vote) {
-        //     console.log("CAST:" , starVote, vote);
-        //     console.log("NOT READY")
-        //     return;
-        // } else {
-            // console.log("SUBMITTING!")
-            // submit vote and update mongoDB accordingly.
-                fetch(`capture/vote`, {
-                    method: 'PUT',
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        voter: localStorage.getItem("uniqueName"),
-                        author: currentCapture.author,
-                        vote: {
-                            vote : vote,
-                            stars : starVote,
-                            captureId : currentCapture._id
-                        }
-                    }),
-                })
-                .then((res) => res.json())
-                .then((data) => {
-                    if (data.status === 200) {
-                        console.log("SUCCESS!", data);
-                    }
-                    if (data.status === 400) {
-                        console.log("Pandar's box, an error has occured.", data.error)
-                    }
-                    // setConfirmation(data.data);
-                    // setConfirmationLoaded(true);
-                    // setFlightNumber("");
-                    console.log("success:", data)
-                })
-                .catch((error) => {
-                    console.log("Error", error);
-                });
-
-            // console.log("READY")
-        // }
+        fetch(`capture/vote`, {
+            method: 'PUT',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                voter: localStorage.getItem("uniqueName"),
+                author: currentCapture.author,
+                vote: {
+                    vote : vote,
+                    stars : starVote,
+                    captureId : currentCapture._id
+                }
+            }),
+        })
+        .then((res) => res.json())
+        .then((data) => {
+            if (data.status === 200) {
+                console.log("SUCCESS!", data);
+            }
+            if (data.status === 400) {
+                console.log("Pandar's box, an error has occured.", data.error)
+            }
+            console.log("success:", data)
+        })
+        .catch((error) => {
+            console.log("Error", error);
+        });
         return;
     }
 
@@ -121,7 +92,6 @@ const Rate = () => {
                                 type="submit"
                                 onClick={() => {
                                     setVote("UNSURE");
-                                    handleVoteClick();
                                 }}
                             >UNSURE</Button>
                             <LeftToRight>
@@ -129,14 +99,12 @@ const Rate = () => {
                                     type="submit"
                                     onClick={() => {
                                         setVote("TRUE");
-                                        handleVoteClick();
                                     }}
                             >TRUE</Button>
                                 <Button
                                     type="submit"
                                     onClick={() => {
                                         setVote("FALSE");
-                                        handleVoteClick();
                                     }}
                                 >FALSE</Button>
                             </LeftToRight>
@@ -297,12 +265,9 @@ const Wrapper = styled.div`
     padding: 10px;
     display: flex;
     flex-direction: column;
-    /* justify-content: space-around; */
     align-items: center;
-    /* height: var(--defaultHeight); */
     width: 100%;
     border: 1px solid black;
-    /* offset-position: -200px; */    
 `
 
 const Text = styled.div`
@@ -323,12 +288,8 @@ const ContentWrapper = styled.div`
     padding: 10px;
     display: flex;
     flex-direction: column;
-    /* justify-content: space-around; */
     align-items: center;
-    /* height: 400px; */
-    /* width: 100%; */
     border: 1px solid black;
-    /* background: grey; */
     background-color: var(--background-color-alternative);
     background-image: var(--background-image-alternative);
 `
@@ -346,7 +307,6 @@ const Button = styled.button`
     &:hover{
         background-color: var(--color-dark);
         color: goldenrod;
-        /* transform: scale(105%); */
         transform: rotate(1.009turn) scale(120%);
     }
     &:active{
@@ -355,7 +315,6 @@ const Button = styled.button`
     `
     
     const Revote = styled(Button)`
-        /* width: 100%; */
     `
 
 const LeftToRight = styled.div`
@@ -364,9 +323,7 @@ const LeftToRight = styled.div`
 `
 
 const Card = styled.div`
-    /* height: 100%; */
     width: 100%;
-    /* border: 1px solid black; */
     margin: 5px;
 `
 
@@ -381,7 +338,6 @@ const Icon = styled.div`
     margin: 5px;
     cursor: pointer;
     color: goldenrod;
-    /* border: 1px solid black; */
     &:hover{
         color: gold;
         transform: scale(125%);

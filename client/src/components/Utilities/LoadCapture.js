@@ -11,15 +11,12 @@ import React, {useState} from 'react'
 export const LoadCapture = async (arrayToLoad) => {
     // const [thisAnswer, setThisAnswer] = useState(null);
     // console.log("array to load" , arrayToLoad, typeof arrayToLoad);
-    const friendArray = arrayToLoad;
     let feedArray = [];
     let animalDataArray = [];
-    // const [feed, setFeed] = useState(null);
     
-    // console.log("received:" , arrayToLoad);
     try{
         // get each user data (includes animal captures) and put into a new array.
-        friendArray.forEach( async (friend) => {
+        arrayToLoad.forEach( async (friend) => {
             // console.log("LOADCAPTURE:" , friend);
 
             await fetch('/user/info', {
@@ -61,7 +58,7 @@ export const LoadCapture = async (arrayToLoad) => {
 
     // const FinalArrayAnswer = feedArray.filter((capture, index) => feedArray.indexOf(capture) !== index);
 
-    const FinalArrayAnswer = [ ...new Set(feedArray)];
+    // const FinalArrayAnswer = [ ...new Set(feedArray)];
     
     // const FinalArrayAnswer = feedArray.filter(onlyUniques)
     // function onlyUniques(capture, index){
