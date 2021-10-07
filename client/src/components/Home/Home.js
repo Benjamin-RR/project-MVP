@@ -5,9 +5,9 @@ import { useHistory } from 'react-router-dom';
 import Loading from '../Common/Loader';
 import SingleCapture from '../Common/SingleCapture';
 import {LoadCapture} from '../Utilities/LoadCapture';
-import {Link} from 'react-router-dom';
-import YourFriends from './FriendList';
 import Button from '../Common/Button';
+// used for future update
+import YourFriends from './FriendList';
 import Rate from '../Features/Rate';
 
 const Home = () => {
@@ -28,21 +28,9 @@ const Home = () => {
     useEffect( async ()=> {
         setPage("home");
         const results = await LoadCapture(friendArray);
-        // LoadCapture(friendArray)
-        // .then((data) => {
-        //     setFeed(data);
-        //     setHomeLoading(false);
-        // })
         await setFeed(results);
         await setHomeLoading(false);
-        // setDropdown(false);
-        // await setFeed( await LoadCapture(friendArray))
     }, [])
-    
-    // if ( !homeLoading ) {
-    //     setHomeHasLoaded(true);
-    // }
-    
     
     return (
         <Wrapper>
@@ -83,23 +71,12 @@ const Wrapper = styled.div`
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    /* height: var(--defaultHeight); */
     min-height: var(--defaultHeight);
     width: 100%;
     border: 1px solid black;
 `
 
 const CaptureContent = styled.div`
-    /* display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 400px;
-    width: 320px;
-    border: 1px solid black;
-    padding: 5px;
-    margin: 5px;
-    background: green; */
 `
 
 const Card = styled.div`
@@ -107,12 +84,8 @@ const Card = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* height: 400px; */
     width: 320px;
-    /* border: 1px solid black; */
-    /* padding: 5px; */
     margin: 5px;
-    /* background: green; */
 `
 
 export default Home;

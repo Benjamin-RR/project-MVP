@@ -35,15 +35,6 @@ express()
     .use(require('./routes/user'))
     .use(require('./routes/image'))
     .use(require('./routes/capture'))
-
-    // IMAGES
-    // .post("/image/uploadCapture", addCaptureImage)
-    // .post("/image/uploadAvatar", addAvatarImage)
-
-    
-    // .get("/image/download", downloadImage)           // never has done anything. delete if never used.
-    // .get("/image/downloadMany", downloadImages)      // never has done anything. delete if never used.
-
     
     // This is the catch all Endpoint
     .get("*", (req, res) => {

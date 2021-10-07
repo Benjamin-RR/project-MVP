@@ -1,9 +1,7 @@
 import React, {useEffect, useContext, useState} from "react";
 import { CaptureContext } from "../../CaptureContext";
 import { GoogleMap , withScriptjs, withGoogleMap, Marker, InfoWindow} from 'react-google-maps';
-import Midnight from './Styles/Midnight';
-import Day from './Styles/Day';
-import Rise from './Styles/Rise';
+
 import styled from "styled-components";
 import Loader from '../../Common/Loader'
 import moment from 'moment';
@@ -11,24 +9,15 @@ import {getCapturesForMap} from './Fetch';
 import {Image} from 'cloudinary-react';
 import Search from "./Search";
 import { useHistory } from 'react-router';
-import {SearchQuery} from './Filter/SearchQuery';
+import {getMapStyle} from './MapHelper/DynamicMapStyle';
 
 
 function thisMap(from) {
     const {
-        page,
-        setPage,
-        userID,
         myLocation,
-        setMyLocation,
-        dynamicMapStyle,
-        setDynamicMapStyle,
         currentCapture, 
         setCurrentCapture,
-        searchSize, 
-        setSearchSize,
         searchQuery, 
-        setSearchQuery,
         mapDataLoading, 
         setMapDataLoading,
         firstMapLoad, 
@@ -37,18 +26,12 @@ function thisMap(from) {
         setComingFrom,
         captureArray, 
         setCaptureArray,
-        // refreshPins, 
-        // setRefreshPins,
     } = useContext(CaptureContext);
-    // const [mapDataLoading, setMapDataLoading] = useState(true);
     const [selectedMarker, setSelectedMarker] = useState(null);
     const [AllCaptureArray, setAllCaptureArray] = useState(null);
-    // const [captureArray, setCaptureArray] = useState(null);
-    const [refreshMap, setRefreshMap] = useState(true);
-    const allMarkers = [];
 
     let history = useHistory();
-
+    const mapStyle = getMapStyle();
 
     // get center position for map.
     let position;   // used to center map.
@@ -61,15 +44,12 @@ function thisMap(from) {
         }
     }
 
-
     // filter data with search query
     const filterDataWithSearchQuery = () => {
         
-
-
         let finalAnswer = [];
-        console.log("captureArray received to FILTER:" , AllCaptureArray);
-        console.log("searchQuery received to FILTER:" , searchQuery);
+        // console.log("captureArray received to FILTER:" , AllCaptureArray);
+        // console.log("searchQuery received to FILTER:" , searchQuery);
         let verified = false;
         let unverified = false;
         if (!AllCaptureArray) {
@@ -130,7 +110,7 @@ function thisMap(from) {
         // if (!finalAnswer) {
         //     finalAnswer = [];
         // }
-        console.log("answer:" , finalAnswer);
+        // console.log("answer:" , finalAnswer);
         
         setCaptureArray(finalAnswer);
         // setPage('explore');
@@ -143,7 +123,7 @@ function thisMap(from) {
     // get new array of captures by filter, if a search query is present.
     useEffect(()=> {
         // console.log("did we receive a query?");
-        console.log("SEARCH QUERY:" , searchQuery);
+        // console.log("SEARCH QUERY:" , searchQuery);
             // console.log("are we beginning the filters?");
             // console.log("checking here");
             // if (captureArray) {
@@ -169,7 +149,7 @@ function thisMap(from) {
             // filterDataWithSearchQuery();
             const data = await getCapturesForMap(position)
             .then( async (data) => {
-                console.log("data fetch:" , data);
+                // console.log("data fetch:" , data);
                 // await setCaptureArray(data)      // changes with filter
                 await setAllCaptureArray(data)   // never changes
             })
@@ -190,25 +170,6 @@ function thisMap(from) {
         filterDataWithSearchQuery();
     }
 
-
-    // find time, find style dependable upon that time (dawn, day, dusk, night) OR if dynamic style is turned on.
-    const Time = moment().calendar()
-    let mapStyle;
-    if (dynamicMapStyle) {
-        if ( Time.includes("P") && ((Time.split(":")[0]).split(" ")[2] < 6) || Time.includes("P") && ((Time.split(":")[0]).split(" ")[2] == 12) || Time.includes("A") && ((Time.split(":")[0]).split(" ")[2] > 6) && ((Time.split(":")[0]).split(" ")[2] != 12)) {
-            mapStyle = Day;
-        } else {
-            mapStyle = Midnight;
-        }
-        if (Time.split(":")[0].includes("6")) {
-            mapStyle = Rise;
-        }
-    } else {
-        mapStyle = Day;
-    }
-    // Time.includes("A") && ((Time.split(":")[0]).split(" ")[2] == 12))
-
-
     // function gets marker image by value passed to it which is the verifed value from any Capture obj.
     const getMarker = (byVerification) => {
         let answer;
@@ -222,18 +183,14 @@ function thisMap(from) {
 
     // validates the link the user is attempting to go to isn't his/her own capture.
     const validateRedirect = (data) => {
-        console.log("data on click:", data) ;
-        console.log("names:" , data.author, localStorage.getItem("uniqueName"))
         if (data.author === localStorage.getItem("uniqueName")) {
-            console.log("MATCH!");
             return;
         }
         history.push('/Rate')
     }
 
-    console.log("DATA THAT WILL RENDER ON MAP:" , captureArray);
+    // console.log("DATA THAT WILL RENDER ON MAP:" , captureArray);
     // console.log("pins need refresh?:" , refreshPins);
-    console.log("MARKER IS:" , Marker);
     return(
         <>
             <GoogleMap

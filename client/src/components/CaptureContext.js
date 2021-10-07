@@ -2,22 +2,20 @@ import React, { useState } from 'react';
 export const CaptureContext = React.createContext();
 
 export const CaptureProvider = ({ children }) => {
-
     // start up data that only changes once per app load
     const [appLoaded, setAppLoaded] = useState(false);
 
     // for handling page and settings
-    const [mediaQ, setMediaQ] = useState(window.matchMedia('(min-width: 600px'))
+    const [mediaQ, setMediaQ] = useState(window.matchMedia('(min-width: 600px'));
     const [page, setPage] = useState("home");
     const [homeHasLoaded, setHomeHasLoaded] = useState(false);
 
     // for google map
     const [searchSize, setSearchSize] = useState({width: "45px", height: "45px"});
-    const [searchQuery, setSearchQuery] = useState({certified: true, unCertified: false, animal: "", user: ""})
+    const [searchQuery, setSearchQuery] = useState({certified: true, unCertified: false, animal: "", user: ""});
     const [mapDataLoading, setMapDataLoading] = useState(true);
     const [firstMapLoad, setFirstMapLoad] = useState(true);
-    // const [mapPosition, setMapPosition] = useState()
-    const [comingFrom, setComingFrom] = useState(null)
+    const [comingFrom, setComingFrom] = useState(null);
     const [captureArray, setCaptureArray] = useState(null);
 
     // settings
@@ -39,16 +37,12 @@ export const CaptureProvider = ({ children }) => {
     if (!myLocation) {
         navigator.geolocation.getCurrentPosition((position) => {
             setMyLocation(position)
-            // console.log("LOCATION:" , position)
         }, () => null)
     }
 
     // to remember which one capture we are viewing.
     const [currentCapture, setCurrentCapture] = useState(null);
-    const [profileOption, setProfileOption] = useState("Statistics")
-
-
-    // setAppLoaded(true);
+    const [profileOption, setProfileOption] = useState("Statistics");
 
     return (
         <CaptureContext.Provider value={{ 
@@ -60,22 +54,16 @@ export const CaptureProvider = ({ children }) => {
             setUserID,
             mediaQ,
             setMediaQ,
-            // uniqueName, 
-            // setUniqueName,
             myLocation,
             setMyLocation,
             friendClick, 
             setFriendClick,
-            // friendArray, 
-            // setFriendArray,
             settingsClick,
             setSettingsClick,
             badgeSetting, 
             setBadgeSetting,
             dynamicMapStyle,
             setDynamicMapStyle,
-            // userColor,
-            // setUserColor,
             currentCapture,
             setCurrentCapture,
             profileOption,

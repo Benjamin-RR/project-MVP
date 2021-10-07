@@ -5,13 +5,12 @@ import {Link} from 'react-router-dom';
 // icons
 import {AiFillHome} from 'react-icons/ai';
 import {AiOutlineHome} from 'react-icons/ai';
-import {MdMessage} from 'react-icons/md';
-import {FiMessageSquare} from 'react-icons/fi'
 import {AiFillCompass} from 'react-icons/ai';
 import {AiOutlineCompass} from 'react-icons/ai'
+import Dropdown from './Dropdown/Dropdown';
+// icons used in future update
 import {AiFillTrophy} from 'react-icons/ai';
 import {AiOutlineTrophy} from 'react-icons/ai'
-import Dropdown from './Dropdown/Dropdown';
 
 import DefaultAvatar from '../Common/DefaultAvatar';
 
@@ -78,18 +77,6 @@ const Header = () => {
                             )}
                         </Icon>
 
-                        {/* <Icon to="/DM" >
-                        { page === "dm" ? (
-                                <MdMessage 
-                                    style={{ height: "100%", width: "100%"}}
-                                />
-                            ) : (
-                                <FiMessageSquare 
-                                    style={{ height: "100%", width: "100%"}}
-                                />
-                            )}
-                        </Icon> */}
-
                         <Icon 
                             onClick={() => {
                                 setCurrentCapture(null);
@@ -107,18 +94,6 @@ const Header = () => {
                                 />
                             )}
                         </Icon>
-
-                        {/* <Icon to="/Leaderboard" >
-                        { page === "leaderboard" ? (
-                                <AiFillTrophy 
-                                    style={{ height: "100%", width: "100%"}}
-                                />
-                            ) : (
-                                <AiOutlineTrophy 
-                                    style={{ height: "100%", width: "100%"}}
-                                />
-                            )}
-                        </Icon> */}
 
                         <UserAvatar
                             onClick={() => {
