@@ -9,7 +9,6 @@ export const LoadAllCaptures = async () => {
     fetch('/captures')
     .then((res) => res.json())
     .then((data) => {
-        // console.log("Load Name results:", data.data);
         // store values from here.
         answer = data;
         AnimalCaptureArray.push(data.data);
@@ -19,6 +18,5 @@ export const LoadAllCaptures = async () => {
             // set error response here.
         }
     });
-    // console.log("answer in load names:" , nameArray);
     return answer;
 }

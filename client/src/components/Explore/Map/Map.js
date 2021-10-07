@@ -3,16 +3,15 @@ import { CaptureContext } from "../../CaptureContext";
 import { GoogleMap , withScriptjs, withGoogleMap, Marker, InfoWindow} from 'react-google-maps';
 
 import styled from "styled-components";
-import Loader from '../../Common/Loader'
 import moment from 'moment';
-import {getCapturesForMap} from './Fetch';
+import {getCapturesForMap} from './MapHelper/Fetch';
 import {Image} from 'cloudinary-react';
 import Search from "./Search";
 import { useHistory } from 'react-router';
 import {getMapStyle} from './MapHelper/DynamicMapStyle';
 
 
-function thisMap(from) {
+function thisMap() {
     const {
         myLocation,
         currentCapture, 
@@ -260,34 +259,6 @@ function thisMap(from) {
 const TheMap = withScriptjs(withGoogleMap(thisMap))
 
 export default function Map() {
-    const {
-        page,
-        setPage,
-        userID,
-        myLocation,
-        setMyLocation,
-        dynamicMapStyle,
-        setDynamicMapStyle,
-        currentCapture, 
-        setCurrentCapture,
-        searchSize, 
-        setSearchSize,
-        mapDataLoading,
-        mapRefresh,
-        setMapRefresh
-    } = useContext(CaptureContext);
-
-    // useEffect(() => {
-    //     setMap(null)
-    // },[mapDataLoading])
-    
-    // console.log("map refresh: " , mapRefresh);
-    // if (mapRefresh) {
-    //     setMapRefresh(false);
-    // }
-
-    // console.log("test:" , TheMap);
-
     return (
         <MapWrapper>
             <SearchWrapper>
@@ -298,7 +269,6 @@ export default function Map() {
                 loadingElement={<div style={{ height: "100%" }} />}
                 containerElement={<div style={{ height: "100%" }} />}
                 mapElement={<div style={{ height: "100%" }} />}
-                // useLoadScript={ googleMapsApiKey=`${process.env.REACT_APP_GOOGLE_HEATMAP_KEY}`, libraries }
             />
         </MapWrapper>
     )

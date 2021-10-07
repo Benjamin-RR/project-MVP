@@ -29,7 +29,6 @@ const Validate = ({email, password, text, uniqueName, displayName}) => {
         }
     }
     
-    console.log("status in validation:" , status);
     return status;
 }
 export default Validate;

@@ -27,7 +27,6 @@ const Rate = () => {
     const handleStarClick = (e) => {
         e.preventDefault();
         setStarVote(stars)
-        console.log("stars on click:", stars);
     }
 
     // submit vote and update mongoDB accordingly.

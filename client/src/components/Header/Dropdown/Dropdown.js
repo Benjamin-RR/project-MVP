@@ -6,24 +6,11 @@ import { useHistory } from 'react-router-dom';
 
 const Dropdown = () => {
     const {
-        page,
-        setPage,
-        dropdown,
         setDropdown,
-        userID,
         setUserID,
         mediaQ,
-        setMediaQ,
-        // uniqueName,
-        // setUniqueName,
-        friendClick, 
         setFriendClick,
-        settingsClick,
         setSettingsClick,
-        // userColor,
-        // setUserColor,
-        // friendArray, 
-        // setFriendArray,
     } = useContext(CaptureContext);
     let history = useHistory();
 
@@ -35,8 +22,6 @@ const Dropdown = () => {
     if (mediaQ.matches) {
         thisTop = '60px'
     }
-    // top: 60px;
-
 
     // handle dropdown
     const handleMouseEnter = () => {
@@ -74,8 +59,6 @@ const Dropdown = () => {
         history.push("/Settings")
     }
 
-    // console.log("friend:", friendClick);
-
     // handle sign out.
     const handleSignOut = () => {
         // remove all signed in user info from local storage.
@@ -83,11 +66,7 @@ const Dropdown = () => {
         localStorage.removeItem("uniqueName");
         localStorage.removeItem("userColor");
         localStorage.removeItem("friends");
-        // localStorage.removeItem("CaptureInfo")
         setUserID(null);
-        // setUniqueName(null);
-        // setUserColor(null)
-        // setFriendArray(null);
         window.location.reload();
     }
 
@@ -123,13 +102,10 @@ const Wrapper = styled.div`
     flex-direction: column;
     width: 200px;
     height: 200px;
-    /* border: 1px solid black; */
     position: absolute;
     right: 10px;
-    /* top: 60px; */
     z-index: 10;
 `
-
 
 const DropDownItem = styled.button`
     padding: 10px;

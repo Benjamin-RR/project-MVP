@@ -70,7 +70,6 @@ const Connect = async({
                 .then((data) => {
                 if (data.status === 200) {
                     // save current logged on user to local storage.
-                    console.log("DATA:" , data)
                     localStorage.setItem("userID", data.data._id);
                     localStorage.setItem("uniqueName", data.data.uniqueName)
                     localStorage.setItem("userColor", data.data.avatarSrc.userColor)

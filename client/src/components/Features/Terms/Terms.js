@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 const Terms = () => {
     const {
-        page,
         setPage
     } = useContext(CaptureContext);
 
@@ -13,7 +12,6 @@ const Terms = () => {
 
     },[])
 
-    console.log("CHECK FROM TERMS");
     return (
         <Wrapper>
             <div>Terms</div>

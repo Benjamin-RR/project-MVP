@@ -53,7 +53,6 @@ const Search = () => {
         setCaptureArray(null); 
     }
 
-
     return(
         <Wrapper
             style={{width: `${searchSize.width}`, height: `${searchSize.height}`, cursor: "pointer"}}

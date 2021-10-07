@@ -144,7 +144,6 @@ const Upload = () => {
                         const reader = new FileReader();
                         reader.readAsDataURL(e.target.files[0]);
                         reader.onloadend = () => {
-                            console.log("reader:", reader.result)
                             setPreviewSource(reader.result);
                         }
                     }}

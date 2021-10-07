@@ -156,7 +156,6 @@ const getUserInfo = async (req, res) => {
         const db = client.db("Capture");
         const uniqueName = req.body.friend
         const user = await db.collection("users").findOne({ uniqueName });
-        console.log("user:" , user);
         // if user found, send back info.
         user ? (
             res.status(200).json({ status: 200, data: user, message: "matched found."})
@@ -211,15 +210,12 @@ const getAllUniqueNames = async (req, res) => {
         const client = await new MongoClient(MONGO_URI, options);
         await client.connect();
         const db = client.db("Capture");
-        console.log("YAY!");
         
         const uniqueNames = await db.collection('users').find().toArray();
-        console.log("all:" , uniqueNames, uniqueNames.length);
         const answer = [];
         uniqueNames.forEach(name => {
             answer.push(name.uniqueName);
         })
-        console.log("answer:" , answer);
         if (uniqueNames) {
             res.status(200).json({ status: 200, data: answer, message: 'success!'});
         } else {
@@ -247,9 +243,7 @@ const getAllUsers = async (req, res) => {
         const db = client.db("Capture");
         
         const allUsers = await db.collection('users').find().toArray();
-        console.log("all:" , allUsers, allUsers.length);
         
-        console.log("answer:" , allUsers);
         if (allUsers) {
             res.status(200).json({ status: 200, data: allUsers, message: 'success!'});
         } else {

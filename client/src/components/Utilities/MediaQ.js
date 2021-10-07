@@ -8,9 +8,11 @@ export  const MediaQ = () => {
         mediaQ, setMediaQ
     } = useContext(CaptureContext);
 
-    { (mediaQ.matches === true) ? (
-        console.log("true")
-    ):(
-        console.log("false")
-    ) }
+    // as the comment above, this future update will make this app WAY more dynamic.
+
+    // { (mediaQ.matches === true) ? (
+    //     console.log("true")
+    // ):(
+    //     console.log("false")
+    // ) }
 }

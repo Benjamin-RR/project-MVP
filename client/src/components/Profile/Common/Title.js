@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Title = (title) => {
-    console.log("title in title: " , title);
     return <ThisTitle>{title.title}</ThisTitle>
 }
 
