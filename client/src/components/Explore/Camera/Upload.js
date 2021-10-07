@@ -1,13 +1,12 @@
-import React, {useContext, useState, useEffect} from 'react';
+import React, {useContext, useState, useEffect, useRef} from 'react';
 import {CaptureContext} from '../../CaptureContext';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom'; 
-
+// icons
 import {BsGrid} from 'react-icons/bs';
 import {BsGridFill} from 'react-icons/bs';
 import {AiOutlineCloseSquare} from 'react-icons/ai'
 
-// import {importAll} from '../../../assets'
 import Loading from '../../Common/Loader';
 
 const Upload = () => {
@@ -20,18 +19,20 @@ const Upload = () => {
     useEffect(() => {
         setPage("upload");
     },[])
-
-    // get gallery from folder.
-    // console.log("test from upload:", importAll() );
     
     let history = useHistory();
     { !userID && 
         history.push("/Login")
     }
+
+    // handles hidding default ugly file input button. (and given a ref to it)
+    const hiddenFileInput = useRef(null);
+    const handleFileClick = (event) => {
+        hiddenFileInput.current.click()
+    }
     
     // for displaying different layout on image select.
     const [grid, setGrid] = useState(false)
-    const imgArray = [];
     // for database.
     const [uniqueName, setUniqueName] = useState(localStorage.getItem("uniqueName"));
     const [userColor, setSetUserColor] = useState(localStorage.getItem("userColor"));
@@ -84,90 +85,104 @@ const Upload = () => {
     }
 
     return (
-    <Wrapper>
-        <Form
-            onSubmit={handleSubmit}
-        >
-            <Top>
-            <Icon
-                onClick={() => {
-                    handleGrid();
-                }}
+        <Wrapper>
+            <Form
+                onSubmit={handleSubmit}
             >
-                {grid ? (
-                    <BsGridFill 
+                <Top>
+                <Icon
+                    onClick={() => {
+                        handleGrid();
+                    }}
+                >
+                    {grid ? (
+                        <BsGridFill 
+                            style={{ height: "100%" , width: "100%" }}
+                        />
+                    ) : (
+                        <BsGrid 
+                            style={{ height: "100%" , width: "100%" }}
+                        />
+                        )}
+                </Icon>
+                <Icon>
+                    <AiOutlineCloseSquare 
                         style={{ height: "100%" , width: "100%" }}
                     />
-                ) : (
-                    <BsGrid 
-                        style={{ height: "100%" , width: "100%" }}
-                    />
+                </Icon>
+                </Top>
+                <>
+                    {previewSource ? (
+                        <Img 
+                            src={previewSource} 
+                            alt="Chosen Image" 
+                            onClick={handleFileClick}
+                        />
+                    ):(
+                        <ImgAlternative
+                            onClick={handleFileClick}
+                        >
+                            <img
+                                src={'/Add.png'}
+                                alt="Add"
+                                style={{ height: "40px" , width: "100px"}}
+                            />
+                            <img
+                                src={'/Image.png'}
+                                alt="Image"
+                                style={{ height: "45px" , width: "130px"}}
+                            />
+                        </ImgAlternative>
                     )}
-            </Icon>
-            <Icon>
-                <AiOutlineCloseSquare 
-                    style={{ height: "100%" , width: "100%" }}
-                />
-            </Icon>
-            </Top>
-            <>
-                <Img 
-                    src={previewSource} 
-                    alt="chosen" 
-                />
-            </>
-            {/* )} */}
-                {/* <Gallery>
-                    <OneImage>
-                        for uploading directly all images to display. this would be a gallery to select images to upload from.
-                    </OneImage>
-                </Gallery> */}
-            <Input 
-                type="file" 
-                name="image"
-                onChange={(e) =>{
-                    const reader = new FileReader();
-                    reader.readAsDataURL(e.target.files[0]);
-                    reader.onloadend = () => {
-                        console.log("reader:", reader.result)
-                        setPreviewSource(reader.result);
-                    }
-                }}
-            />
-            <InputWrapper>
-                <Input
-                    required
-                    placeholder="Animal Name"
-                    value={animalName}
-                    onChange={(e) => {
-                        setAnimalName(e.target.value);
+                </>
+                <Input 
+                    type="file" 
+                    name="image"
+                    style={{ display: "none"}}
+                    ref={hiddenFileInput}
+                    onChange={(e) =>{
+                        const reader = new FileReader();
+                        reader.readAsDataURL(e.target.files[0]);
+                        reader.onloadend = () => {
+                            console.log("reader:", reader.result)
+                            setPreviewSource(reader.result);
+                        }
                     }}
-                ></Input>
-                <Input
-                    placeholder="Comment Optional*"
-                    value={description}
-                    maxLength="210"
-                    onChange={(e) => {
-                        setDescription(e.target.value);
-                    }}
-                ></Input>
-            </InputWrapper>
-            { attemptSubmit ? (
+                />
+                <InputWrapper>
+                    <Input
+                        required
+                        placeholder="Animal Name"
+                        value={animalName}
+                        onChange={(e) => {
+                            setAnimalName(e.target.value);
+                        }}
+                    ></Input>
+                    <Input
+                        placeholder="Comment Optional*"
+                        value={description}
+                        maxLength="210"
+                        onChange={(e) => {
+                            setDescription(e.target.value);
+                        }}
+                    ></Input>
+                </InputWrapper>
+                { attemptSubmit ? (
+                    <Button 
+                    type="submit"
+                    style={{ background: "white"}}
+                    >
+                        <Loading/>
+                </Button>
+                ) : (
                 <Button 
-                type="submit"
-                style={{ background: "white"}}
-                >
-                    <Loading/>
-            </Button>
-            ) : (
-            <Button 
-                type="submit"
-                >
-                    Upload Capture
-            </Button>
-            )}
-        </Form>
-    </Wrapper>
+                    type="submit"
+                    >
+                        Upload Capture
+                </Button>
+                )}
+            </Form>
+        </Wrapper>
     )
 }
 
@@ -208,18 +223,36 @@ const Img = styled.img`
     height: 300px;
     width: 300px;
     margin: 10px 0px 10px 0px;
-    background: lightgrey;
+    border: 1px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    &:hover{
+        transform: scale(103%);
+    }
+    &:active{
+        transform: scale(95%);
+    }
 `
 
-const Gallery = styled.div`
-    display: inline-block;
+const ImgAlternative = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    width: 300px;
+    margin: 10px 0px 10px 0px;
+    background-color: var(--background-color-alternative);
+    background-image: var(--background-image-alternative);
     border: 1px solid black;
-`
-
-const OneImage = styled.img`
-    height: 100%;
-    width: 100%;
-    border: 1px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    &:hover{
+        transform: scale(103%);
+    }
+    &:active{
+        transform: scale(95%);
+    }
 `
 
 const InputWrapper = styled.div`
@@ -232,12 +265,6 @@ const Input = styled.input`
     border: 1px solid black;
     font-size: 15px;
     margin: 5px;
-`
-
-const Text = styled.div`
-    height: 20px;
-    margin: 5px;
-
 `
 
 const Button = styled.button`

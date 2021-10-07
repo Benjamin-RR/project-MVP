@@ -5,7 +5,6 @@ import { useHistory } from 'react-router-dom';
 
 const Gallery = () => {
     const {
-        page,
         setPage,
         userID
     } = useContext(CaptureContext);

@@ -1,5 +1,3 @@
-import React, {useState} from 'react'
-
 // LOAD CAPTURES
 
 // Uses an array of uniqueNames to fetch each uniqueName's Captures. Range: (1 - infinite)
