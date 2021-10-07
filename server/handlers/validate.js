@@ -25,7 +25,7 @@ const validateEmail = (email) => {
 // PASSWORD VALIDATION
 const validatePassword = (password) => {
     let validateStatus = "good"
-    
+        
     return validateStatus;
 }
 

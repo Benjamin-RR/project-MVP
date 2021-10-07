@@ -4,21 +4,12 @@ require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
-const {
-    signInUser,
-    addNewUser,
-    addCaptureImage,
-    addAvatarImage,
-    downloadImage,
-    downloadImages,
-    addFriend,
-    getUserInfo, 
-    getAnimal,
-    captureVote,
-    getCapturesForMap,
-    getAllUniqueNames,
-    getAllUsers,
-} = require("./handlers");
+// const {
+//     addCaptureImage,
+//     addAvatarImage,
+//     downloadImage,
+//     downloadImages,
+// } = require("./handlers");
 
 const PORT = process.env.PORT 
 
@@ -41,23 +32,19 @@ express()
     .use("/", express.static(__dirname + "/"))
 
     // Rest endpoints.
-    // USER
-    .post("/user/signIn", signInUser)
-    .post("/user/new", addNewUser)
-    .post("/user/info", getUserInfo)
-    .put("/user/addFriend", addFriend)
-    .get("/user/names", getAllUniqueNames)
-    .get("/users", getAllUsers)
-    // CAPTURES
-    .post("/image/uploadCapture", addCaptureImage)
-    .put("/capture/vote", captureVote)
-    .get("/captures", getCapturesForMap)
-    // OTHER
-    .post("/image/uploadAvatar", addAvatarImage)
+    .use(require('./routes/user'))
+    .use(require('./routes/image'))
+    .use(require('./routes/capture'))
+
+    // IMAGES
+    // .post("/image/uploadCapture", addCaptureImage)
+    // .post("/image/uploadAvatar", addAvatarImage)
+
+    
     // .get("/image/download", downloadImage)           // never has done anything. delete if never used.
     // .get("/image/downloadMany", downloadImages)      // never has done anything. delete if never used.
-    // .post('/animal', getAnimal)     // get animal info // has been nuked...
 
+    
     // This is the catch all Endpoint
     .get("*", (req, res) => {
         res.status(404).json({

@@ -19,7 +19,6 @@ export const CaptureProvider = ({ children }) => {
     // const [mapPosition, setMapPosition] = useState()
     const [comingFrom, setComingFrom] = useState(null)
     const [captureArray, setCaptureArray] = useState(null);
-    const [refreshPins, setRefreshPins] = useState(false);
 
     // settings
     const [settingsClick, setSettingsClick] = useState(false);
@@ -101,8 +100,6 @@ export const CaptureProvider = ({ children }) => {
             setComingFrom,
             captureArray, 
             setCaptureArray,
-            // refreshPins, 
-            // setRefreshPins,
         }}>
             {children}
         </CaptureContext.Provider>
