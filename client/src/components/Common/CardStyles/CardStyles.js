@@ -24,6 +24,5 @@ export const CardStyles = (data) => {
             color='rgba(165,42,42,1)'
         }
     }
-    // background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 10%, rgba(0,212,255,1) 100%);}}
     return color;
 };
