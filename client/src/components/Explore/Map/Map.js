@@ -43,6 +43,8 @@ function thisMap() {
         }
     }
 
+    // console.log("current capture" , comingFrom, currentCapture);
+
     // filter data with search query
     const filterDataWithSearchQuery = () => {
         

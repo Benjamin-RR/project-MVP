@@ -96,6 +96,7 @@ const captureVote = async (req, res) => {
     // get old ANIMAL CAPTURE data using captureId.    
     query = {"captures.animals._id" : req.body.vote.captureId}
     const test = await db.collection("users").findOne(query);
+    console.log("test:" , test);
     let animalToUpdate;
     const test2 = test.captures.animals.forEach(animal => {
         if (animal._id === req.body.vote.captureId) {
@@ -146,6 +147,8 @@ const captureVote = async (req, res) => {
             }
         }
     }
+    // update AUTHOR ANIMAL CAPTURE statistics with new object into mongoDB.
+    const updatedAnimalCapture = await db.collection("users").updateOne(query, update);
 
     res.status(200).json({ status: 200, data: req.body, message: "vote casted successfully!" });
     client.close();
