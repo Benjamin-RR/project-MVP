@@ -5,7 +5,8 @@ const {
     signInUser,
     addNewUser,
     getUserInfo,
-    addFriend,                      // coming soon.
+    addFriend,                         // coming soon.
+    reply,                      // coming soon.
     getAllUniqueNames,
     getAllUsers
 } = require('../handlers/users');
@@ -14,7 +15,8 @@ const {
 router.post("/user/signIn", signInUser);
 router.post("/user/new", addNewUser);
 router.post("/user/info", getUserInfo);
-router.put("/user/addFriend", addFriend);
+router.put("/user/add", addFriend);
+router.put("/user/reply", reply);
 router.get("/user/names", getAllUniqueNames);
 router.get("/users", getAllUsers);
 

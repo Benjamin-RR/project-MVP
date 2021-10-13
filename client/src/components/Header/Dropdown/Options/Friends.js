@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import { CaptureContext } from '../../../CaptureContext'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
@@ -13,6 +13,8 @@ const Friends = () => {
         userID,
         setFriendClick
     } = useContext(CaptureContext);
+    const [friendToAdd, setFriendToAdd] = useState(null);
+    console.log("friends:" , localStorage.getItem("friends"))
     
     useEffect(() => {
         setPage("friends");
@@ -22,6 +24,35 @@ const Friends = () => {
     let history = useHistory();
     { !userID && 
         history.push("/Login")
+    }
+
+    const handleSubmit = () => {
+
+
+        fetch(`user/add`, {
+            method: 'PUT',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                currentFriends: localStorage.getItem("friends"),        // this line should be removed.
+                friendToAdd: friendToAdd
+            }),
+        })
+        .then((res) => res.json())
+        .then((data) => {
+            if (data.status === 200) {
+                console.log("SUCCESS!", data);
+            }
+            if (data.status === 400) {
+                console.log("Pandar's box, an error has occured.", data.error)
+            }
+            console.log("success:", data)
+        })
+        .catch((error) => {
+            console.log("Error", error);
+        });
+        return;
     }
 
 
@@ -45,6 +76,7 @@ const Friends = () => {
                     <Input 
                         type="text"
                         placeholder="by email or unique name"
+                        onChange={handleSubmit}
                     />
                 </Form>
             </FriendWrapper>

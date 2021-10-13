@@ -178,24 +178,115 @@ const getUserInfo = async (req, res) => {
 //////////////////////////////////////////////
 // func. searches for a unique name OR email, updates that user with friend req pending, and querying user with friend req waiting.
 const addFriend = async (req, res) => {
-    // try{
-    // const client = await new MongoClient(MONGO_URI, options);
-    // await client.connect();
-    // const db = client.db("Capture");
-    // // attempt to find friend being searched.
+    try{
+    // connect to mongo.
+    const client = await new MongoClient(MONGO_URI, options);
+    await client.connect();
+    const db = client.db("Capture");
+    // attempt to find friend being searched.
+    const email = req.body.friendToAdd
+    const uniqueName = req.body.friendToAdd
+    let results;
+    if (results) {
+        console.log('TRUE');
+    } else {
+        console.log('FALSE');
+    }
+    // if friend query uses an email
+    if ((req.body.friendToAdd).includes('@')) {
+        results = await db.collection("users").findOne({email})
+    }
+    // if friend query uses uniqueName
+    else {
+        results = await db.collection("users").findOne({uniqueName})
+    }
+    // if friend does not exists
+    if (!results) {
+        res.status(400).json({ status: 200, data: req.body, message: "friend not found." });
+        client.close();
+        return;
+    } 
+    // if friend exists
+    else {
+        // update logged on user's sent request pending.
+        // update found friend's received request pending.    
+    
+        res.status(200).json({ status: 200, data: req.body, message: "friend request sent successfully." });
+        client.close();
+        return;
+    }
 
-    // // res.status(200).json({ status: 200, data: req.body, message: "update success." });
-    // client.close();
-    // }
-    // catch {
-    //     res.status(400).json({     
-    //         status: 400,
-    //         data: req.body,
-    //         error: `An error occured.`,
-    //     })
-    // }
+    }
+    catch {
+        res.status(400).json({
+            status: 400,
+            data: req.body,
+            error: `An error occured.`,
+        })
+    }
 }
 
+
+// This Endpoint is coming in future update //
+//////////////////////////////////////////////
+//                                          //
+//             REPLY TO FRIEND              //
+//                                          //
+//////////////////////////////////////////////
+// func. searches for a unique name OR email, updates that user with friend req pending, and querying user with friend req waiting.
+const reply = async (req, res) => {
+    console.log("inside accept friend");
+    try{
+    // connect to mongo.
+    const client = await new MongoClient(MONGO_URI, options);
+    await client.connect();
+    const db = client.db("Capture");
+    // if you accept friend request.
+    if (req.body.reply === "accept") {
+        console.log('accept');
+        // update user's sent request pending.
+        // update user's received request pending.
+        // add friend to friend list for both users.
+
+        // update friend list from user logged on with verified person who exists in mongoDB.
+        
+        const newFriendArray = [...req.body.currentFriends, results.uniqueName]
+    
+        // add friend to friend array
+    
+        // query = req.body.friendToAdd
+        let update = { $set: { 
+                "friends" : newFriendArray
+            }
+        }
+        
+        // const updatedInfo = await db.collection("users").updateOne(query, update)
+        console.log("updated results:" , update);
+    
+        // update logged on user with new friend on mongoDB and send back to front end their new added friend.
+
+        res.status(200).json({ status: 200, data: req.body, message: "friend request accepted successfully." });
+        client.close();
+        return;
+    } 
+    // if you deny friend request.
+    else {
+        console.log('deny');
+        // update user's sent request pending.
+        // update user's received request pending.
+        res.status(200).json({ status: 200, data: req.body, message: "friend request denied successfully." });
+        client.close();
+        return;
+    }
+    }
+    catch {
+        res.status(400).json({
+            status: 400,
+            data: req.body,
+            error: `An error occured.`,
+        })
+    }
+}
 
 //////////////////////////////////////////////
 //                                          //
@@ -257,4 +348,4 @@ const getAllUsers = async (req, res) => {
 }
 
 
-module.exports = { signInUser, addNewUser, getUserInfo, addFriend, getAllUniqueNames, getAllUsers };
+module.exports = { signInUser, addNewUser, getUserInfo, addFriend, reply, getAllUniqueNames, getAllUsers };
