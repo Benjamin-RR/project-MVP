@@ -10,17 +10,17 @@ Additionally: Capture was a two week final project for my Concordia University B
 
 # Features
 
-Sign in / Sign up / Sign out.
-Upload Captured image to the app “Capture” which keeps it in the cloud and displays on home feed and throughout the app.
-Rate other user’s captures. Automatically updates statistics on the captured animal, the voter, and the author of the capture which are displayed in user’s profile.
-Badge. Capture cards that have received 7 or more verified votes and more trues then false votes will receive a badge on their “capture card”.
-Dynamic capture “cards” display different colors and can receive a badge. Captures are displayed on a card and as each individual capture gains or loses verified votes and average star vote to determine the type of card it is. E.g. 100 verified votes and you begin receiving bronze, silver, or gold based off of stars received for that capture card.
-Clicking capture card’s avatar will bring you to that user’s profile where everything from their captures, statistics and friends are viewable.
-Clicking on capture card’s image brings you to google map location where that user took the picture.
-Map exploration. Displays all captured images on google map with a custom made marker (done using google map api, and custom REST apis). Additionally clicking on a marker brings up each individual captured information. Such as Name of capture, who captured it, how many days ago, and a small thumbnail image which is clickable and will bring you to rate that image (or alternatively click one time further to their profile).
-Map filtering. Users can filter the markers on google map by verified captures or non. Name of capture, or author of capture.
-Settings. Many dynamic settings are changeable throughout the app. Eg (google map has a default dynamic coloring to it’s map which renders either a style theme of dusk/dawn, day, night) You can toggle these settings on or off at the settings page.
-Many more features are in my interest to build. The current feature underway is sending and accepting friend requests between two users. If you have a feature you would like to see implemented, please do contact me either here on github, or by email at benjaminrobertrussell@gmail.com with an obvious subject such as “Capture Suggestion”. Thanks for your interest in my Capstone MVP project. :) Cheers.
+* Sign in / Sign up / Sign out.
+* Upload Captured image to the app “Capture” which keeps it in the cloud and displays on home feed and throughout the app.
+* Rate other user’s captures. Automatically updates statistics on the captured animal, the voter, and the author of the capture which are displayed in user’s profile.
+* Badge. Capture cards that have received 7 or more verified votes and more trues then false votes will receive a badge on their “capture card”.
+* Dynamic capture “cards” display different colors and can receive a badge. Captures are displayed on a card and as each individual capture gains or loses verified votes and average star vote to determine the type of card it is. E.g. 100 verified votes and you begin receiving bronze, silver, or gold based off of stars received for that capture card.
+* Clicking capture card’s avatar will bring you to that user’s profile where everything from their captures, statistics and friends are viewable.
+* Clicking on capture card’s image brings you to google map location where that user took the picture.
+* Map exploration. Displays all captured images on google map with a custom made marker (done using google map api, and custom REST apis). Additionally clicking on a marker brings up each individual captured information. Such as Name of capture, who captured it, how many days ago, and a small thumbnail image which is clickable and will bring you to rate that image (or alternatively click one time further to their profile).
+* Map filtering. Users can filter the markers on google map by verified captures or non. Name of capture, or author of capture.
+* Settings. Many dynamic settings are changeable throughout the app. Eg (google map has a default dynamic coloring to it’s map which renders either a style theme of dusk/dawn, day, night) You can toggle these settings on or off at the settings page.
+* Many more features are in my interest to build. The current feature underway is sending and accepting friend requests between two users. If you have a feature you would like to see implemented, please do contact me either here on github, or by email at benjaminrobertrussell@gmail.com with an obvious subject such as “Capture Suggestion”. Thanks for your interest in my Capstone MVP project. :) Cheers.
 
 <!-- ![mvp gif](assets/img.gif) -->
 
