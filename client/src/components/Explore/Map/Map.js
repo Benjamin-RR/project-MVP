@@ -9,7 +9,7 @@ import {Image} from 'cloudinary-react';
 import Search from "./Search";
 import { useHistory } from 'react-router';
 import {getMapStyle} from './MapHelper/DynamicMapStyle';
-
+import {filterDataWithSearchQuery} from './MapHelper/SearchQuery';
 
 function thisMap() {
     const {
@@ -35,104 +35,29 @@ function thisMap() {
     // get center position for map.
     let position;   // used to center map.
     if (comingFrom === 'singleCapture') {
-        setCaptureArray(currentCapture.data);
-        position= { lat: currentCapture.data.capture.location.lat , lng: currentCapture.data.capture.location.lng }
+        setCaptureArray(currentCapture);
+        position= { lat: currentCapture[0].capture.location.lat , lng: currentCapture[0].capture.location.lng }
+
     } else {
         if (firstMapLoad) {
             position = { lat: myLocation.coords.latitude, lng: myLocation.coords.longitude }
         }
     }
 
-    // console.log("current capture" , comingFrom, currentCapture);
-
-    // filter data with search query
-    const filterDataWithSearchQuery = () => {
-        
-        let finalAnswer = [];
-        // console.log("captureArray received to FILTER:" , AllCaptureArray);
-        // console.log("searchQuery received to FILTER:" , searchQuery);
-        let verified = false;
-        let unverified = false;
-        if (!AllCaptureArray) {
-            return;
-        }
-
-        // AllCaptureArray.forEach(capture => {
-        //     capture.setMap(null);
-        // })
-        
-        // searchQuery {certified: false, unCertified: false, animal: null, user: null}
-        if (searchQuery.certified) {
-            verified = true;
-            let answer = AllCaptureArray.filter(verifiedCaptures)
-            function verifiedCaptures(capture){
-                return (
-                    capture.capture.verified
-                )
-            }
-            answer.forEach(capture => {
-                finalAnswer.push(capture);
-            })
-        }
-        if (searchQuery.unCertified) {
-            unverified = true;
-            let answer = AllCaptureArray.filter(unVerifiedCaptures)
-            function unVerifiedCaptures(capture){
-                return (
-                    !capture.capture.verified
-                )
-            }
-            answer.forEach(capture => {
-                finalAnswer.push(capture);
-            })
-        }
-
-        if (!verified && !unverified) {
-            finalAnswer = AllCaptureArray;
-        }
-
-        if (searchQuery.animal.length > 0) {
-            finalAnswer = finalAnswer.filter(animal)
-            function animal(capture){
-                return (
-                    (capture.capture.animalName).toLowerCase() === (searchQuery.animal).toLowerCase()
-                )
-            }
-        }
-        
-        if (searchQuery.user.length > 0) {
-            finalAnswer = finalAnswer.filter(user)
-            function user(capture){
-                return (
-                    (capture.author).toLowerCase() === (searchQuery.user).toLowerCase()
-                )
-            }
-        }
-        // if (!finalAnswer) {
-        //     finalAnswer = [];
-        // }
-        // console.log("answer:" , finalAnswer);
-        
-        setCaptureArray(finalAnswer);
-        // setPage('explore');
-        // return answer;
-        // Marker = null;
-        setMapDataLoading(false);
-    }
-    
 
     // get new array of captures by filter, if a search query is present.
     useEffect(()=> {
-        // console.log("did we receive a query?");
-        // console.log("SEARCH QUERY:" , searchQuery);
-            // console.log("are we beginning the filters?");
-            // console.log("checking here");
-            // if (captureArray) {
-                filterDataWithSearchQuery();
-                // setMapDataLoading(false);
-            // }
+        // function clearOverlays() {
+        //     if (AllCaptureArray) {
+        //         for (var i = 0; i < AllCaptureArray.length; i++ ) {
+        //             AllCaptureArray[i].setMap(null);
+        //         }
+        //         AllCaptureArray.length = 0;
+        //     }
+        // }
+        setCaptureArray(filterDataWithSearchQuery(AllCaptureArray, searchQuery));
+        setMapDataLoading(false);
     },[searchQuery]);
-    // {certified: false, unCertified: false, animal: null, user: null}
 
 
     // get array of captures for later rendering. (set map data loading now to false.)
@@ -140,35 +65,16 @@ function thisMap() {
         setFirstMapLoad(false);
 
         if (!currentCapture) {
-            // const data = await getCapturesForMap(position);
-
-            // console.log("data received in Maps:" , data);
-            // const filtered = filterDataWithSearchQuery(data);
-
-            // setCaptureArray(data);      // changes with filter
-            // setAllCaptureArray(data);   // never changes
-            // filterDataWithSearchQuery();
             const data = await getCapturesForMap(position)
-            .then( async (data) => {
-                // console.log("data fetch:" , data);
-                // await setCaptureArray(data)      // changes with filter
-                await setAllCaptureArray(data)   // never changes
-            })
-            // .then( async (data) => {
-            //     await filterDataWithSearchQuery();
-            // })
+            await setAllCaptureArray(data)   // never changes
         } else {
-            // setCaptureArray(currentCapture); // might need this to fix bug clicking on link to explore map.
+            setCaptureArray(currentCapture); // might need this to fix bug clicking on link to explore map.
         }
     }, [captureArray])
-
-    // useEffect(() => {
-    //     filterDataWithSearchQuery();
-
-    // }, [mapDataLoading])
     
     if (AllCaptureArray && mapDataLoading) {
-        filterDataWithSearchQuery();
+        setCaptureArray(filterDataWithSearchQuery(AllCaptureArray, searchQuery));
+        setMapDataLoading(false);
     }
 
     // function gets marker image by value passed to it which is the verifed value from any Capture obj.
@@ -191,7 +97,6 @@ function thisMap() {
     }
 
     // console.log("DATA THAT WILL RENDER ON MAP:" , captureArray);
-    // console.log("pins need refresh?:" , refreshPins);
     return(
         <>
             <GoogleMap

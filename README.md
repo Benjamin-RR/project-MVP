@@ -11,7 +11,7 @@ Additionally: Capture was a two week final project for my Concordia University B
 # Features
 
 * Sign in / Sign up / Sign out.
-* Upload Captured image to the app “Capture” which keeps it in the cloud and displays on home feed and throughout the app.
+* Upload Captured image to the app “Capture” which keeps it in the cloud and displays on home feed and throughout the app. (This wasa done using cloudinary's API and my own custom RESTful APIs.)
 * Rate other user’s captures. Automatically updates statistics on the captured animal, the voter, and the author of the capture which are displayed in user’s profile.
 * Badge. Capture cards that have received 7 or more verified votes and more trues then false votes will receive a badge on their “capture card”.
 * Dynamic capture “cards” display different colors and can receive a badge. Captures are displayed on a card and as each individual capture gains or loses verified votes and average star vote to determine the type of card it is. E.g. 100 verified votes and you begin receiving bronze, silver, or gold based off of stars received for that capture card.

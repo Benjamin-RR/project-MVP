@@ -83,7 +83,7 @@ const Dropdown = () => {
             >Account</DropDownItem>
             <DropDownItem
                 onClick={handleFriendClick} type="submit"
-            >Add a friend</DropDownItem>
+            >Friend</DropDownItem>
             <DropDownItem
                 onClick={handleHelpClick} type="submit"
             >Help</DropDownItem>

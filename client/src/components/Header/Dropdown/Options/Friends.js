@@ -4,9 +4,11 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { useHistory } from 'react-router-dom'; 
 //icons
-import {AiOutlineCloseSquare} from 'react-icons/ai'
+import {AiOutlineCloseSquare} from 'react-icons/ai';
+import {BsPerson} from 'react-icons/bs';
+import {BsPersonFill} from 'react-icons/bs';
 
-
+// this component is used to send friend requests, see visually sent and received pending friend requests.
 const Friends = () => {
     const {
         setPage,
@@ -18,7 +20,6 @@ const Friends = () => {
     
     useEffect(() => {
         setPage("friends");
-
     },[])
     
     let history = useHistory();
@@ -28,14 +29,13 @@ const Friends = () => {
 
     const handleSubmit = () => {
 
-
         fetch(`user/add`, {
             method: 'PUT',
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                currentFriends: localStorage.getItem("friends"),        // this line should be removed.
+                userAsking: localStorage.getItem("uniqueName"),
                 friendToAdd: friendToAdd
             }),
         })
@@ -60,7 +60,7 @@ const Friends = () => {
         <Wrapper>
             <FriendWrapper>
                 <LeftToRight>
-                    <h2>Add friend</h2>
+                    <Text>Add friend</Text>
                     <Icon
                         onClick={()=>{
                             setFriendClick(false)
@@ -68,7 +68,7 @@ const Friends = () => {
                         to='/'
                     >
                         <AiOutlineCloseSquare 
-                            style={{ height: "100%" , width: "100%"}}
+                            style={{ height: "100%" , width: "100%", color: "white"}}
                         />
                     </Icon>
                 </LeftToRight>
@@ -80,6 +80,13 @@ const Friends = () => {
                     />
                 </Form>
             </FriendWrapper>
+            <FriendsPending>
+                <LeftToRight>
+                    <div>Pending Friend Requests</div>
+                    <div>Friend Requests</div>
+                </LeftToRight>
+                <div></div>
+            </FriendsPending>
         </Wrapper>
     )
 
@@ -125,12 +132,30 @@ const LeftToRight = styled.div`
     padding: 10px 10px 10px 20px;
 `
 
+const Text = styled.div`
+    color: white;
+    font-size: 1.7em;
+`
 const Form = styled.form`
 
 `
 
 const Input = styled.input`
 
+`
+
+const FriendsPending = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 340px;
+    height: 200px;
+    top: 200px;
+    left: 10px;
+    border: 1px solid black;
+    background: var(--color-light);
+    border-radius: 10px;
 `
 
 export default Friends;

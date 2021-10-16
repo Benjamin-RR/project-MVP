@@ -10,7 +10,8 @@ const SingleCapture = (data, disableAvatar, disableMap) => {
     const {
         setCurrentCapture,
         badgeSetting, 
-        setComingFrom
+        setComingFrom,
+        setCaptureArray
     } = useContext(CaptureContext);
     const badge = `/verified.png`
     
@@ -61,8 +62,9 @@ const SingleCapture = (data, disableAvatar, disableMap) => {
                     ):(
                         <ImageWrapper
                             onClick={() => {
-                                setCurrentCapture(data);
+                                setCurrentCapture([data.data]);
                                 setComingFrom('singleCapture');
+                                setCaptureArray(null);
                             }}
                             to="/Explore"
                         >
