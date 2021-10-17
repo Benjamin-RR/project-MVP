@@ -30,16 +30,16 @@ MongoDB, Express, React.js, Node.
 RESTful APIs.
 HTML, CSS, JavaScript,
 Github,
-Responsive (mobile, desktop)
-Cloudinary API
-Google Maps API
+Responsive (mobile, desktop),
+Cloudinary API,
+Google Maps API.
 
 *This is not a complete list, but merely the skills / technologies that I remember using often for this project. I suspect I forgot quite a few, to be honest.
 
 
 # The developer
 
-Hello! My name is Benjamin, I love creativity, story telling, and solving puzzles/problems. I recently made a career change to pursue my dream job, programming! In was part of an intensive fast past full time 3 month web developer bootcamp at Concordia University and graduated among the top 10 in my class. I have always had a passion to program from a young age and even taught myself how to program on a TI-83 plus when in High School. 
+Hello! My name is Benjamin, I love creativity, story telling, and solving puzzles/problems. I recently made a career change to pursue my dream job, programming! In was part of an intensive fast pace full time 3 month web developer bootcamp at Concordia University and graduated among the top 10 in my class. I have always had a passion to program from a young age and even taught myself how to program on a TI-83-plus calculator while in High School. 
 
 This project that you see in front of you is a result of a 2 week Capstone MVP project from my bootcamp, inspired by the desire to encourage people to get outdoors, Instagram, and PokemonGo. As for this project, I really wanted to not limit my creativity of possibility and allow my recently acquired skills to puzzle everything together.
 

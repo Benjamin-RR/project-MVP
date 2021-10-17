@@ -4,7 +4,10 @@ export default createGlobalStyle`
     :root{
         --color-light: rgb(36, 65, 109);
         --color-dark:  rgb(16, 40, 80);
-        --defaultHeight: 500px;
+        --defaultHeaderHeight: 150px;
+        --defaultHeight: calc(100vh - 250px);
+        --defaultFooterHeight: 150px;
+
         --IconHeight: 30px;
         --IconWidth: 30px;
         --color-Header-Footer: #5a608d;

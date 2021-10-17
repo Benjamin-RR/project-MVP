@@ -2,8 +2,8 @@
 export const filterDataWithSearchQuery = (AllCaptureArray, searchQuery) => {
         
     let finalAnswer = [];
-    console.log("captureArray received to FILTER:" , AllCaptureArray);
-    console.log("searchQuery received to FILTER:" , searchQuery);
+    // console.log("captureArray received to FILTER:" , AllCaptureArray);
+    // console.log("searchQuery received to FILTER:" , searchQuery);
     let verified = false;
     let unverified = false;
     if (!AllCaptureArray) {

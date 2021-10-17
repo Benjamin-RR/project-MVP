@@ -141,7 +141,7 @@ const Wrapper = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 150px;
+    height: var(--defaultFooterHeight);
     width: 100%;
     background: var(--color-Header-Footer);
     background-image: var(--image-Header-Footer);

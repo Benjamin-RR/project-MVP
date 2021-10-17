@@ -5,8 +5,8 @@ const {
     signInUser,
     addNewUser,
     getUserInfo,
-    addFriend,                         // coming soon.
-    reply,                      // coming soon.
+    addFriend,                          // in construction.
+    reply,                              // in construction.
     getAllUniqueNames,
     getAllUsers
 } = require('../handlers/users');
