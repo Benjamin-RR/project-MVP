@@ -1,6 +1,8 @@
 # Backend
 
-| --------------------------|----------|--------------------------------|
+11 iternal api's created and used for this project.
+2 external api's were used for this project (not shown in list below: cloudinary api and google maps api.)
+
 | endpoint                  | method   | Description                    |
 | --------------------------|----------|--------------------------------|
 | `/captures`               | `GET`    | Get Captures For Google Map    |
@@ -17,3 +19,12 @@
 | `/user/names`             | `GET`    | Get all unique names           |
 | `/users`                  | `GET`    | Get all Users                  |
 | --------------------------|----------|--------------------------------|
+
+## Available Scripts
+
+In the project directory, you can run:
+
+### `yarn start`
+
+Runs the app in the development mode.<br />
+Open [http://localhost:7777](http://localhost:7777) to view it in the browser.

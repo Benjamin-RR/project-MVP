@@ -1,3 +1,5 @@
+// this is my first rough draft idea of data structure, this component was infact never used outside of a reference point.
+// this component will soon be removed entirely from the project (once a few added features make it into the project).
 const users = {
     benjaminRR: {
         handle: "benjaminRR",

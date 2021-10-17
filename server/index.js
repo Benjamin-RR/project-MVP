@@ -4,14 +4,7 @@ require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
-// const {
-//     addCaptureImage,
-//     addAvatarImage,
-//     downloadImage,
-//     downloadImages,
-// } = require("./handlers");
-
-const PORT = process.env.PORT 
+const PORT = process.env.PORT;
 
 express()
     .use(function (req, res, next) {
@@ -31,7 +24,7 @@ express()
     .use(express.urlencoded({ extended: true, limit: '50mb' }))
     .use("/", express.static(__dirname + "/"))
 
-    // Rest endpoints.
+    // REST endpoints.
     .use(require('./routes/user'))
     .use(require('./routes/image'))
     .use(require('./routes/capture'))
