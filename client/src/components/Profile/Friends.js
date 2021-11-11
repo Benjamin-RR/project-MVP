@@ -20,7 +20,7 @@ const Wrapper = styled.div`
     flex-direction: column;
     align-items: center;
     width: 100%;
-    min-height: var(--defaultHeight);
+    min-height: calc( var(--defaultHeight) - 20px);
     background: rgb(9,9,121);
     background: linear-gradient(90deg, rgba(9,9,121,0.2046568627450981) 0%, rgba(73,113,162,0.2046568627450981) 20%, rgba(73,113,162,0.14583333333333337) 50%, rgba(73,113,162,0.1962535014005602) 80%, rgba(57,64,142,0.1962535014005602) 100%);
 `

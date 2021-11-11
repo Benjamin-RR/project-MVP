@@ -35,7 +35,9 @@ const Wrapper = styled.div`
     display: flex;
     justify-content: space-around;
     align-items: center;
-    height: var(--defaultHeight);
+    height: 520px;
+    /* height: var(--defaultHeight); */
+    /* min-height: calc( var(--defaultHeight) + 130px); */
     width: 100%;
 `
 
