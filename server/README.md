@@ -20,6 +20,11 @@
 | `/users`                  | `GET`    | Get all Users                  |
 | --------------------------|----------|--------------------------------|
 
+## Installation
+
+First run `yarn install` in the cd server.
+Make sure you .env is all set up with: PORT, MONGO_URI, and Cloudinary.
+
 ## Available Scripts
 
 In the project directory, you can run:
